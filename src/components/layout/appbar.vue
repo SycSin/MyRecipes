@@ -61,7 +61,7 @@
             >
               <v-icon color="primary" large>mdi-food-turkey</v-icon>
               My
-              <span class="accent--text">Recipe</span>
+              <span class="accent--text">Recipes</span>
             </v-toolbar-title>
           </v-col>
 
