@@ -1,0 +1,12 @@
+services:
+  web:
+    image: vuejs:16.14.2
+    build:
+      context: .
+    ports:
+      - 8080:8080
+    container_name: vuejs
+    volumes:
+      - ./app:/app
+      - /app/node_modules
+
