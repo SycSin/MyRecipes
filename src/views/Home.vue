@@ -21,7 +21,7 @@
               </v-col>
               <v-col class="d-flex align-center">
                 <v-avatar class="elevation-4" color="accent">
-                  <v-icon large>mdi-feather</v-icon>
+                  <v-icon large>mdi-food</v-icon>
                 </v-avatar>
 
                 <div class="text-h6 pl-2">Vorname Nachname · 23 Feb 2022</div>
