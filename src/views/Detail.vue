@@ -6,7 +6,7 @@
           <div>
             <v-card flat color="transparent">
               <v-img
-                src="https://cdn.pixabay.com/photo/2020/02/07/20/32/cyprus-4828328_1280.jpg"
+                src="https://image.brigitte.de/11225976/t/Lx/v3/w960/r1.5/-/ramen-teaser.jpg"
                 :aspect-ratio="16 / 9"
                 gradient="to top, rgba(25,32,72,.4), rgba(25,32,72,.0)"
                 style="border-radius: 16px"

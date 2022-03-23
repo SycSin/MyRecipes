@@ -7,7 +7,7 @@
             dark
             gradient="to top, rgba(25,32,72,.7), rgba(25,32,72,.0)"
             height="500px"
-            src="https://images.pexels.com/photos/3244513/pexels-photo-3244513.jpeg"
+            src="https://img.taste.com.au/vEJ9w_Zy/w720-h480-cfill-q80/taste/2019/02/healthy-tuna-mornay-153401-1.jpg"
         >
           <v-card-text class="fill-height d-flex align-end">
             <v-row class="flex-column">
@@ -58,7 +58,7 @@
                           class="elevation-2"
                           gradient="to top, rgba(25,32,72,.4), rgba(25,32,72,.0)"
                           height="200px"
-                          src="https://cdn.pixabay.com/photo/2020/12/23/14/41/forest-5855196_1280.jpg"
+                          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1iUfICWyjri-xEfJAy3G7viql5bLCSy3nfA&usqp=CAU"
                           style="border-radius: 16px"
                       >
                         <v-card-text>
@@ -102,7 +102,7 @@
                       class="elevation-2 fill-height"
                       gradient="to top, rgba(25,32,72,.4), rgba(25,32,72,.0)"
                       height="600px"
-                      src="https://cdn.pixabay.com/photo/2019/10/29/14/46/landscape-4587079_1280.jpg"
+                      src="https://www.viennafood.at/images/cover/cover-2.jpg"
                   >
                     <div
                         class="d-flex flex-column justify-space-between fill-height"
@@ -144,7 +144,7 @@
                     <v-img
                         :aspect-ratio="16 / 9"
                         height="100%"
-                        src="https://cdn.pixabay.com/photo/2021/01/27/06/54/nova-scotia-duck-tolling-retriever-5953883_1280.jpg"
+                        src="https://www.viennafood.at/theme/vienna/images/lasagne.jpg"
                     ></v-img>
                   </v-card>
                 </v-col>
