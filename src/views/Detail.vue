@@ -142,7 +142,7 @@
                       </v-col>
 
                       <v-col class="flex-shrink-0" cols="auto">
-                        <v-chip color="accent">#Travel</v-chip>
+                        <v-chip color="accent">#Recipe</v-chip>
                       </v-col>
 
                       <v-col class="flex-shrink-0" cols="auto">

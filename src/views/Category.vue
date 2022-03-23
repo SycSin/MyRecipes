@@ -5,7 +5,7 @@
         <div>
           <div>
             <div>
-              <h2 class="text-h4 font-weight-bold">ANIMAL</h2>
+              <h2 class="text-h4 font-weight-bold">Meat</h2>
 
               <h4 class="text-h6">Some category description goes here</h4>
             </div>
