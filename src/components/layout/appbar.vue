@@ -60,8 +60,8 @@
                 @click="$router.push('/')"
             >
               <v-icon color="primary" large>food-turkey</v-icon>
-              Hero
-              <span class="accent--text">MyRecipe</span>
+              My
+              <span class="accent--text">Recipe</span>
             </v-toolbar-title>
           </v-col>
 
