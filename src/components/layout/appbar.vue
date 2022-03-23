@@ -106,11 +106,11 @@ export default {
     drawer: null,
     btnItems: [
       {
-        text: "Free Download",
-        href: "https://github.com/AGDholo/giraffe",
+        text: "Sign-Up",
+        to: "/login",
         target: "_black",
         color: "primary",
-        icon: "mdi-download",
+        icon: "mdi-account-plus",
       },
     ],
     barItems: [
