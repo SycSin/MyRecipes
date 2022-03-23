@@ -19,10 +19,10 @@
 
           <v-col>
             <div>
-              <v-btn depressed color="accent" small>TRAVEL</v-btn>
+              <v-btn depressed color="accent" small>Asian</v-btn>
 
               <h3 class="text-h6 font-weight-bold primary--text py-3">
-                What do | need to know to start learning JavaScript?
+                Delicious Asian Noodles & Dumplings
               </h3>
 
               <div class="d-flex align-center">
@@ -30,7 +30,7 @@
                   <v-icon dark small>mdi-feather</v-icon>
                 </v-avatar>
 
-                <div class="pl-2">Yan Lee · 03 Jan 2019</div>
+                <div class="pl-2">Vorname Nachname · 03 Jan 2019</div>
               </div>
             </div>
           </v-col>
@@ -47,7 +47,7 @@
         <v-card-text
           class="d-flex justify-space-between align-center white--text"
         >
-          <h6 class="text-h6">Travel</h6>
+          <h6 class="text-h6">Recipes</h6>
 
           <div class="text-h6">47</div>
         </v-card-text>
@@ -66,7 +66,7 @@
           </v-avatar>
 
           <div class="pl-2">
-            <div class="text-h6">Yan Lee</div>
+            <div class="text-h6">Vorname Nachname</div>
             <div class="text-subtitle-1">47 Articles</div>
           </div>
         </div>
@@ -98,7 +98,7 @@
         flat
         class="pt-4"
       ></v-text-field>
-      <v-btn color="accent" block large>Subscrbe</v-btn>
+      <v-btn color="accent" block large>Subscribe</v-btn>
     </div>
   </div>
 </template>
