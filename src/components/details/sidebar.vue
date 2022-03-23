@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <h3 class="text-h5 font-weight-medium pb-4">Popular Posts</h3>
+      <h3 class="text-h5 font-weight-medium pb-4">Popular Recipes</h3>
 
       <v-divider></v-divider>
 
@@ -10,7 +10,7 @@
           <v-col cols="12" md="6" lg="5">
             <v-card height="100%" flat>
               <v-img
-                src="https://cdn.pixabay.com/photo/2021/01/22/16/55/camera-5940588_1280.jpg"
+                src="https://i.pinimg.com/736x/a1/0c/80/a10c809eb8ef9284abbe264d2be3b970.jpg"
                 :aspect-ratio="16 / 9"
                 height="100%"
               ></v-img>
