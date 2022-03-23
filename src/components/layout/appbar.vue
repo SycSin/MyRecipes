@@ -59,7 +59,7 @@
                 style="cursor: pointer"
                 @click="$router.push('/')"
             >
-              <v-icon color="primary" large>food-turkey</v-icon>
+              <v-icon color="primary" large>mdi-food-turkey</v-icon>
               My
               <span class="accent--text">Recipe</span>
             </v-toolbar-title>
