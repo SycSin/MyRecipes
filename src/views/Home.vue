@@ -68,12 +68,11 @@
 
                       <v-card-text>
                         <div class="text-h5 font-weight-bold primary--text">
-                          Burgers and Wraps for the perfect party.
+                          Tasty Party Snacks
                         </div>
 
                         <div class="text-body-1 py-4">
-                          Looking for a nice snack for your next party?
-                          Then this is the recipe for you!
+                          Suprise your guests with a delicious party snack!
                         </div>
 
                         <div class="d-flex align-center">
@@ -108,7 +107,7 @@
                         class="d-flex flex-column justify-space-between fill-height"
                     >
                       <v-card-text>
-                        <v-btn color="accent">ANIMALS</v-btn>
+                        <v-btn color="accent">Vegan</v-btn>
                       </v-card-text>
 
                       <v-card-text>
@@ -135,7 +134,7 @@
           </div>
 
           <div class="pt-16">
-            <h2 class="text-h4 font-weight-bold">Latest Posts</h2>
+            <h2 class="text-h4 font-weight-bold">Latest Recipes</h2>
 
             <div>
               <v-row v-for="i in 6" :key="i" class="py-4">
