@@ -24,7 +24,7 @@
                   <v-icon large>mdi-feather</v-icon>
                 </v-avatar>
 
-                <div class="text-h6 pl-2">Yan Lee · 22 July 2019</div>
+                <div class="text-h6 pl-2">Vorname Nachname · 23 Feb 2022</div>
               </v-col>
             </v-row>
           </v-card-text>
@@ -68,12 +68,12 @@
 
                       <v-card-text>
                         <div class="text-h5 font-weight-bold primary--text">
-                          How to write an awesome blog post in 5 steps
+                          Burgers and Wraps for the perfect party.
                         </div>
 
                         <div class="text-body-1 py-4">
-                          Ultrices sagittis orci a scelerisque. Massa placerat
-                          duis ultricies lacus sed turpis
+                          Looking for a nice snack for your next party?
+                          Then this is the recipe for you!
                         </div>
 
                         <div class="d-flex align-center">
@@ -81,7 +81,7 @@
                             <v-icon dark>mdi-feather</v-icon>
                           </v-avatar>
 
-                          <div class="pl-2">Yan Lee · 22 July 2019</div>
+                          <div class="pl-2">Vorname Nachname · 23 Feb 2022</div>
                         </div>
                       </v-card-text>
                     </v-card>
@@ -124,7 +124,7 @@
                             <v-icon dark>mdi-feather</v-icon>
                           </v-avatar>
 
-                          <div class="pl-2">Yan Lee · 03 Jan 2019</div>
+                          <div class="pl-2">Vorname Nachname · 23 Feb 2022</div>
                         </div>
                       </v-card-text>
                     </div>
@@ -151,7 +151,7 @@
 
                 <v-col>
                   <div>
-                    <v-btn color="accent" depressed>TRAVEL</v-btn>
+                    <v-btn color="accent" depressed>Recipe</v-btn>
 
                     <h3 class="text-h4 font-weight-bold pt-3">
                       Ut enim blandit volutpat maecenas volutpat blandit
@@ -169,7 +169,7 @@
                         <v-icon dark>mdi-feather</v-icon>
                       </v-avatar>
 
-                      <div class="pl-2">Yan Lee · 03 Jan 2019</div>
+                      <div class="pl-2">Vorname Nachname · 22 Jan 2022</div>
                     </div>
                   </div>
                 </v-col>
