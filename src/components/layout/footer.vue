@@ -5,17 +5,16 @@
         <v-row align="start">
           <v-col cols="12" md="3">
             <h4 class="text-h5 font-weight-bold">
-              Giraffe
+              MyRecipes
             </h4>
             <p class="text-body-1">
-              Create, prototype, collaborate and turn your ideas into incredible
-              products with the definitive platform for digital design.
+              Create recipes and share them with the world.
             </p>
           </v-col>
 
           <v-col cols="12" md="3">
             <v-list color="transparent" flat>
-              <v-subheader class="text-h6">HeroUI</v-subheader>
+              <v-subheader class="text-h6">MyRecipe</v-subheader>
               <v-list-item-group color="primary">
                 <v-list-item
                     v-for="(item, i) in heroui"
@@ -37,7 +36,7 @@
 
           <v-col cols="12" md="3">
             <v-list color="transparent" flat>
-              <v-subheader class="text-h6">Giraffe</v-subheader>
+              <v-subheader class="text-h6">MyRecipe</v-subheader>
               <v-list-item-group color="primary">
                 <v-list-item
                     v-for="(item, i) in shock"
@@ -94,7 +93,7 @@
               href="https://heroui.net"
               rel="noopener noreferrer"
               target="_blank"
-          >HreoUI</a
+          >MyRecipe</a
           >
           {{ new Date().getFullYear() }}. All rights reserved.
         </div>
