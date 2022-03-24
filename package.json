@@ -9,6 +9,7 @@
     "serve": "vue-cli-service serve"
   },
   "dependencies": {
+    "@mdi/font": "^6.6.95",
     "@vue/compiler-sfc": "^3.2.31",
     "core-js": "^3.6.5",
     "http-server": "^14.1.0",
