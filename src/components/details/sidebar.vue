@@ -22,7 +22,7 @@
               <v-btn depressed color="accent" small>Asian</v-btn>
 
               <h3 class="text-h6 font-weight-bold primary--text py-3">
-                Delicious Asian Noodles & Dumplings
+                Asian Noodles with Dumplings
               </h3>
 
               <div class="d-flex align-center">

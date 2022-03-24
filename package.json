@@ -1,17 +1,21 @@
 {
-  "name": "giraffe",
+  "name": "MyRecipes",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "build": "vue-cli-service build",
+    "preview": "vite preview",
+    "serve": "vue-cli-service serve"
   },
   "dependencies": {
+    "@vue/compiler-sfc": "^3.2.31",
     "core-js": "^3.6.5",
+    "http-server": "^14.1.0",
+    "material-design-icons-iconfont": "^6.5.0",
     "vue": "^2.6.14",
     "vue-router": "^3.2.0",
-    "vuetify": "^2.6.0"
+    "vuetify": "^2.6.4"
   },
   "devDependencies": {
     "sass": "~1.32.12",
@@ -19,7 +23,7 @@
     "unplugin-vue-components": "^0.17.15",
     "vite": "^2.7.13",
     "vite-plugin-vue2": "^1.9.3",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.14"
   },
   "browserslist": [
     "> 1%",
