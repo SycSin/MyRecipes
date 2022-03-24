@@ -106,8 +106,8 @@ export default {
     drawer: null,
     btnItems: [
       {
-        text: "Sign-Up",
-        to: "/login",
+        text: "Sign Up",
+        to: "/signup",
         target: "_black",
         color: "primary",
         icon: "mdi-account-plus",
