@@ -80,7 +80,7 @@
             <v-btn color="primary">
               Sign Up
             </v-btn>
-            <vue-recaptcha sitekey="6LcmHwsfAAAAAPtOGLJ1KjLYigrYQmTR060DnXaR"></vue-recaptcha>
+            <vue-recaptcha sitekey="6Ld9KAsfAAAAAIcYmQogYclUq4vnHvwMnEeETiLD"></vue-recaptcha>
           </div>
         </v-card-text>
       </v-card>
