@@ -77,10 +77,10 @@
               :value="score.value"
           ></v-progress-linear>
           <div class="text-right">
+            <vue-recaptcha sitekey="6Ld9KAsfAAAAAGCMWWL_GbXL5MWcvWSV8P3uxV1A"></vue-recaptcha>
             <v-btn color="primary">
               Sign Up
             </v-btn>
-            <vue-recaptcha sitekey="6Ld9KAsfAAAAAIcYmQogYclUq4vnHvwMnEeETiLD"></vue-recaptcha>
           </div>
         </v-card-text>
       </v-card>
