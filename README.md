@@ -1,55 +1,43 @@
-# HeroUI - Giraffe
+# MyRecipes
+## Introduction
+MyRecipes is a recipe website which is used to create recipes, rate them and add them to a food planner.
 
-![images](images/preview.png)
+This repository is the source for the **front end** application of [MyRecipes](https://www.myrecipes.at).
 
-Giraffe is a complete application theme, Giraffe theme built with [Vuetify](https://vuetifyjs.com/) created
-by [HeroUI](https://heroui.net/). It is a solution that displays dense content, such as news, blogs or magazines,
-including news, authors, classified pages, and so on. Giraffe are characterized by a large number of components
-assembled together and look amazing. If you are a new company and want to create your online image, or if you just want
-people to know who you are and what you do, this may be your answer.
+## Installation
+Our application is built to run via Docker on any environment.
 
-## Preview
+### Requirements
+* [Docker](https://docs.docker.com/get-docker/)
+* [Docker Compose](https://docs.docker.com/compose/install/#install-compose)
 
-**[View Live Preview](https://giraffe.heroui.net/)**
+### Creating the image
+In order to create a Docker image the `Dockerfile` as well as the `docker-compose.yml` file are required.
 
-## Usage
+The `Dockerfile` is a sequence of commands for building process of the image and the `docker-compose.yml` file is required in order to deploy the application.
 
-### Basic Usage
+Issue the following command to build the image:
+```shell
+docker-compose up -d
+```
 
-Clone the source files of the theme and navigate into the theme's root directory. Run `yarn` and then run `yarn dev`
-which will open up a preview of the template in your default browser, watch for changes to core template files, and live
-reload the browser when changes are saved. You can view the `package.json` file to see which scripts are included.
+### Preview
+After deploying the application via Docker, you can preview the application via the following link:
+> https://127.0.0.1:8080
 
-#### Scripts
-We have now switched to the Vite build tool, which is much faster.
+## Deployments
+This section is only required in case the live-update does not work as expected.
 
-- `yarn dev` start a vite dev server
-- `yarn build` build all file to `dist`
+### Development
+When developing please issue the following command to build the image:
+```shell
+docker exec -t myrecipes-frontend npm run serve
+```
+The `serve` command is used for live-updates of the code on the webpage.
 
-## Bug & Issues
-
-Have a bug or an issue with this template? [Open a new issue](https://github.com/AGDholo/giraffe/issues).
-
-## About
-
-Giraffe is an open source library of free Vuetify themes and templates。All of the free themes and templates on HeroUI
-are released under the MIT license, which means you can use them for any purpose, even for commercial projects.
-
-- <https://heroui.net/>
-- <https://github.com/AGDholo>
-
-Giraffe based on the [Vuetify](https://vuetifyjs.com/) framework created
-by [stackFlam1ngo](https://twitter.com/stackFlam1ngo).
-
-## Copyright and License
-
-Copyright 2022 HeroUI LLC. Code released under the [MIT](https://github.com/AGDholo/giraffe/blob/master/LICENSE)
-license.
-
-## Sponsor
-
-I accept all sponsorship, if you want to cooperate, please feel free to contact me.
-
-![WebStorm logo](https://resources.jetbrains.com/storage/products/company/brand/logos/WebStorm.png)
-
+### Production
+Live updates are not recommended in productive environments, therefore it is best-practise to build the application with the following command:
+```shell
+docker exec -t myrecipes-frontend npm run build
+```
 
