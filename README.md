@@ -16,7 +16,7 @@ In order to create a Docker image the `Dockerfile` as well as the `docker-compos
 
 The `Dockerfile` is a sequence of commands for the building process of the image and the `docker-compose.yml` file is required in order to deploy the application.
 
-Issue the following command to build the image:
+Issue the following command to build and deploy the application:
 ```shell
 docker-compose up -d
 ```
