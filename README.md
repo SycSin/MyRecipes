@@ -14,7 +14,7 @@ Our application is built to run via Docker on any environment.
 ### Creating the image
 In order to create a Docker image the `Dockerfile` as well as the `docker-compose.yml` file are required.
 
-The `Dockerfile` is a sequence of commands for building process of the image and the `docker-compose.yml` file is required in order to deploy the application.
+The `Dockerfile` is a sequence of commands for the building process of the image and the `docker-compose.yml` file is required in order to deploy the application.
 
 Issue the following command to build the image:
 ```shell
