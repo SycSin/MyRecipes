@@ -23,7 +23,7 @@ docker-compose up -d
 
 ### Preview
 After deploying the application via Docker, you can preview the application via the following link:
-> https://127.0.0.1:8080
+> http://127.0.0.1:8080
 
 ## Deployments
 This section is only required in case the live-update does not work as expected.
