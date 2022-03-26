@@ -15,8 +15,14 @@ RUN npm install
 # copy project files and folders to the current working directory (i.e. 'app' folder)
 COPY . .
 
-# build app for production with minification
-RUN npm run build
+# globally install vue-cli-service
+RUN npm install -g @vue/cli-service
+
+# install vue-template-compiler
+RUN npm install -g vue-template-compiler
+
+# installing material design icons for vuetify
+RUN npm install @mdi/font
 
 EXPOSE 8080
-CMD [ "http-server", "dist" ]
+CMD [ "npm", "run", "serve" ]
