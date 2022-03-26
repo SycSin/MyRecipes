@@ -7,7 +7,7 @@ services:
        context: .
      ports:
        - 127.0.0.1:8080:8080
-     container_name: vuejs
+     container_name: myrecipes-frontend
      volumes:
        - .:/app
        - /app/node_modules
