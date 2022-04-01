@@ -59,6 +59,30 @@
           </v-col>
 
 
+          <v-col cols="12" md="3">
+            <v-list color="transparent" flat>
+              <v-subheader class="text-h6">Impressum</v-subheader>
+              <v-list-item-group color="primary">
+                <v-list-item
+                    v-for="(item, i) in impressum"
+                    :key="i"
+                    :href="item.href"
+                    dense
+                    target="_black"
+                    color="white"
+                >
+                  <v-list-item-content>
+                    <v-list-item-title
+                        class="text-body-1"
+                        v-text="item.text"
+                    ></v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list-item-group>
+            </v-list>
+          </v-col>
+
+
         </v-row>
 
         <div class="text-center mt-6">
@@ -104,6 +128,20 @@ export default {
         href: "https://github.com/AGDholo/giraffe/blob/master/LICENSE",
       },
     ],
+    impressum: [
+      {
+        text: "FH Campus Wien",
+        href: "https://www.fh-campuswien.ac.at/"
+      },
+      {
+        text: "Favoritenstraße 226",
+        href: "https://goo.gl/maps/yz8hisW4vxPKhpiu7"
+      },
+      {
+        text: "1100 Wien",
+        href: "https://goo.gl/maps/yz8hisW4vxPKhpiu7"
+      }
+    ]
   }),
 };
 </script>
