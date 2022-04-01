@@ -109,10 +109,6 @@ export default {
         text: "Github",
         href: "https://github.com/SycSin/MyRecipes.git",
       },
-      {
-        text: "Themes",
-        href: "https://heroui.net/",
-      },
     ],
     shock: [
       {
