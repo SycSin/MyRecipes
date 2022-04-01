@@ -22,6 +22,7 @@
                     :href="item.href"
                     dense
                     target="_black"
+                    color="white"
                 >
                   <v-list-item-content>
                     <v-list-item-title
@@ -44,6 +45,7 @@
                     :href="item.href"
                     dense
                     target="_black"
+                    color="white"
                 >
                   <v-list-item-content>
                     <v-list-item-title
@@ -56,34 +58,7 @@
             </v-list>
           </v-col>
 
-          <v-col cols="12" md="3">
-            <div>
-              <h5 class="text-h6 font-weight-bold">
-                Subscribe
-              </h5>
-              <p class="text-body-1">
-                The latest Rocket news, articles, and resources, sent straight
-                to your inbox every month.
-              </p>
-            </div>
 
-            <v-row>
-              <v-col cols="8">
-                <v-text-field
-                    hide-details
-                    label="Filled"
-                    light
-                    solo
-                ></v-text-field>
-              </v-col>
-
-              <v-col cols="4">
-                <v-btn block color="secondary" large>
-                  Subscribe
-                </v-btn>
-              </v-col>
-            </v-row>
-          </v-col>
         </v-row>
 
         <div class="text-center mt-6">
@@ -108,7 +83,7 @@ export default {
     heroui: [
       {
         text: "Github",
-        href: "https://github.com/AGDholo",
+        href: "https://github.com/SycSin/MyRecipes.git",
       },
       {
         text: "Themes",
@@ -118,11 +93,11 @@ export default {
     shock: [
       {
         text: "Download",
-        href: "https://github.com/AGDholo/giraffe",
+        href: "https://github.com/SycSin/MyRecipes.git",
       },
       {
         text: "Issues",
-        href: "https://github.com/AGDholo/giraffe/issues",
+        href: "https://github.com/SycSin/MyRecipes.git/issues",
       },
       {
         text: "LICENSE",
