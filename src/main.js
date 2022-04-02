@@ -11,6 +11,7 @@ import '@mdi/font/css/materialdesignicons.css'
 Vue.config.productionTip = false
 document.title = "MyRecipes"
 
+
 Vue.use(Vuetify);
 new Vue({
   vuetify,
