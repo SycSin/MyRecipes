@@ -14,10 +14,10 @@
 
           <v-col cols="12" md="3">
             <v-list color="transparent" flat>
-              <v-subheader class="text-h6">MyRecipe</v-subheader>
+              <v-subheader class="text-h6">Team</v-subheader>
               <v-list-item-group color="primary">
                 <v-list-item
-                    v-for="(item, i) in heroui"
+                    v-for="(item, i) in team"
                     :key="i"
                     :href="item.href"
                     dense
@@ -104,15 +104,24 @@
 <script>
 export default {
   data: () => ({
-    heroui: [
+    team: [
       {
-        text: "Github",
-        href: "https://github.com/SycSin/MyRecipes.git",
+        text: "SycSin",
+        href: "https://github.com/SycSin"
       },
-    ],
+      {
+        text: "GW",
+        href: "https://github.com/WildingGerald"
+      },
+      {
+        text: "tacsi566",
+        href: "https://github.com/tacsi566"
+      }
+    ]
+    ,
     shock: [
       {
-        text: "Download",
+        text: "Github",
         href: "https://github.com/SycSin/MyRecipes.git",
       },
       {
