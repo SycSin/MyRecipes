@@ -8,7 +8,7 @@
               MyRecipes
             </h4>
             <p class="text-body-1">
-              Create recipes and share them with the world.
+              Create recipes and share them with the world. Plan your meals and save it to your calendar.
             </p>
           </v-col>
 
