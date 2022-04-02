@@ -9,7 +9,8 @@ import '@mdi/font/css/materialdesignicons.css'
 
 
 Vue.config.productionTip = false
-document.title = "MyRecipe"
+document.title = "MyRecipes"
+
 
 Vue.use(Vuetify);
 new Vue({

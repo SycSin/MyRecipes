@@ -37,7 +37,7 @@
 
           <v-col cols="12" md="3">
             <v-list color="transparent" flat>
-              <v-subheader class="text-h6">MyRecipe</v-subheader>
+              <v-subheader class="text-h6">MyRecipes</v-subheader>
               <v-list-item-group color="primary">
                 <v-list-item
                     v-for="(item, i) in shock"
@@ -92,7 +92,7 @@
               href="https://heroui.net"
               rel="noopener noreferrer"
               target="_blank"
-          >MyRecipe</a
+          >MyRecipes</a
           >
           {{ new Date().getFullYear() }}. All rights reserved.
         </div>
