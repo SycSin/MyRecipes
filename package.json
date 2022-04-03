@@ -21,6 +21,7 @@
     "vue-password-strength-meter": "^1.7.2",
     "vue-recaptcha": "^2.0.1",
     "vue-router": "^3.2.0",
+    "vue-to-top-button": "^1.0.2",
     "vuetify": "^2.6.4",
     "zxcvbn": "^4.4.2"
   },
