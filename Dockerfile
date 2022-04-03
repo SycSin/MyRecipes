@@ -24,5 +24,8 @@ RUN npm install -g vue-template-compiler
 # installing material design icons for vuetify
 RUN npm install @mdi/font
 
+# install vue-to-top-button
+RUN npm install -g vue-to-top-button --save
+
 EXPOSE 8080
 CMD [ "npm", "run", "serve" ]
