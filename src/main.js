@@ -16,8 +16,7 @@ Vue.use(vueToTopButton, {
   // Change type to 0 to disable animation
   type: 1,
   color: "#2178ff",
-  //bg: "#ffffff",
-  offset: 2
+  offset: 0.3,
 })
 
 Vue.use(Vuetify);
