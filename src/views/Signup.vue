@@ -42,10 +42,10 @@
             </template>
             <v-date-picker
                 ref="picker"
-                locale="en-us"
+                locale="de"
                 v-model="date"
-                :day-format="date => new Date(date).getDate()"
-                :max="new Date().toISOString().substr(0, 10)"
+                :day-format="(date) => new Date(date).getDate()"
+                :max="new Date().toUTCString()"
                 :picker-date="pickerDate"
                 min="1950-01-01"
                 @change="save"
@@ -62,22 +62,22 @@
               @click:append="showPassword = !showPassword"
           ></v-text-field>
           <v-text-field
-              v-model="password"
-              :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-              :rules="[rules.required, rules.min, rules.strength]"
+              v-model="password2"
+              :append-icon="showPassword2 ? 'mdi-eye' : 'mdi-eye-off'"
+              :rules="[rules.required, rules.min, rules.strength, rules.match]"
               validate-on-blur
-              :type="showPassword ? 'text' : 'password'"
+              :type="showPassword2 ? 'text' : 'password'"
               label="Re-type Password"
               class="mb-6"
-              @click:append="showPassword = !showPassword"
+              @click:append="showPassword2 = !showPassword2"
           ></v-text-field>
           <v-progress-linear
               :background-opacity="opacity"
               :color="score.color"
               :value="score.value"
           ></v-progress-linear>
-          <div class="text-right">
-            <vue-recaptcha sitekey="6Ld9KAsfAAAAAGCMWWL_GbXL5MWcvWSV8P3uxV1A"></vue-recaptcha>
+          <div class="text-right" style="margin-top: 30px;">
+            <vue-recaptcha sitekey="6Ld9KAsfAAAAAGCMWWL_GbXL5MWcvWSV8P3uxV1A" @verify="submit"/>
             <v-btn color="primary">
               Sign Up
             </v-btn>
@@ -89,18 +89,21 @@
 </template>
 <script>
 import zxcvbn from "zxcvbn";
-import { VueRecaptcha } from 'vue-recaptcha';
+import {VueRecaptcha} from "vue-recaptcha";
 export default {
   data: () => ({
     date: null,
     menu: false,
-    pickerDate: '1995-1-1',
+    siteKey: '6Ld9KAsfAAAAAGCMWWL_GbXL5MWcvWSV8P3uxV1A',
+    pickerDate: '1997-1-1',
     showPassword: false,
+    showPassword2: false,
     password: '',
     rules: {
       required: value => !!value || 'Enter a password',
       min: v => v.length >= 8 || 'Use 8 characters or more for your password',
       strength: v => zxcvbn(v).score >= 3 || 'Please choose a stronger password. Try a mix of letters, numbers, and symbols.',
+      match: v2 => v2.checkPasswords(password, password2) || 'Passwords do not match.'
     },
   }),
   components: { VueRecaptcha },
@@ -117,6 +120,9 @@ export default {
       this.$refs.menu.save(date)
       this.pickerDate = date;
     },
+    checkPasswords(password1, password2){
+      return password1 === password2;
+    }
   },
   computed: {
     score() {
@@ -149,7 +155,7 @@ export default {
             value: 0
           };
       }
-    }
+    },
   }
 }
 </script>
