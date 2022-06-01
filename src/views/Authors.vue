@@ -5,11 +5,11 @@
         <div>
           <div>
             <div class="my-2">
-              <h2 class="text-h4 font-weight-bold">Our Authors</h2>
+              <h2 class="text-h4 font-weight-bold">Unsere Authoren</h2>
             </div>
 
             <v-row>
-              <v-col cols="12" md="6" v-for="i in 8" :key="i">
+              <v-col cols="12" md="6" v-for="item in authors" :key="item.id">
                 <v-hover
                   v-slot:default="{ hover }"
                   open-delay="50"
@@ -23,28 +23,26 @@
                       hover
                     >
                       <v-img
-                        src="https://cdn.pixabay.com/photo/2021/01/30/20/04/sheltie-5965187_1280.jpg"
-                        :aspect-ratio="16 / 9"
+                        :src=item.image
                         gradient="to top, rgba(25,32,72,.4), rgba(25,32,72,.0)"
-                        height="300px"
+                        height="700px"
                         class="elevation-2"
                         style="border-radius: 16px"
                       ></v-img>
 
                       <v-card-text class="text-center">
                         <v-avatar color="accent" size="86" class="authors">
-                          <v-icon dark size="64">mdi-feather</v-icon>
+                          <v-img :src=item.image></v-img>
                         </v-avatar>
 
                         <div
                           class="text-h5 font-weight-bold primary--text pt-4"
                         >
-                          Yan Lee
+                          {{ item.name }}
                         </div>
 
                         <div class="text-body-1 py-4">
-                          Ultrices sagittis orci a scelerisque. Massa placerat
-                          duis ultricies lacus sed turpis tincidunt id.
+                          {{ item.description }}
                         </div>
 
                         <div>
@@ -84,12 +82,19 @@
 </template>
 
 <script>
+
+import { authors } from '../resources/js/data';
+
 export default {
-  name: "Category",
-  components: {
-    siderbar: () => import("@/components/details/sidebar"),
-  },
-};
+    name: "Authoren",
+    components: {
+    },
+    data(){
+      return {
+        authors: authors,
+      }
+    }
+  };
 </script>
 
 <style lang="scss" scoped>

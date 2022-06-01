@@ -1,30 +1,30 @@
 <template>
   <div>
     <div>
-      <v-card to="detail">
+      <v-card to="recipe">
         <v-img
             :aspect-ratio="16 / 9"
             dark
             gradient="to top, rgba(25,32,72,.7), rgba(25,32,72,.0)"
             height="500px"
-            src="https://img.taste.com.au/vEJ9w_Zy/w720-h480-cfill-q80/taste/2019/02/healthy-tuna-mornay-153401-1.jpg"
+            :src=recipes[randomId].img
         >
           <v-card-text class="fill-height d-flex align-end">
             <v-row class="flex-column">
-              <v-col>
-                <v-btn color="accent" to="category">Recipe</v-btn>
-              </v-col>
               <v-col cols="12" lg="8" md="10" xl="7">
-                <h2 class="text-h3 py-3" style="line-height: 1.2">
-                  Healthy Tuna Mornay
+                <h2 class="text-h3 py-3" style="line-height: 1.0">
+                 {{ recipes[randomId].title }}
                 </h2>
+              </v-col>
+              <v-col>
+                <v-btn v-for="item in recipes[randomId].categories" :key="item" color="accent" to="categories" style="margin-right: 10px;">{{ item }}</v-btn>
               </v-col>
               <v-col class="d-flex align-center">
                 <v-avatar class="elevation-4" color="accent">
-                  <v-icon large>mdi-food</v-icon>
+                  <v-img :src="recipes[randomId].author.image"></v-img>
                 </v-avatar>
 
-                <div class="text-h6 pl-2">Vorname Nachname · 23 Feb 2022</div>
+                <div class="text-h6 pl-2">{{ recipes[randomId].author.name }} · {{ recipes[randomId].date }}</div>
               </v-col>
             </v-row>
           </v-card-text>
@@ -36,10 +36,9 @@
       <v-col cols="12" lg="12" xl="8">
         <div>
           <div class="pt-16">
-            <h2 class="text-h4 font-weight-bold pb-4">Recommended For You</h2>
-
+            <h2 class="text-h4 font-weight-bold pb-4">Persönliche Vorschläge</h2>
             <v-row>
-              <v-col v-for="i in 6" :key="i" cols="12" lg="4" md="6">
+              <v-col v-for="item in recipes.slice(0,6)" :key="item.id" cols="12" lg="4" md="6">
                 <v-hover
                     v-slot:default="{ hover }"
                     close-delay="50"
@@ -51,36 +50,38 @@
                         :elevation="hover ? 12 : 0"
                         flat
                         hover
-                        to="/detail"
+                        to="/recipe"
                     >
                       <v-img
                           :aspect-ratio="16 / 9"
                           class="elevation-2"
                           gradient="to top, rgba(25,32,72,.4), rgba(25,32,72,.0)"
                           height="200px"
-                          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1iUfICWyjri-xEfJAy3G7viql5bLCSy3nfA&usqp=CAU"
+                          :src=item.img
                           style="border-radius: 16px"
                       >
                         <v-card-text>
-                          <v-btn color="accent" to="category">TIPS</v-btn>
+                          <v-btn color="accent" to="categories">
+                            {{ item.categories[0] }}
+                          </v-btn>
                         </v-card-text>
                       </v-img>
 
                       <v-card-text>
                         <div class="text-h5 font-weight-bold primary--text">
-                          Tasty Party Snacks
+                          {{ item.title }}
                         </div>
 
                         <div class="text-body-1 py-4">
-                          Suprise your guests with a delicious party snack!
+                          {{ item.description }}
                         </div>
 
                         <div class="d-flex align-center">
                           <v-avatar color="accent" size="36">
-                            <v-icon dark>mdi-feather</v-icon>
+                            <v-img :src="item.author.image"></v-img>
                           </v-avatar>
 
-                          <div class="pl-2">Vorname Nachname · 23 Feb 2022</div>
+                          <div class="pl-2">{{ item.author.name }} · {{ item.date }}</div>
                         </div>
                       </v-card-text>
                     </v-card>
@@ -91,23 +92,23 @@
           </div>
 
           <div class="pt-16">
-            <h2 class="text-h4 font-weight-bold pb-4">Featured</h2>
+            <h2 class="text-h4 font-weight-bold pb-4">Inspirierende Posts</h2>
 
             <v-row>
-              <v-col v-for="i in 3" :key="i" cols="6" lg="4">
-                <v-card dark flat>
+              <v-col v-for="item in posts" :key="item.id" cols="6" lg="4">
+                <v-card dark flat to="/recipe">
                   <v-img
                       :aspect-ratio="16 / 9"
                       class="elevation-2 fill-height"
                       gradient="to top, rgba(25,32,72,.4), rgba(25,32,72,.0)"
                       height="600px"
-                      src="https://www.viennafood.at/images/cover/cover-2.jpg"
+                      :src=item.img
                   >
                     <div
                         class="d-flex flex-column justify-space-between fill-height"
                     >
                       <v-card-text>
-                        <v-btn color="accent">Vegan</v-btn>
+                        <v-btn color="accent">{{ item.categories[0] }}</v-btn>
                       </v-card-text>
 
                       <v-card-text>
@@ -115,15 +116,18 @@
                             class="text-h5 py-3 font-weight-bold"
                             style="line-height: 1.2"
                         >
-                          15 things I have always wondered about birds
+                          {{ item.title }}
+                          <div class="text-h5 py-2 sm3">
+                            #{{ item.categories[0] }}
+                          </div>
                         </div>
 
                         <div class="d-flex align-center">
                           <v-avatar color="accent" size="36">
-                            <v-icon dark>mdi-feather</v-icon>
+                            <v-img :src=item.author.image></v-img>
                           </v-avatar>
 
-                          <div class="pl-2">Vorname Nachname · 23 Feb 2022</div>
+                          <div class="pl-2">{{ item.author.name }} · {{ item.date }}</div>
                         </div>
                       </v-card-text>
                     </div>
@@ -134,43 +138,44 @@
           </div>
 
           <div class="pt-16">
-            <h2 class="text-h4 font-weight-bold">Latest Recipes</h2>
+            <h2 class="text-h4 font-weight-bold">Neueste Rezepte</h2>
 
             <div>
-              <v-row v-for="i in 6" :key="i" class="py-4">
-                <v-col cols="12" md="4">
-                  <v-card flat height="100%">
+              <v-row v-for="item in sortByDate(recipes, 3)" :key="item.id" class="py-4">
+                <v-col md="6">
+                  <v-card height="100%"
+                          :color="hover ? 'white' : 'transparent'"
+                          :elevation="hover ? 12 : 0"
+                          flat
+                          hover
+                          to="/recipe">
                     <v-img
                         :aspect-ratio="16 / 9"
-                        height="100%"
-                        src="https://www.viennafood.at/theme/vienna/images/lasagne.jpg"
+                        :src=item.img
                     ></v-img>
-                  </v-card>
-                </v-col>
 
                 <v-col>
                   <div>
-                    <v-btn color="accent" depressed>Recipe</v-btn>
+                    <v-btn v-for="element in item.categories" :key="element" color="accent" style="margin-right: 10px;" depressed to="/categories">{{ element }}</v-btn>
 
                     <h3 class="text-h4 font-weight-bold pt-3">
-                      Ut enim blandit volutpat maecenas volutpat blandit
+                      {{ item.title }}
                     </h3>
 
                     <p class="text-h6 font-weight-regular pt-3 text--secondary">
-                      Duis aute irure dolor in reprehenderit in voluptate velit
-                      esse cillum dolore eu fugiat nulla pariatur. Excepteur
-                      sint occaecat cupidatat non proident, sunt in culpa qui
-                      officia deserunt mollit anim id est laborum.
+                      {{ item.description }}
                     </p>
 
                     <div class="d-flex align-center">
                       <v-avatar color="accent" size="36">
-                        <v-icon dark>mdi-feather</v-icon>
+                        <v-img :src=item.author.image></v-img>
                       </v-avatar>
 
-                      <div class="pl-2">Vorname Nachname · 22 Jan 2022</div>
+                      <div class="pl-2">{{ item.author.name }} · {{ item.date }}</div>
                     </div>
                   </div>
+                </v-col>
+                  </v-card>
                 </v-col>
               </v-row>
             </div>
@@ -188,10 +193,23 @@
 </template>
 
 <script>
+import { recipes, authors, categories, posts, sortByDate, randomId, random } from '../resources/js/data';
+
 export default {
   name: "Home",
   components: {
     siderbar: () => import("@/components/details/sidebar"),
   },
+  data(){
+    return {
+      recipes: recipes,
+      authors: authors,
+      categories: categories,
+      posts: posts,
+      sortByDate: sortByDate,
+      randomId: randomId,
+      random: random,
+    }
+  }
 };
 </script>

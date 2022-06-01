@@ -1,24 +1,24 @@
 <template>
-  <v-row class="d-flex justify-center align-center fill-height" style="min-height: 100vh">
+  <v-row class="d-flex justify-center align-center fill-height" style="min-height: 100vh; background-image: url('https://images.pexels.com/photos/4920540/pexels-photo-4920540.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');">
     <v-col cols="12" md="6">
-      <v-card class="py-6">
+      <v-card class="py-6" style="border-radius: 15px;">
         <v-card-title class="d-flex justify-center">
           <div class="text-h4">
-            Sign Up
+            Anmeldung
           </div>
         </v-card-title>
         <v-card-text>
           <v-text-field
-              label="Email"
+              label="Benutzername"
               outlined
           ></v-text-field>
           <v-text-field
-              label="Firstname"
+              label="Vorname"
               outlined
               required
           ></v-text-field>
           <v-text-field
-              label="Lastname"
+              label="Nachname"
               outlined
               required
           ></v-text-field>
@@ -34,7 +34,7 @@
             <template v-slot:activator="{ on }">
               <v-text-field
                   v-model="date"
-                  label="Birthdate"
+                  label="Geburtsdatum"
                   prepend-icon="event"
                   readonly
                   v-on="on"
@@ -57,7 +57,7 @@
               :rules="[rules.required, rules.min, rules.strength]"
               validate-on-blur
               :type="showPassword ? 'text' : 'password'"
-              label="Password"
+              label="Passwort"
               class="mb-6"
               @click:append="showPassword = !showPassword"
           ></v-text-field>
@@ -67,7 +67,7 @@
               :rules="[rules.required, rules.min, rules.strength, rules.match]"
               validate-on-blur
               :type="showPassword2 ? 'text' : 'password'"
-              label="Re-type Password"
+              label="Passwort wiederholen"
               class="mb-6"
               @click:append="showPassword2 = !showPassword2"
           ></v-text-field>
@@ -77,7 +77,7 @@
               :value="score.value"
           ></v-progress-linear>
           <div class="text-right" style="margin-top: 30px;">
-            <vue-recaptcha sitekey="6Ld9KAsfAAAAAGCMWWL_GbXL5MWcvWSV8P3uxV1A" @verify="submit"/>
+            <!--vue-recaptcha sitekey="6Ld9KAsfAAAAAGCMWWL_GbXL5MWcvWSV8P3uxV1A" @verify="submit"/-->
             <v-btn color="primary">
               Sign Up
             </v-btn>

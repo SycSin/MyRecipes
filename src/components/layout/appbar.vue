@@ -104,33 +104,36 @@ export default {
     drawer: null,
     btnItems: [
       {
-        text: "Sign Up",
+        text: "Registrieren",
         to: "/signup",
         target: "_black",
         color: "primary",
         icon: "mdi-account-plus",
       },
+      {
+        text: "Login",
+        to: "/login",
+        target: "_black",
+        color: "accent",
+        icon: "mdi-login-variant"
+      },
     ],
     barItems: [
       {
-        title: "Home",
+        title: "Startseite",
         to: "/",
       },
       {
-        title: "Category",
-        to: "/category",
+        title: "Kategorien",
+        to: "/categories",
       },
       {
-        title: "Detail",
-        to: "/detail",
+        title: "Rezept",
+        to: "/recipe",
       },
       {
-        title: "Authors",
+        title: "Authoren",
         to: "/authors",
-      },
-      {
-        title: "Login",
-        to: "/login",
       },
     ],
   }),
