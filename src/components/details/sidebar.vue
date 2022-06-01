@@ -1,37 +1,46 @@
 <template>
   <div>
     <div>
-      <h3 class="text-h5 font-weight-medium pb-4">Popular Recipes</h3>
+      <h3 class="text-h5 font-weight-medium pb-4">Populäre Rezepte</h3>
 
       <v-divider></v-divider>
 
       <div>
-        <v-row v-for="i in 5" :key="i" class="py-2">
-          <v-col cols="12" md="6" lg="5">
-            <v-card height="100%" flat>
-              <v-img
-                src="https://i.pinimg.com/736x/a1/0c/80/a10c809eb8ef9284abbe264d2be3b970.jpg"
-                :aspect-ratio="16 / 9"
-                height="100%"
-              ></v-img>
-            </v-card>
-          </v-col>
-
-          <v-col>
+        <v-row v-for="item in recipes.slice(0,4).reverse()" :key="item.id" class="py-2">
+          <v-col cols="12" lg="10" md="6">
             <div>
-              <v-btn depressed color="accent" small>Asian</v-btn>
+              <v-card :color="hover ? 'white' : 'transparent'"
+                      :elevation="hover ? 12 : 0"
+                      flat
+                      height="100%"
+                      hover
+                      to="/recipe">
+                <v-img
+                    :aspect-ratio="16 / 9"
+                    :src="item.img"
+                    class="elevation-2"
+                    gradient="to top, rgba(25,32,72,.4), rgba(25,32,72,.0)"
+                ></v-img>
 
-              <h3 class="text-h6 font-weight-bold primary--text py-3">
-                Asian Noodles with Dumplings
-              </h3>
+                <div>
+                  <v-btn v-for="category in item.categories" color="accent" depressed small to="/categories" style="margin-right: 2px;">{{ category }}</v-btn>
 
-              <div class="d-flex align-center">
-                <v-avatar color="accent" size="24">
-                  <v-icon dark small>mdi-feather</v-icon>
-                </v-avatar>
+                  <h3 class="text-h6 font-weight-bold primary--text py-3">
+                    {{ item.title }}
+                  </h3>
+                  <p>
+                    {{ item.description }}
+                  </p>
 
-                <div class="pl-2">Vorname Nachname · 03 Jan 2019</div>
-              </div>
+                  <div class="d-flex align-center">
+                    <v-avatar color="accent" size="24">
+                      <v-img :src="item.author.image"></v-img>
+                    </v-avatar>
+
+                    <div class="pl-2">{{ item.author.name }} · {{ item.date }}</div>
+                  </div>
+                </div>
+              </v-card>
             </div>
           </v-col>
         </v-row>
@@ -39,66 +48,45 @@
     </div>
 
     <div class="pt-4">
-      <h3 class="text-h5 font-weight-medium pb-4">Category</h3>
+      <h3 class="text-h5 font-weight-medium pb-4">Top Authoren</h3>
 
       <v-divider></v-divider>
 
-      <v-card color="accent" dark flat v-for="i in 5" :key="i" class="my-4">
-        <v-card-text
-          class="d-flex justify-space-between align-center white--text"
-        >
-          <h6 class="text-h6">Recipes</h6>
+        <div class="pt-4">
+          <v-card v-for="item in authors" :key="item.id" class="d-flex align-center mb-4"
+                  flat
+                  hover
+                  to="/authors">
+            <v-avatar color="accent" size="64">
+              <v-img :src="item.image"></v-img>
+            </v-avatar>
 
-          <div class="text-h6">47</div>
-        </v-card-text>
-      </v-card>
-    </div>
-
-    <div class="pt-4">
-      <h3 class="text-h5 font-weight-medium pb-4">Top Authors</h3>
-
-      <v-divider></v-divider>
-
-      <div class="pt-4">
-        <div class="d-flex align-center mb-6" v-for="i in 5" :key="i">
-          <v-avatar color="accent" size="64">
-            <v-icon dark x-large>mdi-feather</v-icon>
-          </v-avatar>
-
-          <div class="pl-2">
-            <div class="text-h6">Vorname Nachname</div>
-            <div class="text-subtitle-1">47 Articles</div>
-          </div>
+            <div class="pl-2">
+              <div class="text-h6">{{ item.name }}</div>
+              <div class="text-subtitle-1">{{ random() + 2 }} Rezepte</div>
+            </div>
+          </v-card>
         </div>
-      </div>
     </div>
 
-    <div class="pt-4">
-      <h3 class="text-h5 font-weight-medium pb-4">Tags</h3>
+    <v-divider></v-divider>
 
-      <v-divider></v-divider>
-
-      <v-row class="pt-4">
-        <v-col v-for="i in 7" :key="i" class="flex-shrink-0" cols="auto">
-          <v-chip color="accent">#Images</v-chip>
-        </v-col>
-      </v-row>
-    </div>
-
-    <div class="pt-4">
-      <h3 class="text-h5 font-weight-medium pb-4">Newsletter</h3>
-
-      <v-divider></v-divider>
-
-      <v-text-field
-        label="Your email adress"
-        solo
-        type="email"
-        outlined
-        flat
-        class="pt-4"
-      ></v-text-field>
-      <v-btn color="accent" block large>Subscribe</v-btn>
-    </div>
   </div>
 </template>
+
+<script>
+
+import {recipes, authors, categories, randomId, random} from '../../resources/js/data';
+
+export default {
+  data() {
+    return {
+      recipes: recipes,
+      authors: authors,
+      categories: categories,
+      randomId: randomId,
+      random: random,
+    }
+  }
+};
+</script>

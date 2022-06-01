@@ -11,6 +11,7 @@ import vueToTopButton from "vue-to-top-button"
 Vue.config.productionTip = false
 document.title = "MyRecipes"
 
+
 Vue.use(vueToTopButton, {
 
   // Change type to 0 to disable animation

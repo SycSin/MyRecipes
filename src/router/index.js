@@ -11,18 +11,18 @@ const routes = [
         component: Home
     },
     {
-        path: '/category',
-        name: 'Category',
+        path: '/categories',
+        name: 'Kategorien',
         component: () => import("@/views/Category.vue"),
     },
     {
-        path: '/detail',
-        name: 'Detail',
-        component: () => import("@/views/Detail.vue"),
+        path: '/recipe',
+        name: 'Rezepte',
+        component: () => import("@/views/Recipe.vue"),
     },
     {
         path: '/authors',
-        name: 'Authors',
+        name: 'authoren',
         component: () => import("@/views/Authors.vue"),
     },
     {
@@ -32,7 +32,7 @@ const routes = [
     },
     {
         path: '/signup',
-        name: 'Sign Up',
+        name: 'Registrieren',
         component: () => import("@/views/Signup.vue"),
     }
 ]

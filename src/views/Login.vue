@@ -1,7 +1,7 @@
 <template>
-  <v-row class="d-flex justify-center align-center fill-height" style="min-height: 100vh">
+  <v-row class="d-flex justify-center align-center fill-height" style="min-height: 100vh; background-image: url('https://images.pexels.com/photos/4686816/pexels-photo-4686816.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');">
     <v-col cols="12" md="6">
-      <v-card class="py-6">
+      <v-card class="py-6" style="border-radius: 20px;">
         <v-card-title class="d-flex justify-center">
           <div class="text-h4">
             Login
@@ -10,9 +10,9 @@
         <v-card-text>
         <form ref="form" @submit.prevent="login()">
           <v-text-field
+              label="Benutzername"
               v-model="username"
               name="username"
-              label="Username"
               type="text"
               placeholder="username"
               required

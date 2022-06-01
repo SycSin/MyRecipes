@@ -18,6 +18,9 @@ COPY . .
 # globally install vue-cli-service
 RUN npm install -g @vue/cli-service
 
+# install bootstrap and bootstrap-vue
+RUN npm install -g bootstrap bootstrap-vue
+
 # install vue-template-compiler
 RUN npm install -g vue-template-compiler
 
