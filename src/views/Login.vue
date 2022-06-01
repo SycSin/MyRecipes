@@ -8,21 +8,63 @@
           </div>
         </v-card-title>
         <v-card-text>
+        <form ref="form" @submit.prevent="login()">
           <v-text-field
               label="Benutzername"
+              v-model="username"
+              name="username"
+              type="text"
+              placeholder="username"
+              required
               outlined
           ></v-text-field>
           <v-text-field
+              v-model="password"
+              name="password"
               label="Password"
+              type="password"
+              placeholder="password"
+              required
               outlined
           ></v-text-field>
           <div class="text-right">
-            <v-btn color="primary">
+            <v-btn type="submit" color="primary" value="login">
               Login
             </v-btn>
           </div>
+        </form>
         </v-card-text>
       </v-card>
     </v-col>
   </v-row>
 </template>
+
+<script>
+export default {
+    name: "Login",
+    data() {
+        return {
+            username: '',
+            password: '',
+        };
+    },
+    methods: {
+        login() {
+            fetch('http://host.docker.internal:8081/auth/login', {
+                method: 'POST',
+                body: JSON.stringify({
+                    username: this.username,
+                    password: this.password
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
+            .then((response) => response.json())
+            .then((result) => {
+                console.log("seas hans");   
+            });
+        }
+    },
+};
+</script>
