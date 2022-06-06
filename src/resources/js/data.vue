@@ -35,38 +35,38 @@
       {
         id: 1,
         name: 'Mark Heather',
-        description: 'Hi! Mein Name ist Mark und koche schon mein Leben lang. Ich experimentiere gerne mit Rezepten aus aller Welt und erweitere stets meinen kullinarischen Horizont. :)',
+        description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
         image: 'https://images.pexels.com/photos/2406949/pexels-photo-2406949.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
       },
       {
         id: 2,
         name: 'Mary Luciane',
-        description: 'Hi! Mein Name ist Mary und koche schon mein Leben lang. Ich experimentiere gerne mit Rezepten aus aller Welt und erweitere stets meinen kullinarischen Horizont. :)',
+        description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
         image: 'https://images.pexels.com/photos/7710127/pexels-photo-7710127.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
       },
       {
         id: 3,
         name: 'Cathrine Martinez',
-        description: 'Hi! Mein Name ist Cathrine und koche schon mein Leben lang. Ich experimentiere gerne mit Rezepten aus aller Welt und erweitere stets meinen kullinarischen Horizont. :)',
+        description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
         image: 'https://images.pexels.com/photos/4350178/pexels-photo-4350178.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
       },
       {
         id: 4,
         name: 'Joshua Lewis',
-        description: 'Hi! Mein Name ist Joshua und koche schon mein Leben lang. Ich experimentiere gerne mit Rezepten aus aller Welt und erweitere stets meinen kullinarischen Horizont. :)',
+        description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
         image: 'https://images.pexels.com/photos/5920775/pexels-photo-5920775.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
       },
       {
         id: 5,
         name: 'Lisa Bryan',
-        description: 'Hi! Mein Name ist Lisa und koche schon mein Leben lang. Ich experimentiere gerne mit Rezepten aus aller Welt und erweitere stets meinen kullinarischen Horizont. :)',
+        description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
         image: 'https://images.pexels.com/photos/6205523/pexels-photo-6205523.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
       },
     ];
     let recipes = [
       {
         id: 0,
-        title: 'Wiener Kaiserscharrn',
+        title: 'Wiener Kaiserschmarrn',
         description: 'Der traditionalle Wiener Kaiserschmarrn.',
         categories: [
           categories[0].name,

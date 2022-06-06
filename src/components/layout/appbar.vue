@@ -132,7 +132,7 @@ export default {
         to: "/recipe",
       },
       {
-        title: "Authoren",
+        title: "Autoren",
         to: "/authors",
       },
     ],

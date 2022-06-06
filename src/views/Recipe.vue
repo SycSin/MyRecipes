@@ -85,15 +85,23 @@
                   <div class="text-subtitle-1 primary--text font-weight-medium mt-5">
                     <ul>
                       <li class="my-2">
-                        Mehl, Eier und Zucker mit einer Prise Salz in einer Schüssel verrühren.
+                        Die Eier trennen und das Eiklar in einer Schüssel zum Schnee schlagen.
                       </li>
 
                       <li class="my-2">
+                        Mehl, Ei-Dotter und Zucker mit einer Prise Salz in einer Schüssel verrühren.
+                      </li>
+
+                      <li class="my-2">
+                        Das steifgeschlagene Eiklar in den Teig unterheben. 
+                      </li>
+                      
+		      <li class="my-2">
                         Eine Pfanne mit Butter befetten und anschließen erhitzen.
                       </li>
 
                       <li class="my-2">
-                        Sobald die Pfanne erhitzt ist, den zusammengerührten Teig hineingießen und bei mittlerer Hitze
+                        Sobald die Pfanne erhitzt ist, den Teig hineingießen und bei mittlerer Hitze
                         gold-braun anbraten.
                       </li>
 
@@ -102,7 +110,7 @@
                       </li>
 
                       <li class="my-2">
-                        Die gewändeten stücke auf der unterseite leicht anbraten lassen und in einzelne teile reißen.
+                        Die gewendeten Stücke auf der Unterseite leicht anbraten lassen und in einzelne Teile reißen.
                       </li>
 
                       <li class="my-2">
