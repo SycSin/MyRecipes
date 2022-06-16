@@ -143,6 +143,11 @@ export default {
       //  title: "PlannerOld",
       //  to: "/planner-old",
       //},
+
+      {
+        title: "Rezept erstellen",
+        to: "/createRecipe",
+      }
     ],
   }),
 };
