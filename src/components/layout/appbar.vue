@@ -135,6 +135,14 @@ export default {
         title: "Authoren",
         to: "/authors",
       },
+      {
+        title: "Planner",
+        to: "/planner",
+      },
+      //{
+      //  title: "PlannerOld",
+      //  to: "/planner-old",
+      //},
     ],
   }),
 };

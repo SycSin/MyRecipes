@@ -26,6 +26,16 @@ const routes = [
         component: () => import("@/views/Authors.vue"),
     },
     {
+        path: '/planner',
+        name: 'Planner',
+        component: () => import("@/views/Planner.vue"),
+    },
+    //{
+    //    path: '/planner-old',
+    //    name: 'PlannerOld',
+    //    component: () => import("@/views/Planner-bkup.vue"),
+    //},
+    {
         path: '/login',
         name: 'Login',
         component: () => import("@/views/Login.vue"),
@@ -40,7 +50,7 @@ const routes = [
 const router = new VueRouter({
     routes,
     scrollBehavior() {
-        document.getElementById('app').scrollIntoView();
+        document.getElementById('planner').scrollIntoView();
     }
 })
 

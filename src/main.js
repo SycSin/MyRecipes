@@ -4,13 +4,25 @@ import vuetify from './plugins/vuetify';
 import router from './router'
 import Vuetify from "vuetify";
 import 'vuetify/dist/vuetify.min.css'
-import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import '@mdi/font/css/materialdesignicons.css'
 import vueToTopButton from "vue-to-top-button"
+import DaySpan from 'dayspan-vuetify-2'
 
 Vue.config.productionTip = false
 document.title = "MyRecipes"
 
+Vue.use(Vuetify);
+new Vue({
+  vuetify,
+  router,
+  render: h => h(App)
+}).$mount('#app');
+
+Vue.use(DaySpan, {
+  methods: {
+    getDefaultEventColor: () => '#1976d2'
+  }
+});
 
 Vue.use(vueToTopButton, {
 
@@ -20,9 +32,3 @@ Vue.use(vueToTopButton, {
   offset: 0.3,
 })
 
-Vue.use(Vuetify);
-new Vue({
-  vuetify,
-  router,
-  render: h => h(App)
-}).$mount('#app')

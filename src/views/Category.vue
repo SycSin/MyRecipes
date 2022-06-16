@@ -29,7 +29,7 @@
                           style="margin-bottom: 15px;"
                           to="/recipe"
                       >
-                        <v-img v-if=""
+                        <v-img
                             :src=item.img
                             :aspect-ratio="16 / 9"
                             gradient="to top, rgba(25,32,72,.4), rgba(25,32,72,.0)"
