@@ -49,7 +49,7 @@
                 v-model="categories"
                 :options="categories"
                 :items="categories"
-                item-text="category"
+                item-text="name"
                 label="Kategorie"
             ></v-select>
             <v-textarea
@@ -105,6 +105,8 @@
 
 <script>
 
+import { categories } from '../resources/js/data';
+
 export default {
   name: "Login",
   data() {
@@ -115,13 +117,7 @@ export default {
       title: '',
       file: '',
       dragging: false,
-      categories: [
-        {category: "Süßes"},
-        {category: "Vegan"},
-        {category: "Vegetarisch"},
-        {category: "Fleisch"},
-        {category: "Fisch"},
-      ]
+      categories: categories,
     };
   },
   methods: {
