@@ -50,7 +50,7 @@ const routes = [
 const router = new VueRouter({
     routes,
     scrollBehavior() {
-        document.getElementById('planner').scrollIntoView();
+        document.getElementById('app').scrollIntoView();
     }
 })
 
