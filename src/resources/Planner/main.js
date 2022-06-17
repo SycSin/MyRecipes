@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import DaySpanVuetify from './plugin'
 import App from './app'
-import vuetify from './plugins_/vuetify'
+import vuetify from '@/plugins/vuetify'
 
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import './styles/app.scss'

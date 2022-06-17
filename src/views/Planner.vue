@@ -5,10 +5,13 @@
     </div>
 </template>
 <script>
+
+require("@/views/Planner/main.js");
+
 export default {
   name: "Planner",
   components: {
-    planner: () => import("./Planner/app")
+    planner: () => import("../resources/Planner/app"),
   },
 };
 </script>
