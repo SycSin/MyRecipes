@@ -45,6 +45,13 @@
                 required
                 outlined
             ></v-text-field>
+            <v-select
+                v-model="categories"
+                :options="categories"
+                :items="categories"
+                item-text="category"
+                label="Kategorie"
+            ></v-select>
             <v-textarea
                 v-model="description"
                 name="description"
@@ -97,6 +104,7 @@
 </template>
 
 <script>
+
 export default {
   name: "Login",
   data() {
@@ -106,7 +114,14 @@ export default {
       description: '',
       title: '',
       file: '',
-      dragging: false
+      dragging: false,
+      categories: [
+        {category: "Süßes"},
+        {category: "Vegan"},
+        {category: "Vegetarisch"},
+        {category: "Fleisch"},
+        {category: "Fisch"},
+      ]
     };
   },
   methods: {
