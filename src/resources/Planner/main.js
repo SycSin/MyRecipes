@@ -37,7 +37,7 @@ Vue.use(DaySpanVuetify,
 
 /* eslint-disable no-new */
 new Vue({
-    el: '#planner',
+    el: '#app',
     vuetify,
     render: h => h(App)
 })

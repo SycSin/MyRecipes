@@ -7,7 +7,7 @@
                    :style="styleHeader">
 
             <v-toolbar-title slot="extension">
-                {{ details.title }}
+                <a href="recipe" style="color: white;">{{ details.title }}</a>
                 <v-icon v-if="details.icon"
                         :style="styleButton">
                     {{ details.icon }}
@@ -130,17 +130,6 @@
                     </v-list-item-content>
                 </v-list-item>
 
-                <v-list-item v-if="hasBusy">
-                    <v-list-item-avatar>
-                        <v-icon>work</v-icon>
-                    </v-list-item-avatar>
-                    <v-list-item-content>
-                        <slot name="eventPopoverBusy" v-bind="slotData">
-                            <v-list-item-title>{{ busyness }}</v-list-item-title>
-                        </slot>
-                    </v-list-item-content>
-                </v-list-item>
-
             </v-list>
 
             <slot name="eventPopoverBodyBottom" v-bind="slotData"></slot>
@@ -253,14 +242,6 @@ export default {
 
             startDate () {
                 return this.calendarEvent.start.format(this.formats.start)
-            },
-
-            busyness () {
-                return this.details.busy ? this.labels.busy : this.labels.free
-            },
-
-            hasBusy () {
-                return typeof this.details.busy === 'boolean'
             },
 
             occurs () {

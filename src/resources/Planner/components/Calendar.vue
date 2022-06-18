@@ -431,6 +431,17 @@ export default {
         padding: 0px !important;
     }
 
+    .ds-week-view {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      overflow-y: auto;
+      outline: none;
+      background-color: white;
+    }
+
     .ds-month-view {
         width: 100%;
         height: 100%;
@@ -438,17 +449,6 @@ export default {
         .ds-today {
             background-color: rgba(0, 0, 0, 0.04);
         }
-    }
-
-    .ds-week-view {
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        overflow-y: auto;
-        outline: none;
-        background-color: white;
     }
 
     .ds-year-view {

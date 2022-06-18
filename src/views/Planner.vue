@@ -1,12 +1,12 @@
 <template>
-    <div class="my-2">
-      <h2 class="text-h4 font-weight-bold">Food Planner</h2>
-      <planner></planner>
-    </div>
+  <v-container>
+    <h2 class="text-h4 font-weight-bold">Food Planner</h2>
+    <planner></planner>
+  </v-container>
 </template>
 <script>
 
-require("@/views/Planner/main.js");
+require("../resources/Planner/main.js");
 
 export default {
   name: "Planner",
@@ -15,3 +15,5 @@ export default {
   },
 };
 </script>
+<style>
+</style>

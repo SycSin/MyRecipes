@@ -67,7 +67,8 @@
 
 <script>
 import { dsMerge } from './functions'
-import { Calendar, Weekday, Month, Sorts } from 'dayspan'
+import { Calendar } from 'dayspan'
+import { planner } from '../js/data';
 import * as moment from 'moment'
 
 export default {
@@ -84,23 +85,18 @@ export default {
             {value: 'de', text: 'German'},
             {value: 'nl', text: 'Dutch'},
             {value: 'ca', text: 'Catalan'}
-        ],
-        defaultEvents: [
-            {
-                data: {
-                    title: 'Weekly Meeting',
-                    color: '#3F51B5'
-                },
-                schedule: {
-                    dayOfWeek: [Weekday.MONDAY],
-                    times: [9],
-                    duration: 30,
-                    durationUnit: 'minutes'
-                }
-            },
-            {
-                data: {
-                    title: 'First Weekend',
+      ],
+      events: planner,
+      data() {
+        return {
+          planner: planner,
+        }
+      },
+      /**
+       defaultEvents:
+          {
+            data: {
+              title: 'First Weekend',
                     color: '#4CAF50'
                 },
                 schedule: {
@@ -261,6 +257,7 @@ export default {
                 }
             }
         ]
+             **/
     }),
 
     mounted () {
@@ -319,7 +316,7 @@ export default {
                 }
 
                 if (!state.events || !state.events.length) {
-                    state.events = this.defaultEvents
+                    state.events = this.events
                 }
 
                 let defaults = this.$dayspan.getDefaultEventDetails()
@@ -339,5 +336,11 @@ export default {
     body, html {
         width: 100%;
         height: 100%;
+    }
+    .ds-day .ds-week-date{
+      font-size:10px;
+    }
+    .ds-ev-title {
+      font-size: 20px;
     }
 </style>

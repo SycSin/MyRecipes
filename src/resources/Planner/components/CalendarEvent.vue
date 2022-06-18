@@ -228,7 +228,14 @@ export default {
         position: relative;
     }
 
+      @media only screen and (max-width: 1024px) {
+        .ds-ev-title {
+          font-size: 10px;
+        }
+    }
+
     .ds-calendar-event {
+        height: 60px;
         margin: 1px;
         color: white;
         overflow: hidden;
