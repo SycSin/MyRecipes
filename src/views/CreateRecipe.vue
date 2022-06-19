@@ -1,5 +1,6 @@
 <template>
-  <v-row class="d-flex justify-center align-center fill-height" style="min-height: 100vh; background-image: url('https://images.pexels.com/photos/4686816/pexels-photo-4686816.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');">
+  <v-row class="d-flex justify-center align-center fill-height"
+         style="min-height: 100vh; background-image: url('https://images.pexels.com/photos/4686816/pexels-photo-4686816.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');">
     <v-col cols="12" md="6">
       <v-card class="py-6" style="border-radius: 20px;">
         <v-card-title class="d-flex justify-center">
@@ -11,7 +12,8 @@
           <form ref="form">
             <div id="app">
               <div v-if="!file">
-                <div :class="['dropZone', dragging ? 'dropZone-over' : '']" @dragenter="dragging = true" @dragleave="dragging = false">
+                <div :class="['dropZone', dragging ? 'dropZone-over' : '']" @dragenter="dragging = true"
+                     @dragleave="dragging = false">
                   <div class="dropZone-info" @drag="onChange">
                     <span class="fa fa-cloud-upload dropZone-title"></span>
                     <span class="dropZone-title">Drop file or click to upload</span>
@@ -46,11 +48,15 @@
                 outlined
             ></v-text-field>
             <v-select
-                v-model="categories"
+                v-model="selectedCategories"
                 :options="categories"
                 :items="categories"
                 item-text="name"
                 label="Kategorie"
+                multiple
+                persistent-hint
+                chips
+                deletable-chips
             ></v-select>
             <v-textarea
                 v-model="description"
@@ -61,36 +67,22 @@
                 required
                 outlined
             ></v-textarea>
-
-            <v-row  style="align-items: center">
-              <v-col>
-                <v-text-field
-                    label="Zutat"
-                    v-model="ingredient"
-                    name="ingredient"
-                    type="text"
-                    placeholder="Zutat"
-                    required
-                    outlined>
-                </v-text-field>
-              </v-col>
-              <v-col>
-                <v-text-field
-                    label="Menge"
-                    v-model="amount"
-                    name="amount"
-                    type="text"
-                    placeholder="Menge"
-                    required
-                    outlined>
-                </v-text-field>
-              </v-col>
-              <v-col>
-                <v-btn @click="addIngredient" icon>
-                  <v-icon size="30">mdi-plus</v-icon>
-                </v-btn>
-              </v-col>
-            </v-row>
+            <autoextra :collection="persons" v-slot="{item,last,index}">
+              <div class="columns" :class="{last: last}">
+                <div class="field column">
+                  <div class="control">
+                    <label class="label">{{last ? 'New ' : ''}}Person {{!last ? index + 1 : ''}}</label>
+                    <input class="input" type="text" v-model="item.name"/>
+                  </div>
+                </div>
+                <div class="field column">
+                  <label class="label">Age</label>
+                  <div class="control">
+                    <input class="input" type="number" v-model="item.age"/>
+                  </div>
+                </div>
+              </div>
+            </autoextra>
             <div class="text-right">
               <v-btn type="submit" color="accent" value="create">
                 Erstellen
@@ -105,56 +97,61 @@
 
 <script>
 
-import { categories } from '../resources/js/data';
+import {categories} from '../resources/js/data';
 
 export default {
   name: "Login",
   data() {
     return {
-      amount: '',
-      ingredient: '',
       description: '',
       title: '',
       file: '',
       dragging: false,
       categories: categories,
+      selectedCategories: [],
+      ingredients: [
+        {
+          ingredient: 'Flour',
+          amount: '1'
+        }
+      ],
+      persons: [
+        { name: 'Alice', age: 46 },
+      ]
     };
   },
   methods: {
-   addIngredient(){
-     console.log("Klick");
-   },
-  onChange(e) {
-    var files = e.target.files || e.dataTransfer.files;
+    onChange(e) {
+      var files = e.target.files || e.dataTransfer.files;
 
-    if (!files.length) {
+      if (!files.length) {
+        this.dragging = false;
+        return;
+      }
+
+      this.createFile(files[0]);
+    },
+    createFile(file) {
+      if (!file.type.match("image.*")) {
+
+        alert('please select image file');
+        this.dragging = false;
+        return;
+      }
+
+      if (file.size > 5000000) {
+        alert('please check file size no over 5 MB.')
+        this.dragging = false;
+        return;
+      }
+
+      this.file = file;
+      console.log(this.file);
       this.dragging = false;
-      return;
+    },
+    removeFile() {
+      this.file = '';
     }
-
-    this.createFile(files[0]);
-  },
-  createFile(file) {
-    if (!file.type.match("image.*")) {
-
-      alert('please select image file');
-      this.dragging = false;
-      return;
-    }
-
-    if (file.size > 5000000) {
-      alert('please check file size no over 5 MB.')
-      this.dragging = false;
-      return;
-    }
-
-    this.file = file;
-    console.log(this.file);
-    this.dragging = false;
-  },
-  removeFile() {
-    this.file = '';
-  }
   },
   computed: {
     extension() {
@@ -162,7 +159,7 @@ export default {
     }
   }
 
-  }
+}
 </script>
 
 <style>
@@ -238,5 +235,8 @@ export default {
 
 .removeFile {
   width: 200px;
+}
+.last {
+  opacity: .5;
 }
 </style>
