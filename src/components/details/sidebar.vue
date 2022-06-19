@@ -14,7 +14,7 @@
                       flat
                       height="100%"
                       hover
-                      to="/recipe">
+                      :to="'/recipe/'+item.id">
                 <v-img
                     :aspect-ratio="16 / 9"
                     :src="item.img"
