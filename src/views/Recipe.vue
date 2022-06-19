@@ -7,7 +7,7 @@
             <v-card color="transparent" flat>
               <v-img
                   :aspect-ratio="16 / 9"
-                  :src=recipes[0].img
+                  :src=recipes[$route.params.id].img
                   gradient="to top, rgba(25,32,72,.4), rgba(25,32,72,.0)"
                   style="border-radius: 16px"
               ></v-img>
@@ -16,30 +16,30 @@
 
                 <div class="text-h4 font-weight-bold primary--text pt-4">
                   <v-row>
-                    <h4>{{ recipes[0].title }}</h4>
+                    <h4>{{ recipes[$route.params.id].title }}</h4>
                     &nbsp;
-                    <p v-for="i in recipes[0].rating" :key="i" class="pa-0" style="font-size: 20px;">
+                    <p v-for="i in recipes[$route.params.id].rating" :key="i" class="pa-0" style="font-size: 20px;">
                       &#11088;
                     </p>
                   </v-row>
                 </div>
                 <div>
-                  <v-btn v-for="item in recipes[0].categories" :key="item" color="accent" style="margin-right: 5px;">
+                  <v-btn v-for="item in recipes[$route.params.id].categories" :key="item" color="accent" style="margin-right: 5px;" to="/categories/">
                     {{ item }}
                   </v-btn>
                 </div>
 
                 <div class="text-body-1 py-4">
-                  {{ recipes[0].description }}
+                  {{ recipes[$route.params.id].description }}
                 </div>
 
                 <div class="d-flex align-center justify-space-between">
                   <div class="d-flex align-center">
                     <v-avatar color="accent" size="36">
-                      <v-img :src="recipes[0].author.image"></v-img>
+                      <v-img :src="recipes[$route.params.id].author.image"></v-img>
                     </v-avatar>
 
-                    <div class="pl-2 text-body-1">{{ recipes[0].author.name }} · {{ recipes[0].date }}</div>
+                    <div class="pl-2 text-body-1">{{ recipes[$route.params.id].author.name }} · {{ recipes[$route.params.id].date }}</div>
                   </div>
 
                   <div class="d-flex align-center">
@@ -59,22 +59,11 @@
 
                 <v-divider class="my-4"></v-divider>
 
-                <div>
-                  <!--b-table stacked :items="recipes[0].ingredients"></b-table-->
-                </div>
-
-
                 <div class="text-h5 primary--text font-weight-bold">
                   Zutaten:
                   <p class="text-subtitle-1 primary--text font-weight-medium mt-5">
                   <ul>
-                    <li> Mehl: 200 g</li>
-                    <li> Zucker: 30 g</li>
-                    <li> Salz: 1 Prise</li>
-                    <li> Eier: 4 Stück</li>
-                    <li> Milch: 330 ml</li>
-                    <li> Butter: 40 g</li>
-                    <li> Staubzucker: 1 Prise</li>
+                    <li v-for="item in recipes[$route.params.id].ingredients">{{ item }}</li>
                   </ul>
                   </p>
                 </div>
@@ -84,30 +73,7 @@
                   Schritte:
                   <div class="text-subtitle-1 primary--text font-weight-medium mt-5">
                     <ul>
-                      <li class="my-2">
-                        Mehl, Eier und Zucker mit einer Prise Salz in einer Schüssel verrühren.
-                      </li>
-
-                      <li class="my-2">
-                        Eine Pfanne mit Butter befetten und anschließen erhitzen.
-                      </li>
-
-                      <li class="my-2">
-                        Sobald die Pfanne erhitzt ist, den zusammengerührten Teig hineingießen und bei mittlerer Hitze
-                        gold-braun anbraten.
-                      </li>
-
-                      <li class="my-2">
-                        Den angebratenen Teig in Vierteln schneiden und anschließend wenden.
-                      </li>
-
-                      <li class="my-2">
-                        Die gewändeten stücke auf der unterseite leicht anbraten lassen und in einzelne teile reißen.
-                      </li>
-
-                      <li class="my-2">
-                        Zur Zubereitung den Kaiserschmarrn noch mit einer Prise Staubzucker verfeinern und genießen. :)
-                      </li>
+                      <li class="my-2" v-for="item in recipes[$route.params.id].steps"> {{ item }}</li>
                     </ul>
                   </div>
                 </div>
@@ -139,16 +105,16 @@
                           to="/authors">
                     <div class="d-flex align-center">
                       <v-avatar color="accent" size="128">
-                        <v-img :src="recipes[0].author.image"></v-img>
+                        <v-img :src="recipes[$route.params.id].author.image"></v-img>
                       </v-avatar>
 
                       <div class="pl-4">
                         <div class="text-h5 primary--text font-weight-bold">
-                          <span class="accent--text">{{ recipes[0].author.name }}</span>
+                          <span class="accent--text">{{ recipes[$route.params.id].author.name }}</span>
                         </div>
 
                         <div class="text-subtitle-1 my-2">
-                          {{ recipes[0].author.description }}
+                          {{ recipes[$route.params.id].author.description }}
                         </div>
 
                         <div class="text-subtitle-1">
@@ -175,7 +141,7 @@
                     <v-col cols="12" lg="4" md="6">
                       <v-card flat
                               hover
-                              to="/recipe/anotherRandomId">
+                              :to="'/recipe/'+anotherRandomId()">
                         <div class="d-flex align-center">
                           <div>
                             <v-icon>mdi-arrow-left</v-icon>
@@ -195,7 +161,7 @@
                     <v-col cols="12" lg="4" md="6">
                       <v-card flat
                               hover
-                              to="/recipe/randomId">
+                              :to="'/recipe/'+randomId">
                         <div class="d-flex align-center text-right">
                           <div class="text-h6 primary--text pr-2">
                             <div class="text-subtitle-1">Nächstes Rezept</div>
