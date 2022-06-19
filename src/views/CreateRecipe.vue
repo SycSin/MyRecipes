@@ -67,24 +67,17 @@
                 required
                 outlined
             ></v-textarea>
-            <autoextra :collection="persons" v-slot="{item,last,index}">
-              <div class="columns" :class="{last: last}">
-                <div class="field column">
-                  <div class="control">
-                    <label class="label">{{last ? 'New ' : ''}}Person {{!last ? index + 1 : ''}}</label>
-                    <input class="input" type="text" v-model="item.name"/>
-                  </div>
-                </div>
-                <div class="field column">
-                  <label class="label">Age</label>
-                  <div class="control">
-                    <input class="input" type="number" v-model="item.age"/>
-                  </div>
-                </div>
-              </div>
-            </autoextra>
+            <v-textarea
+                v-model="ingredient"
+                name="ingredient"
+                label="Zutaten"
+                type="textarea"
+                placeholder="Zutaten z.B.: 1kg Mehl"
+                required
+                outlined
+            ></v-textarea>
             <div class="text-right">
-              <v-btn type="submit" color="accent" value="create">
+              <v-btn type="submit" color="accent" value="create" @click.native="reset">
                 Erstellen
               </v-btn>
             </div>
@@ -109,14 +102,12 @@ export default {
       dragging: false,
       categories: categories,
       selectedCategories: [],
+      ingredient: '',
       ingredients: [
         {
-          ingredient: 'Flour',
-          amount: '1'
+          amount: '',
+          name: ''
         }
-      ],
-      persons: [
-        { name: 'Alice', age: 46 },
       ]
     };
   },
@@ -151,6 +142,9 @@ export default {
     },
     removeFile() {
       this.file = '';
+    },
+    reset(){
+
     }
   },
   computed: {
@@ -235,8 +229,5 @@ export default {
 
 .removeFile {
   width: 200px;
-}
-.last {
-  opacity: .5;
 }
 </style>
