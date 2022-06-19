@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <v-card to="recipe">
+      <v-card :to="'/recipe/'+randomId">
         <v-img
             :aspect-ratio="16 / 9"
             dark
@@ -50,7 +50,7 @@
                         :elevation="hover ? 12 : 0"
                         flat
                         hover
-                        to="/recipe"
+                        :to="'/recipe/' + item.id"
                     >
                       <v-img
                           :aspect-ratio="16 / 9"
@@ -92,52 +92,6 @@
           </div>
 
           <div class="pt-16">
-            <h2 class="text-h4 font-weight-bold pb-4">Inspirierende Posts</h2>
-
-            <v-row>
-              <v-col v-for="item in posts" :key="item.id" cols="6" lg="4">
-                <v-card dark flat to="/recipe">
-                  <v-img
-                      :aspect-ratio="16 / 9"
-                      class="elevation-2 fill-height"
-                      gradient="to top, rgba(25,32,72,.4), rgba(25,32,72,.0)"
-                      height="600px"
-                      :src=item.img
-                  >
-                    <div
-                        class="d-flex flex-column justify-space-between fill-height"
-                    >
-                      <v-card-text>
-                        <v-btn color="accent">{{ item.categories[0] }}</v-btn>
-                      </v-card-text>
-
-                      <v-card-text>
-                        <div
-                            class="text-h5 py-3 font-weight-bold"
-                            style="line-height: 1.2"
-                        >
-                          {{ item.title }}
-                          <div class="text-h5 py-2 sm3">
-                            #{{ item.categories[0] }}
-                          </div>
-                        </div>
-
-                        <div class="d-flex align-center">
-                          <v-avatar color="accent" size="36">
-                            <v-img :src=item.author.image></v-img>
-                          </v-avatar>
-
-                          <div class="pl-2">{{ item.author.name }} · {{ item.date }}</div>
-                        </div>
-                      </v-card-text>
-                    </div>
-                  </v-img>
-                </v-card>
-              </v-col>
-            </v-row>
-          </div>
-
-          <div class="pt-16">
             <h2 class="text-h4 font-weight-bold">Neueste Rezepte</h2>
 
             <div>
@@ -148,7 +102,7 @@
                           :elevation="hover ? 12 : 0"
                           flat
                           hover
-                          to="/recipe">
+                          :to="'/recipe/' + item.id">
                     <v-img
                         :aspect-ratio="16 / 9"
                         :src=item.img
@@ -193,7 +147,7 @@
 </template>
 
 <script>
-import { recipes, authors, categories, posts, sortByDate, randomId, random } from '../resources/js/data';
+import { recipes, authors, categories, sortByDate, randomId, random } from '../resources/js/data';
 
 export default {
   name: "Home",
@@ -205,7 +159,6 @@ export default {
       recipes: recipes,
       authors: authors,
       categories: categories,
-      posts: posts,
       sortByDate: sortByDate,
       randomId: randomId,
       random: random,
