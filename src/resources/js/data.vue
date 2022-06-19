@@ -3,69 +3,8 @@
 </template>
 
 <script>
-<<<<<<< HEAD
 import {Day, Month, Weekday} from "dayspan";
 
-let categories = [
-  {
-    id: 0,
-    name: "Süßes",
-  },
-  {
-    id: 1,
-    name: 'Vegan',
-  },
-  {
-    id: 2,
-    name: 'Vegetarisch',
-  },
-  {
-    id: 3,
-    name: 'Fleisch',
-  },
-  {
-    id: 4,
-    name: 'Fisch',
-  }
-];
-let authors = [
-  {
-    id: 0,
-    name: 'Laura Hiller',
-    description: 'Hi! Mein Name ist Laura und koche schon mein Leben lang. Ich experimentiere gerne mit Rezepten aus aller Welt und erweitere stets meinen kullinarischen Horizont. :)',
-    image: 'https://images.pexels.com/photos/3671083/pexels-photo-3671083.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-  },
-  {
-    id: 1,
-    name: 'Mark Heather',
-    description: 'Hi! Mein Name ist Mark und koche schon mein Leben lang. Ich experimentiere gerne mit Rezepten aus aller Welt und erweitere stets meinen kullinarischen Horizont. :)',
-    image: 'https://images.pexels.com/photos/2406949/pexels-photo-2406949.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-  },
-  {
-    id: 2,
-    name: 'Mary Luciane',
-    description: 'Hi! Mein Name ist Mary und koche schon mein Leben lang. Ich experimentiere gerne mit Rezepten aus aller Welt und erweitere stets meinen kullinarischen Horizont. :)',
-    image: 'https://images.pexels.com/photos/7710127/pexels-photo-7710127.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-  },
-  {
-    id: 3,
-    name: 'Cathrine Martinez',
-    description: 'Hi! Mein Name ist Cathrine und koche schon mein Leben lang. Ich experimentiere gerne mit Rezepten aus aller Welt und erweitere stets meinen kullinarischen Horizont. :)',
-    image: 'https://images.pexels.com/photos/4350178/pexels-photo-4350178.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-  },
-  {
-    id: 4,
-    name: 'Joshua Lewis',
-    description: 'Hi! Mein Name ist Joshua und koche schon mein Leben lang. Ich experimentiere gerne mit Rezepten aus aller Welt und erweitere stets meinen kullinarischen Horizont. :)',
-    image: 'https://images.pexels.com/photos/5920775/pexels-photo-5920775.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-  },
-  {
-    id: 5,
-    name: 'Lisa Bryan',
-    description: 'Hi! Mein Name ist Lisa und koche schon mein Leben lang. Ich experimentiere gerne mit Rezepten aus aller Welt und erweitere stets meinen kullinarischen Horizont. :)',
-    image: 'https://images.pexels.com/photos/6205523/pexels-photo-6205523.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-  },
-];
 let categories = [
   {
     id: 0,
@@ -554,7 +493,6 @@ function getRecipesByCategory(category) {
   return tmpRecipes;
 }
 
-<<<<<<< HEAD
 export {planner}
 export {recipes}
 export {categories}
@@ -579,30 +517,6 @@ export default {
       random,
       sortByDate,
       getRecipesByCategory,
-=======
-    export { recipes }
-    export { categories }
-    export { authors }
-    export { randomId }
-    export { anotherRandomId }
-    export { random }
-    export { sortByDate }
-    export { getRecipesByCategory }
-
-    export default {
-      data(){
-        return {
-          recipes,
-          categories,
-          authors,
-          randomId,
-          anotherRandomId,
-          random,
-          sortByDate,
-          getRecipesByCategory,
-        }
-      }
->>>>>>> 0dc8fd68f77b140c1f5ea0272bcb393ba0f2c2b2
     }
   }
 }
