@@ -7,7 +7,7 @@
                    :style="styleHeader">
 
             <v-toolbar-title slot="extension">
-                <a href="recipe" style="color: white;">{{ details.title }}</a>
+                <a :href="'recipe/'+getRecipeIdByTitle(details.title)" style="font-size: 25px; font-weight: bold; color: white;">{{ details.title }}</a>
                 <v-icon v-if="details.icon"
                         :style="styleButton">
                     {{ details.icon }}
@@ -16,8 +16,8 @@
 
             <v-btn
                     v-if="allowEdit"
-                    color="secondary"
-                    small absolute bottom left fab icon
+                    color="white"
+                    absolute fab icon
                     @click="edit">
                 <v-icon>edit</v-icon>
             </v-btn>
@@ -37,15 +37,15 @@
                                 v-bind="{$scopedSlots}"
                                 :schedule="calendarEvent.schedule"
                                 :calendar-event="calendarEvent"
-                                :calendar="calendar">
+                                :calendar="calendar"
+                                >
 
-                            <v-btn icon :style="styleButton" style="background-color: transparent!important;">
-                                <v-icon>more_vert</v-icon>
+                            <v-btn icon :style="styleButton" style="background-color: transparent!important;" @click="remove" :calendar-event="calendarEvent">
+                              <v-icon>delete</v-icon>
                             </v-btn>
 
                         </ds-schedule-actions>
                     </template>
-                    <span>{{ labels.options }}</span>
 
                 </v-tooltip>
 
@@ -66,31 +66,6 @@
 
             <v-list dense>
 
-                <v-list-item>
-                    <v-list-item-avatar>
-                        <v-icon>access_time</v-icon>
-                    </v-list-item-avatar>
-                    <v-list-item-content>
-                        <slot name="eventPopoverOccurs" v-bind="slotData">
-                            <v-list-item-title>{{ startDate }}</v-list-item-title>
-                            <v-list-item-subtitle>{{ occurs }}</v-list-item-subtitle>
-                        </slot>
-                    </v-list-item-content>
-                </v-list-item>
-
-                <v-list-item v-if="details.location">
-                    <v-list-item-avatar>
-                        <v-icon>location_on</v-icon>
-                    </v-list-item-avatar>
-                    <v-list-item-content>
-                        <slot name="eventPopoverLocation" v-bind="slotData">
-                            <v-list-item-title>
-                                <span v-html="details.location"></span>
-                            </v-list-item-title>
-                        </slot>
-                    </v-list-item-content>
-                </v-list-item>
-
                 <v-list-item v-if="details.description">
                     <v-list-item-avatar>
                         <v-icon>subject</v-icon>
@@ -103,33 +78,6 @@
                         </slot>
                     </v-list-item-content>
                 </v-list-item>
-
-                <v-list-item v-if="details.notify">
-                    <v-list-item-avatar>
-                        <v-icon>notifications</v-icon>
-                    </v-list-item-avatar>
-                    <v-list-item-content>
-                        <slot name="eventPopoverNotifications" v-bind="slotData">
-                            <v-list-item-title>
-                                <span v-html="details.notify"></span>
-                            </v-list-item-title>
-                        </slot>
-                    </v-list-item-content>
-                </v-list-item>
-
-                <v-list-item v-if="details.calendar">
-                    <v-list-item-avatar>
-                        <v-icon>event</v-icon>
-                    </v-list-item-avatar>
-                    <v-list-item-content>
-                        <slot name="eventPopoverCalendar" v-bind="slotData">
-                            <v-list-item-title>
-                                <span v-html="details.calendar"></span>
-                            </v-list-item-title>
-                        </slot>
-                    </v-list-item-content>
-                </v-list-item>
-
             </v-list>
 
             <slot name="eventPopoverBodyBottom" v-bind="slotData"></slot>
@@ -143,171 +91,210 @@
 </template>
 
 <script>
-import { CalendarEvent, Calendar, Pattern } from 'dayspan'
+import {Calendar, CalendarEvent, Day, Functions as fn, Time} from 'dayspan'
+
+import { recipes, getRecipeIdByTitle } from '../../js/data';
 
 export default {
 
-    name: 'dsCalendarEventPopover',
+  name: 'dsCalendarEventPopover',
 
-    props:
-        {
-            calendarEvent:
-                {
-                    required: true,
-                    type: CalendarEvent
-                },
-
-            calendar:
-                {
-                    required: true,
-                    type: Calendar
-                },
-
-            readOnly:
-                {
-                    type: Boolean,
-                    default: false
-                },
-
-            edit:
-                {
-                    type: Function
-                },
-
-            allowEditOnReadOnly:
-                {
-                    type: Boolean,
-                    default () {
-                        return this.$dsDefaults().allowEditOnReadOnly
-                    }
-                },
-
-            close:
-                {
-                    type: Function
-                },
-
-            formats:
-                {
-                    validate (x) {
-                        return this.$dsValidate(x, 'formats')
-                    },
-                    default () {
-                        return this.$dsDefaults().formats
-                    }
-                },
-
-            labels:
-                {
-                    validate (x) {
-                        return this.$dsValidate(x, 'labels')
-                    },
-                    default () {
-                        return this.$dsDefaults().labels
-                    }
-                }
-        },
-
-    computed:
-        {
-            slotData () {
-                return {
-                    calendarEvent: this.calendarEvent,
-                    calendar: this.calendar,
-                    edit: this.edit,
-                    close: this.close,
-                    details: this.details,
-                    readOnly: this.readOnly
-                }
+  props:
+      {
+        calendarEvent:
+            {
+              required: true,
+              type: CalendarEvent
             },
 
-            classes () {
-                return {
-                    'ds-event-cancelled': this.calendarEvent.cancelled
-                }
+        calendar:
+            {
+              required: true,
+              type: Calendar
             },
 
-            styleHeader () {
-                return {
-                    backgroundColor: this.details.color,
-                    color: this.details.forecolor
-                }
+        readOnly:
+            {
+              type: Boolean,
+              default: false
             },
 
-            styleButton () {
-                return {
-                    color: this.details.forecolor
-                }
+        edit:
+            {
+              type: Function
             },
 
-            startDate () {
-                return this.calendarEvent.start.format(this.formats.start)
+        allowEditOnReadOnly:
+            {
+              type: Boolean,
+              default() {
+                return this.$dsDefaults().allowEditOnReadOnly
+              }
             },
 
-            occurs () {
-                return this.$dayspan.getEventOccurrence(
-                    this.calendarEvent.schedule,
-                    this.calendarEvent.start,
-                    this.labels,
-                    this.formats
-                )
+        close:
+            {
+              type: Function
             },
 
-            details () {
-                return this.calendarEvent.event.data
+        formats:
+            {
+              validate(x) {
+                return this.$dsValidate(x, 'formats')
+              },
+              default() {
+                return this.$dsDefaults().formats
+              }
             },
 
-            allowEdit () {
-                return this.allowEditOnReadOnly || !this.isReadOnly
-            },
-
-            isReadOnly () {
-                return this.readOnly || this.$dayspan.readOnly || this.details.readonly
+        labels:
+            {
+              validate(x) {
+                return this.$dsValidate(x, 'labels')
+              },
+              default() {
+                return this.$dsDefaults().labels
+              }
             }
+      },
+
+  computed:
+      {
+        slotData() {
+          return {
+            calendarEvent: this.calendarEvent,
+            calendar: this.calendar,
+            edit: this.edit,
+            close: this.close,
+            details: this.details,
+            readOnly: this.readOnly
+          }
         },
 
-    data: vm => ({}),
+        classes() {
+          return {
+            'ds-event-cancelled': this.calendarEvent.cancelled
+          }
+        },
 
-    methods:
-        {}
+        styleHeader() {
+          return {
+            backgroundColor: this.details.color,
+            color: this.details.forecolor
+          }
+        },
+
+        styleButton() {
+          return {
+            color: this.details.forecolor
+          }
+        },
+
+        startDate() {
+          return this.calendarEvent.start.format(this.formats.start)
+        },
+
+        occurs() {
+          return this.$dayspan.getEventOccurrence(
+              this.calendarEvent.schedule,
+              this.calendarEvent.start,
+              this.labels,
+              this.formats
+          )
+        },
+
+        details() {
+          return this.calendarEvent.event.data
+        },
+
+        allowEdit() {
+          return this.allowEditOnReadOnly || !this.isReadOnly
+        },
+
+        isReadOnly() {
+          return this.readOnly || this.$dayspan.readOnly || this.details.readonly
+        }
+      },
+
+  data() {
+    return {
+      recipes: recipes,
+      getRecipeIdByTitle: getRecipeIdByTitle,
+    }
+  },
+
+  methods:
+      {
+        remove () {
+          this.$dayspan.getPermission('actionRemove', () => {
+            var ev = this.getEvent('remove')
+
+            this.$emit('remove', ev)
+
+            if (!ev.handled && ev.calendar) {
+              ev.calendar.removeEvent(ev.event)
+              ev.handled = true
+            }
+
+            this.$emit('finish', ev)
+
+            this.$emit('event-remove', ev.event)
+          })
+        },
+        getEvent (type, extra = {}) {
+          return fn.extend({
+
+            type: type,
+            schedule: this.schedule,
+            calendar: this.calendar,
+            calendarEvent: this.calendarEvent,
+            event: this.event,
+            handled: false,
+            refresh: true,
+            $vm: this,
+            $element: this.$el
+
+          }, extra)
+        }
+      }
 }
 </script>
 
 <style scoped lang="scss">
 
-    .ds-calendar-event-popover-card {
+.ds-calendar-event-popover-card {
 
-        .v-btn--floating.v-btn--left {
-            margin-left: 0px !important;
+  .v-btn--floating.v-btn--left {
+    margin-left: 0px !important;
 
-            .v-icon {
-                height: auto;
-            }
-        }
-
-        .v-card__text {
-            padding: 16px 0;
-
-            .v-list {
-
-                .v-list__tile {
-                    padding: 0px !important;
-                    height: auto;
-
-                    .v-list__tile__sub-title {
-
-                    }
-                }
-            }
-        }
-
-        .v-toolbar__extension {
-            padding: 0 16px !important;
-
-            .v-toolbar__title {
-                margin-left: 56px;
-            }
-        }
+    .v-icon {
+      height: auto;
     }
+  }
+
+  .v-card__text {
+    padding: 16px 0;
+
+    .v-list {
+
+      .v-list__tile {
+        padding: 0px !important;
+        height: auto;
+
+        .v-list__tile__sub-title {
+
+        }
+      }
+    }
+  }
+
+  .v-toolbar__extension {
+    padding: 0 16px !important;
+
+    .v-toolbar__title {
+      margin-left: 56px;
+    }
+  }
+}
 
 </style>
