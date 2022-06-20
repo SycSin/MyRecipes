@@ -144,10 +144,6 @@ export default {
         title: "Planner",
         to: "/planner",
       },
-      //{
-      //  title: "PlannerOld",
-      //  to: "/planner-old",
-      //},
     ],
   }),
 };
