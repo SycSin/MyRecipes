@@ -36,6 +36,7 @@
                 persistent-hint
                 chips
                 deletable-chips
+                required
             ></v-select>
             <v-textarea
                 v-model="form.description"
@@ -73,10 +74,9 @@ import {categories} from '../resources/js/data';
 import axios from "axios";
 
 export default {
-  name: "Login",
+  //name: "Login",
   data() {
     return {
-
       form: {
         description: '',
         title: '',
@@ -96,7 +96,7 @@ export default {
     submitForm(){
       let formData = new FormData();
       formData.append('file', this.file);
-      axios.post('/recipe', this.form).
+      axios.post('/api/recipe', this.form).
           then((res) => {
             console.log(res)
             console.log(this.form)

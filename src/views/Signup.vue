@@ -8,154 +8,74 @@
           </div>
         </v-card-title>
         <v-card-text>
-          <v-text-field
-              label="Benutzername"
-              outlined
-          ></v-text-field>
-          <v-text-field
-              label="Vorname"
-              outlined
-              required
-          ></v-text-field>
-          <v-text-field
-              label="Nachname"
-              outlined
-              required
-          ></v-text-field>
-          <v-menu
-              ref="menu"
-              v-model="menu"
-              :close-on-content-click="false"
-              transition="scale-transition"
-              offset-y
-              full-width
-              min-width="290px"
-          >
-            <template v-slot:activator="{ on }">
+          <form ref="form" @submit.prevent="submitForm()">
               <v-text-field
-                  v-model="date"
-                  label="Geburtsdatum"
-                  prepend-icon="event"
-                  readonly
-                  v-on="on"
+                  label="Benutzer"
+                  v-model="form.username"
+                  name="user"
+                  type="text"
+                  placeholder="Benutzer"
+                  required
+                  outlined
               ></v-text-field>
-            </template>
-            <v-date-picker
-                ref="picker"
-                locale="de"
-                v-model="date"
-                :day-format="(date) => new Date(date).getDate()"
-                :max="new Date().toUTCString()"
-                :picker-date="pickerDate"
-                min="1950-01-01"
-                @change="save"
-            ></v-date-picker>
-          </v-menu>
-          <v-text-field
-              v-model="password"
-              :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-              :rules="[rules.required, rules.min, rules.strength]"
-              validate-on-blur
-              :type="showPassword ? 'text' : 'password'"
-              label="Passwort"
-              class="mb-6"
-              @click:append="showPassword = !showPassword"
-          ></v-text-field>
-          <v-text-field
-              v-model="password2"
-              :append-icon="showPassword2 ? 'mdi-eye' : 'mdi-eye-off'"
-              :rules="[rules.required, rules.min, rules.strength, rules.match]"
-              validate-on-blur
-              :type="showPassword2 ? 'text' : 'password'"
-              label="Passwort wiederholen"
-              class="mb-6"
-              @click:append="showPassword2 = !showPassword2"
-          ></v-text-field>
-          <v-progress-linear
-              :background-opacity="opacity"
-              :color="score.color"
-              :value="score.value"
-          ></v-progress-linear>
-          <div class="text-right" style="margin-top: 30px;">
-            <!--vue-recaptcha sitekey="6Ld9KAsfAAAAAGCMWWL_GbXL5MWcvWSV8P3uxV1A" @verify="submit"/-->
-            <v-btn color="primary">
-              Sign Up
-            </v-btn>
-          </div>
+              <v-text-field
+                  label="Mail"
+                  v-model="form.email"
+                  name="title"
+                  type="text"
+                  placeholder="E-Mail"
+                  required
+                  outlined
+              ></v-text-field>
+              <v-text-field
+                  v-model="form.password"
+                  :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                  :rules="[rules.required, rules.min]"
+                  validate-on-blur
+                  :type="showPassword ? 'text' : 'password'"
+                  label="Passwort"
+                  class="mb-6"
+                  @click:append="showPassword = !showPassword"
+              ></v-text-field>
+            <div class="text-right" style="margin-top: 30px;">
+              <v-btn color="primary" type="submit">
+                Sign Up
+              </v-btn>
+            </div>
+          </form>
         </v-card-text>
       </v-card>
     </v-col>
   </v-row>
 </template>
 <script>
-import zxcvbn from "zxcvbn";
-import {VueRecaptcha} from "vue-recaptcha";
+
+import axios from "axios"
+
 export default {
-  data: () => ({
-    date: null,
-    menu: false,
-    siteKey: '6Ld9KAsfAAAAAGCMWWL_GbXL5MWcvWSV8P3uxV1A',
-    pickerDate: '1997-1-1',
+  data () {
+  return {
+    form: {
+      username: '',
+      email: '',
+      password: ''
+    },
     showPassword: false,
-    showPassword2: false,
-    password: '',
     rules: {
       required: value => !!value || 'Enter a password',
-      min: v => v.length >= 8 || 'Use 8 characters or more for your password',
-      strength: v => zxcvbn(v).score >= 3 || 'Please choose a stronger password. Try a mix of letters, numbers, and symbols.',
-      match: v2 => v2.checkPasswords(password, password2) || 'Passwords do not match.'
-    },
-  }),
-  components: { VueRecaptcha },
-  watch: {
-    menu(val) {
-      val && setTimeout(() => (
-          this.$refs.picker.activePicker = 'YEAR',
-              this.pickerDate = null
-      ))
-    },
-  },
+      min: v => v.length >= 8 || 'Use 8 characters or more for your password'
+    }};
+},
   methods: {
-    save(date) {
-      this.$refs.menu.save(date)
-      this.pickerDate = date;
-    },
-    checkPasswords(password1, password2){
-      return password1 === password2;
+    submitForm(){
+      axios.post('http://localhost:8081/auth/register', this.form)
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
     }
-  },
-  computed: {
-    score() {
-      const result = zxcvbn(this.password);
-
-      switch (result.score) {
-        case 4:
-          return {
-            color: "light-blue",
-            value: 100
-          };
-        case 3:
-          return {
-            color: "light-green",
-            value: 75
-          };
-        case 2:
-          return {
-            color: "yellow",
-            value: 50
-          };
-        case 1:
-          return {
-            color: "orange",
-            value: 25
-          };
-        default:
-          return {
-            color: "red",
-            value: 0
-          };
-      }
-    },
   }
 }
 </script>

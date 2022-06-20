@@ -5,9 +5,10 @@ import axios from "axios"
 export default ({ requiresAuth = false } = {}) => {
     const options = {};
 
-    options.baseURL = 'http://localhost:3000';
+    options.baseURL = 'http://localhost:8081/';
     options.headers.post['Content-Type'] = 'multipart/form-data';
 
+    // Bearer?
     if (requiresAuth) {
         options.headers.Authorization = 'JWT TOKEN'
     }
