@@ -6,7 +6,7 @@ export default ({ requiresAuth = false } = {}) => {
     const options = {};
 
     options.baseURL = 'http://localhost:3000';
-
+    options.headers.post['Content-Type'] = 'multipart/form-data';
 
     if (requiresAuth) {
         options.headers.Authorization = 'JWT TOKEN'

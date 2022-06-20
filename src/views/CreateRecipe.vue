@@ -9,7 +9,7 @@
           </div>
         </v-card-title>
         <v-card-text>
-          <form ref="form">
+          <form ref="form" v-on:submit.prevent="submitForm">
             <div id="app">
               <div v-if="!file">
                 <div :class="['dropZone', dragging ? 'dropZone-over' : '']" @dragenter="dragging = true"
@@ -40,7 +40,7 @@
             </div>
             <v-text-field
                 label="Titel"
-                v-model="title"
+                v-model="form.title"
                 name="title"
                 type="text"
                 placeholder="Titel"
@@ -48,7 +48,7 @@
                 outlined
             ></v-text-field>
             <v-select
-                v-model="selectedCategories"
+                v-model="form.selectedCategories"
                 :options="categories"
                 :items="categories"
                 item-text="name"
@@ -59,7 +59,7 @@
                 deletable-chips
             ></v-select>
             <v-textarea
-                v-model="description"
+                v-model="form.description"
                 name="description"
                 label="Beschreibung"
                 type="textarea"
@@ -68,7 +68,7 @@
                 outlined
             ></v-textarea>
             <v-textarea
-                v-model="ingredient"
+                v-model="form.ingredient"
                 name="ingredient"
                 label="Zutaten"
                 type="textarea"
@@ -77,7 +77,7 @@
                 outlined
             ></v-textarea>
             <div class="text-right">
-              <v-btn type="submit" color="accent" value="create" @click.native="reset">
+              <v-btn type="submit" color="accent" value="create">
                 Erstellen
               </v-btn>
             </div>
@@ -91,24 +91,23 @@
 <script>
 
 import {categories} from '../resources/js/data';
+import axios from "axios";
 
 export default {
   name: "Login",
   data() {
     return {
-      description: '',
-      title: '',
+
+      form: {
+        description: '',
+        title: '',
+        selectedCategories: [],
+        ingredient: '',
+      },
       file: '',
       dragging: false,
       categories: categories,
-      selectedCategories: [],
-      ingredient: '',
-      ingredients: [
-        {
-          amount: '',
-          name: ''
-        }
-      ]
+
     };
   },
   methods: {
@@ -143,9 +142,15 @@ export default {
     removeFile() {
       this.file = '';
     },
-    reset(){
-
+    submitForm(){
+      axios.post('/recipe', this.form).
+          then((res) => {
+            console.log(res)
+            console.log(this.form)
+      })
+      this.form = '';
     }
+
   },
   computed: {
     extension() {
