@@ -39,5 +39,8 @@ RUN npm install @mdi/font
 # install vue-to-top-button
 RUN npm install -g vue-to-top-button --save
 
+# install axios
+RUN npm install axios --save
+
 EXPOSE 8080
 CMD [ "npm", "run", "serve" ]
