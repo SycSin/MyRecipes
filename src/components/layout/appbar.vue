@@ -144,6 +144,10 @@ export default {
         title: "Planner",
         to: "/planner",
       },
+      {
+        title: "Rezept erstellen",
+        to: "/createRecipe",
+      }
     ],
   }),
 };

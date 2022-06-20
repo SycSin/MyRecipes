@@ -6,6 +6,8 @@ import Vuetify from "vuetify";
 import 'vuetify/dist/vuetify.min.css'
 import '@mdi/font/css/materialdesignicons.css'
 import vueToTopButton from "vue-to-top-button"
+import DaySpan from 'dayspan-vuetify-2'
+import service from './http-common'
 
 Vue.config.productionTip = false
 document.title = "MyRecipes"
