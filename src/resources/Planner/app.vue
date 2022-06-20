@@ -7,7 +7,7 @@
                          @change="saveState">
 
             <template v-slot:title>
-                Details
+                Einstellungen
             </template>
 
             <template slot="eventPopover" slot-scope="slotData">
@@ -46,13 +46,13 @@
                     <v-layout wrap align-center>
                         <v-flex xs12>
                             <v-checkbox box
-                                        label="Read Only?"
+                                        label="Lesemodus"
                                         v-model="readOnly"
                             ></v-checkbox>
                         </v-flex>
                         <v-flex xs12>
                             <v-select
-                                    label="Language"
+                                    label="Sprache"
                                     :items="locales"
                                     v-model="currentLocale"
                                     @input="setLocale"
@@ -82,7 +82,7 @@ export default {
         locales: [
             {value: 'en', text: 'English'},
             {value: 'fr', text: 'French'},
-            {value: 'de', text: 'German'},
+            {value: 'de', text: 'Deutsch'},
             {value: 'nl', text: 'Dutch'},
             {value: 'ca', text: 'Catalan'}
       ],
@@ -92,172 +92,6 @@ export default {
           planner: planner,
         }
       },
-      /**
-       defaultEvents:
-          {
-            data: {
-              title: 'First Weekend',
-                    color: '#4CAF50'
-                },
-                schedule: {
-                    weekspanOfMonth: [0],
-                    dayOfWeek: [Weekday.FRIDAY],
-                    duration: 3,
-                    durationUnit: 'days'
-                }
-            },
-            {
-                data: {
-                    title: 'End of Month',
-                    color: '#000000'
-                },
-                schedule: {
-                    lastDayOfMonth: [1],
-                    duration: 1,
-                    durationUnit: 'hours'
-                }
-            },
-            {
-                data: {
-                    title: 'Mother\'s Day',
-                    color: '#2196F3',
-                    calendar: 'US Holidays'
-                },
-                schedule: {
-                    month: [Month.MAY],
-                    dayOfWeek: [Weekday.SUNDAY],
-                    weekspanOfMonth: [1]
-                }
-            },
-            {
-                data: {
-                    title: 'New Year\'s Day',
-                    color: '#2196F3',
-                    calendar: 'US Holidays'
-                },
-                schedule: {
-                    month: [Month.JANUARY],
-                    dayOfMonth: [1]
-                }
-            },
-            {
-                data: {
-                    title: 'Inauguration Day',
-                    color: '#2196F3',
-                    calendar: 'US Holidays'
-                },
-                schedule: {
-                    month: [Month.JANUARY],
-                    dayOfMonth: [20]
-                }
-            },
-            {
-                data: {
-                    title: 'Martin Luther King, Jr. Day',
-                    color: '#2196F3',
-                    calendar: 'US Holidays'
-                },
-                schedule: {
-                    month: [Month.JANUARY],
-                    dayOfWeek: [Weekday.MONDAY],
-                    weekspanOfMonth: [2]
-                }
-            },
-            {
-                data: {
-                    title: 'George Washington\'s Birthday',
-                    color: '#2196F3',
-                    calendar: 'US Holidays'
-                },
-                schedule: {
-                    month: [Month.FEBRUARY],
-                    dayOfWeek: [Weekday.MONDAY],
-                    weekspanOfMonth: [2]
-                }
-            },
-            {
-                data: {
-                    title: 'Memorial Day',
-                    color: '#2196F3',
-                    calendar: 'US Holidays'
-                },
-                schedule: {
-                    month: [Month.MAY],
-                    dayOfWeek: [Weekday.MONDAY],
-                    lastWeekspanOfMonth: [0]
-                }
-            },
-            {
-                data: {
-                    title: 'Independence Day',
-                    color: '#2196F3',
-                    calendar: 'US Holidays'
-                },
-                schedule: {
-                    month: [Month.JULY],
-                    dayOfMonth: [4]
-                }
-            },
-            {
-                data: {
-                    title: 'Labor Day',
-                    color: '#2196F3',
-                    calendar: 'US Holidays'
-                },
-                schedule: {
-                    month: [Month.SEPTEMBER],
-                    dayOfWeek: [Weekday.MONDAY],
-                    lastWeekspanOfMonth: [0]
-                }
-            },
-            {
-                data: {
-                    title: 'Columbus Day',
-                    color: '#2196F3',
-                    calendar: 'US Holidays'
-                },
-                schedule: {
-                    month: [Month.OCTOBER],
-                    dayOfWeek: [Weekday.MONDAY],
-                    weekspanOfMonth: [1]
-                }
-            },
-            {
-                data: {
-                    title: 'Veterans Day',
-                    color: '#2196F3',
-                    calendar: 'US Holidays'
-                },
-                schedule: {
-                    month: [Month.NOVEMBER],
-                    dayOfMonth: [11]
-                }
-            },
-            {
-                data: {
-                    title: 'Thanksgiving Day',
-                    color: '#2196F3',
-                    calendar: 'US Holidays'
-                },
-                schedule: {
-                    month: [Month.NOVEMBER],
-                    dayOfWeek: [Weekday.THURSDAY],
-                    weekspanOfMonth: [3]
-                }
-            },
-            {
-                data: {
-                    title: 'Christmas Day',
-                    color: '#2196F3',
-                    calendar: 'US Holidays'
-                },
-                schedule: {
-                    month: [Month.DECEMBER],
-                    dayOfMonth: [25]
-                }
-            }
-        ]
-             **/
     }),
 
     mounted () {
@@ -341,6 +175,6 @@ export default {
       font-size:10px;
     }
     .ds-ev-title {
-      font-size: 20px;
+      font-size: 15px;
     }
 </style>
