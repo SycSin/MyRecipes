@@ -72,7 +72,7 @@ export default {
                 {label: 'Woche'},
                 {label: 'Monat'},
                 {label: 'Jahr'},
-                {label: 'Zeitplan'},
+                {label: 'Liste'},
                 {label: '4 Tage'}
             ],
             formats: {

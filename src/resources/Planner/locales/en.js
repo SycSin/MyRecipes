@@ -72,7 +72,7 @@ export default {
                 {label: 'Week'},
                 {label: 'Month'},
                 {label: 'Year'},
-                {label: 'Schedule'},
+                {label: 'List'},
                 {label: '4 days'}
             ],
             formats: {
