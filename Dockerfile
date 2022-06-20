@@ -6,7 +6,7 @@ RUN npm install -g http-server
 # make the 'app' folder the current working directory
 WORKDIR /app
 
-# copy both 'package.json' and 'package-lock.json' (if available)
+# copy both 'package.json-old' and 'package-lock.json' (if available)
 COPY package*.json ./
 
 # install project dependencies
@@ -23,6 +23,9 @@ RUN npm install -g bootstrap bootstrap-vue
 
 # install vue-template-compiler
 RUN npm install -g vue-template-compiler
+
+# install dayspan-vuetify-2
+RUN npm install --save dayspan-vuetify-2
 
 # installing material design icons for vuetify
 RUN npm install @mdi/font
