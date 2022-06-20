@@ -19,11 +19,6 @@ new Vue({
   render: h => h(App)
 }).$mount('#app');
 
-Vue.use(DaySpan, {
-  methods: {
-    getDefaultEventColor: () => '#1976d2'
-  }
-});
 
 Vue.use(vueToTopButton, {
 

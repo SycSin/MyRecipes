@@ -178,7 +178,7 @@ export default {
             sameBackground: 'primary'
         },
         formats: {
-            fullDay: LOCALE_ENTRY,
+            fullDay: false,
             timed: LOCALE_ENTRY
         }
     },
@@ -493,7 +493,7 @@ export default {
     },
 
     dsScheduleTimes: {
-        defaultTime: '08:00',
+        defaultTime: '00:00',
         labels: {
             all: LOCALE_ENTRY,
             minute: LOCALE_ENTRY,

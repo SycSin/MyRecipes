@@ -198,7 +198,6 @@ export default {
         border-right: #e0e0e0 1px solid;
         border-bottom: #e0e0e0 1px solid;
         padding: 4px;
-
         .ds-week-date {
             font-size: 40px;
             line-height: 36px;

@@ -99,8 +99,13 @@
 </template>
 
 <script>
+import {randomId, random} from '../../resources/js/data';
+
+
 export default {
   data: () => ({
+    randomId: randomId,
+    random: random,
     drawer: null,
     btnItems: [
       {
@@ -129,7 +134,7 @@ export default {
       },
       {
         title: "Rezept",
-        to: "/recipe",
+        to: "/recipe/"+randomId,
       },
       {
         title: "Authoren",
@@ -139,11 +144,6 @@ export default {
         title: "Planner",
         to: "/planner",
       },
-      //{
-      //  title: "PlannerOld",
-      //  to: "/planner-old",
-      //},
-
       {
         title: "Rezept erstellen",
         to: "/createRecipe",

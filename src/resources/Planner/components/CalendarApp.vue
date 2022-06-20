@@ -223,6 +223,20 @@
           </v-fab-transition>
         </slot>
 
+        <slot name="calendarAppPrint">
+            <v-btn
+                class="ds-add-event-today"
+                color="primary"
+                style="margin-top: 60px"
+                fixed
+                right
+                top
+                @click="print"
+            >
+              <v-icon>print</v-icon>
+            </v-btn>
+        </slot>
+
         <slot name="containerInside" v-bind="{events, calendar}"></slot>
       </v-container>
     </v-content>
@@ -440,6 +454,10 @@ export default {
         cal.size === type.size &&
         (!aroundDay || cal.span.matchesDay(aroundDay))
       );
+    },
+
+    print(){
+      window.print();
     },
 
     rebuild(aroundDay, force, forceType) {

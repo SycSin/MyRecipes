@@ -7,28 +7,14 @@
 
             <slot name="agendaDayDate" v-bind="slotData">
 
-                <div class="ds-agenda-line-first">
-                    {{ firstLine }}
-                </div>
-
                 <div class="ds-agenda-line-second"
                      @click.stop="viewDay">
-                    {{ secondLine }}
                 </div>
 
             </slot>
 
         </td>
 
-        <td class="ds-agenda-when" @click.stop>
-
-            <slot name="agendaEventWhen" v-bind="slotData">
-
-                {{ when }}
-
-            </slot>
-
-        </td>
 
         <td class="ds-agenda-details" @click.stop="editCheck">
 
@@ -50,7 +36,6 @@
 
                             <strong v-html="details.title"></strong>
 
-                            <span class="ds-details-description" v-html="details.description"></span>
 
                         </slot>
 
@@ -62,6 +47,15 @@
             </v-menu>
 
         </td>
+      <td class="ds-agenda-when" @click.stop>
+
+        <slot name="agendaEventWhen" v-bind="slotData">
+
+          <span class="ds-details-description" v-html="details.description"></span>
+
+        </slot>
+
+      </td>
 
     </tr>
 

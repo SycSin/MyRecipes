@@ -24,12 +24,6 @@ RUN npm install -g bootstrap bootstrap-vue
 # install vue-template-compiler
 RUN npm install -g vue-template-compiler
 
-# install vue-template-compiler
-RUN npm i --save vue-simple-calendar
-
-## install dayspan
-#RUN npm install --save dayspan
-
 # install dayspan-vuetify-2
 RUN npm install --save dayspan-vuetify-2
 

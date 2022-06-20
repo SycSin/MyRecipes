@@ -16,7 +16,7 @@ const routes = [
         component: () => import("@/views/Category.vue"),
     },
     {
-        path: '/recipe',
+        path: '/recipe/:id',
         name: 'Rezepte',
         component: () => import("@/views/Recipe.vue"),
     },
@@ -56,8 +56,9 @@ const routes = [
 
 const router = new VueRouter({
     routes,
+    mode: 'history',
     scrollBehavior() {
-        document.getElementById('planner').scrollIntoView();
+        document.getElementById('app').scrollIntoView();
     }
 })
 

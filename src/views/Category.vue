@@ -27,7 +27,7 @@
                           :elevation="hover ? 12 : 0"
                           hover
                           style="margin-bottom: 15px;"
-                          to="/recipe"
+                          :to="'/recipe/'+item.id"
                       >
                         <v-img
                             :src=item.img
@@ -38,7 +38,7 @@
                             style="border-radius: 16px"
                         >
                           <v-card-text>
-                            <v-btn color="accent">{{ item.categories[0] }}</v-btn>
+                            <v-btn color="accent" to="/categories/">{{ item.categories[0] }}</v-btn>
                           </v-card-text>
                         </v-img>
 

@@ -16,7 +16,7 @@ import { default as Icons } from './icons'
 import { default as Locales, defaultLocale } from './locales'
 import { dsMerge, dsMergeLocale } from './functions'
 import Vue from 'vue'
-import vuetify from './plugins_/vuetify'
+import vuetify from '@/plugins/vuetify'
 let moment = require("moment");
 const LOCALE_ENTRY = 0
 
