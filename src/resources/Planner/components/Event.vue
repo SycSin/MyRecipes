@@ -111,7 +111,6 @@
                                               :disabled="isReadOnly"
                                               v-model="details.color">
                                         <template slot="item" slot-scope="{ item }">
-                                            <v-lis
                                             <v-list-item-content>
                                                 <div class="ds-color-option" :style="{backgroundColor: item.value}" v-text="item.text"></div>
                                             </v-list-item-content>
