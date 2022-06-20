@@ -6,13 +6,14 @@
         <v-toolbar extended flat
                    :style="styleHeader">
 
-            <v-toolbar-title slot="extension">
-
-                <v-text-field single-line hide-details solo flat autofocus
-                              :label="labels.title"
-                              v-model="details.title"
-                ></v-text-field>
-
+            <v-toolbar-title slot="extension" style="color: white">
+              <v-autocomplete
+                  :items="recipes"
+                  :item-text="item => `${ item.title }`"
+                  label="Rezept"
+                  v-model="details.title"
+                  style="font-size: 20px;"
+              ></v-autocomplete>
             </v-toolbar-title>
 
             <v-btn
@@ -64,35 +65,6 @@
 
             <v-list>
 
-                <v-list-item>
-                    <v-list-item-avatar>
-                        <v-icon>access_time</v-icon>
-                    </v-list-item-avatar>
-                    <v-list-item-content class="py-0">
-                        <slot name="eventCreatePopoverOccurs" v-bind="slotData">
-                            <v-list-item-title>{{ startDate }}</v-list-item-title>
-                            <v-list-item-subtitle>{{ occurs }}</v-list-item-subtitle>
-                        </slot>
-                    </v-list-item-content>
-                </v-list-item>
-
-                <v-list-item v-if="prompts.location && $dayspan.supports.location">
-                    <v-list-item-avatar>
-                        <v-icon>location_on</v-icon>
-                    </v-list-item-avatar>
-                    <v-list-item-content class="py-0">
-                        <slot name="eventCreatePopoverLocation" v-bind="slotData">
-
-                            <v-text-field
-                                    single-line hide-details solo flat full-width
-                                    :label="labels.location"
-                                    v-model="details.location"
-                            ></v-text-field>
-
-                        </slot>
-                    </v-list-item-content>
-                </v-list-item>
-
                 <v-list-item v-if="prompts.description && $dayspan.supports.description">
                     <v-list-item-avatar>
                         <v-icon>subject</v-icon>
@@ -105,23 +77,6 @@
                                     :label="labels.description"
                                     v-model="details.description"
                             ></v-textarea>
-
-                        </slot>
-                    </v-list-item-content>
-                </v-list-item>
-
-                <v-list-item v-if="prompts.calendar && $dayspan.supports.calendar">
-                    <v-list-item-avatar>
-                        <v-icon>event</v-icon>
-                    </v-list-item-avatar>
-                    <v-list-item-content class="py-0">
-                        <slot name="eventCreatePopoverCalendar" v-bind="slotData">
-
-                            <v-text-field
-                                    single-line hide-details solo flat full-width
-                                    :label="labels.calendar"
-                                    v-model="details.calendar"
-                            ></v-text-field>
 
                         </slot>
                     </v-list-item-content>
@@ -149,49 +104,6 @@
                         </slot>
                     </v-list-item-content>
                 </v-list-item>
-
-                <v-list-item v-if="prompts.icon && $dayspan.supports.icon">
-                    <v-list-item-avatar>
-                        <v-icon>{{ details.icon || 'help' }}</v-icon>
-                    </v-list-item-avatar>
-                    <v-list-item-content class="py-0">
-                        <slot name="eventCreatePopoverIcon" v-bind="slotData">
-
-                            <v-select
-                                    single-line hide-details solo flat full-width
-                                    :items="$dayspan.icons"
-                                    v-model="details.icon">
-                                <template slot="item" slot-scope="{ item }">
-                                    <v-list-item-avatar>
-                                        <v-icon>{{ item.value }}</v-icon>
-                                    </v-list-item-avatar>
-                                    <v-list-item-content>
-                                        {{ item.text }}
-                                    </v-list-item-content>
-                                </template>
-                            </v-select>
-
-                        </slot>
-                    </v-list-item-content>
-                </v-list-item>
-
-                <v-list-item v-if="prompts.busy && $dayspan.supports.busy">
-                    <v-list-item-avatar>
-                        <v-icon>work</v-icon>
-                    </v-list-item-avatar>
-                    <v-list-item-content class="py-0">
-                        <slot name="eventCreatePopoverBusy" v-bind="slotData">
-
-                            <v-select
-                                    single-line hide-details solo flat full-width
-                                    :items="busyOptions"
-                                    v-model="details.busy"
-                            ></v-select>
-
-                        </slot>
-                    </v-list-item-content>
-                </v-list-item>
-
             </v-list>
 
             <slot name="eventCreatePopoverBodyBottom" v-bind="slotData"></slot>
@@ -205,12 +117,13 @@
 </template>
 
 <script>
-import { CalendarEvent, Calendar, Pattern, Functions as fn } from 'dayspan'
+import { CalendarEvent, Calendar, Functions as fn } from 'dayspan'
+
+import { recipes } from "../../js/data"
 
 export default {
 
     name: 'dsCalendarEventCreatePopover',
-
     props:
         {
             calendarEvent:
@@ -269,14 +182,6 @@ export default {
                         return this.$dsDefaults().prompts
                     }
                 },
-
-            busyOptions:
-                {
-                    type: Array,
-                    default () {
-                        return this.$dsDefaults().busyOptions
-                    }
-                }
         },
 
     computed:
@@ -286,6 +191,7 @@ export default {
                     calendarEvent: this.calendarEvent,
                     calendar: this.calendar,
                     close: this.close,
+                    remove: this.remove,
                     details: this.details
                 }
             },
@@ -313,10 +219,6 @@ export default {
                 return this.calendarEvent.start.format(this.formats.start)
             },
 
-            busyness () {
-                return this.details.busy ? this.labels.busy : this.labels.free
-            },
-
             isValid () {
                 return this.$dayspan.isValidEvent(
                     this.details,
@@ -336,9 +238,9 @@ export default {
         },
 
     data: vm => ({
-        details: vm.buildDetails()
+        details: vm.buildDetails(),
+        recipes: recipes,
     }),
-
     methods:
         {
             edit () {
