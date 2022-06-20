@@ -68,7 +68,7 @@ let authors = [
 let recipes = [
   {
     id: 0,
-    title: 'Wiener Kaiserscharrn',
+    title: 'Wiener Kaiserschmarrn',
     description: 'Der traditionalle Wiener Kaiserschmarrn.',
     categories: [
       categories[0].name,
@@ -93,7 +93,7 @@ let recipes = [
       'Eine Pfanne mit Butter befetten und anschließen erhitzen.',
       'Sobald die Pfanne erhitzt ist, den zusammengerührten Teig hineingießen und bei mittlerer Hitze gold-braun anbraten.',
       'Den angebratenen Teig in Vierteln schneiden und anschließend wenden.',
-      'Die gewändeten stücke auf der unterseite leicht anbraten lassen und in einzelne teile reißen.',
+      'Die gewändeten Stücke auf der Unterseite leicht anbraten lassen und in einzelne Teile reißen.',
       'Zur Zubereitung den Kaiserschmarrn noch mit einer Prise Staubzucker verfeinern und genießen. :)',
     ],
     date: '12.03.2022',
@@ -493,6 +493,19 @@ function getRecipesByCategory(category) {
   return tmpRecipes;
 }
 
+/*
+This function returns the id of the first recipe with a specific title
+ */
+function getRecipeIdByTitle(title) {
+  let id = 0;
+  recipes.forEach((recipe) => {
+    if(recipe.title === title){
+      id = recipe.id;
+    }
+  });
+  return id;
+}
+
 export {planner}
 export {recipes}
 export {categories}
@@ -503,6 +516,7 @@ export {anotherRandomId}
 export {random}
 export {sortByDate}
 export {getRecipesByCategory}
+export {getRecipeIdByTitle}
 
 export default {
   data() {
@@ -517,6 +531,7 @@ export default {
       random,
       sortByDate,
       getRecipesByCategory,
+      getRecipeIdByTitle,
     }
   }
 }
