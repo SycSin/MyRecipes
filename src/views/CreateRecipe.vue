@@ -10,32 +10,11 @@
         </v-card-title>
         <v-card-text>
           <form ref="form" v-on:submit.prevent="submitForm">
-            <div id="app">
-              <div v-if="!file">
-                <div :class="['dropZone', dragging ? 'dropZone-over' : '']" @dragenter="dragging = true"
-                     @dragleave="dragging = false">
-                  <div class="dropZone-info" @drag="onChange">
-                    <span class="fa fa-cloud-upload dropZone-title"></span>
-                    <span class="dropZone-title">Drop file or click to upload</span>
-                    <div class="dropZone-upload-limit-info">
-                      <div>extension support: jpeg</div>
-                      <div>maximum file size: 5 MB</div>
-                    </div>
-                  </div>
-                  <input type="file" @change="onChange">
-                </div>
-              </div>
-              <div v-else class="dropZone-uploaded">
-                <div class="dropZone-uploaded-info">
-                  <span class="dropZone-title">Uploaded</span>
-                  <button type="button" class="btn btn-primary removeFile" @click="removeFile">Remove File</button>
-                </div>
-              </div>
-
-              <div class="uploadedFile-info">
-                <div>fileName: {{ file.name }}</div>
-                <div>fileZise(bytes): {{ file.size }}</div>
-                <div>extension：{{ extension }}</div>
+            <div class="container">
+              <div class="large-12 medium-12 small-12 cell">
+                <label>File
+                  <input type="file" id="file" ref="file" v-on:change="handleFileUpload"/>
+                </label>
               </div>
             </div>
             <v-text-field
@@ -102,53 +81,36 @@ export default {
         description: '',
         title: '',
         selectedCategories: [],
-        ingredient: '',
+        ingredient: ''
       },
       file: '',
-      dragging: false,
       categories: categories,
-
+      formFieldsCopy : {},
+      fileCopy: {}
     };
   },
   methods: {
-    onChange(e) {
-      var files = e.target.files || e.dataTransfer.files;
-
-      if (!files.length) {
-        this.dragging = false;
-        return;
-      }
-
-      this.createFile(files[0]);
-    },
-    createFile(file) {
-      if (!file.type.match("image.*")) {
-
-        alert('please select image file');
-        this.dragging = false;
-        return;
-      }
-
-      if (file.size > 5000000) {
-        alert('please check file size no over 5 MB.')
-        this.dragging = false;
-        return;
-      }
-
-      this.file = file;
-      console.log(this.file);
-      this.dragging = false;
-    },
-    removeFile() {
-      this.file = '';
+    handleFileUpload(){
+      this.file = this.$refs.file.files[0];
     },
     submitForm(){
+      let formData = new FormData();
+      formData.append('file', this.file);
       axios.post('/recipe', this.form).
           then((res) => {
             console.log(res)
             console.log(this.form)
       })
-      this.form = '';
+      axios.post('/single-file', formData).
+      then(function(){
+        console.log('SUCCESS!!');
+      })
+          .catch(function(){
+            console.log('FAILURE!!');
+          });
+      this.form = {...this.formFieldsCopy};
+      this.$refs.fileupload.value=null;
+      this.file = this.fileCopy;
     }
 
   },
