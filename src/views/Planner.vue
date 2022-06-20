@@ -1,6 +1,7 @@
 <template>
   <v-container>
     <h2 class="text-h4 font-weight-bold">Food Planner</h2>
+    asdf
     <planner></planner>
   </v-container>
 </template>
@@ -15,5 +16,3 @@ export default {
   },
 };
 </script>
-<style>
-</style>
