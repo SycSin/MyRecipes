@@ -80,13 +80,13 @@ let recipes = [
       description: authors[0].description,
     },
     ingredients: [
-      'Mehl: 200 g',
-      'Zucker: 30 g',
-      'Salz: 1 Prise',
-      'Eier: 4 Stück',
-      'Milch: 330 ml',
-      'Butter: 40 g',
-      'Staubzucker: 1 Prise',
+      'Flour: 200g',
+      'Sugar: 30g',
+      'Salt: 1 pinch',
+      'Eggs: 4 pieces',
+      'Milk: 330 ml',
+      'Butter: 40g',
+      'Powdered sugar: 1 pinch'
     ],
     steps: [
       'Mehl, Eier und Zucker mit einer Prise Salz in einer Schüssel verrühren',
@@ -195,11 +195,11 @@ let recipes = [
       description: authors[3].description,
     },
     ingredients: [
-        'Ahi Thunfisch - Steaks (Sushiqualität): 2 Stück',
-        'Öl, neutrales oder gewürztes Woköl: 2 EL',
-        'Pfeffer, ganz (Szechuanpfeffer): 2 TL',
-        'Salz (am besten Fleur de Sel): 1 TL',
-        'Cayennepfeffer: 1 Prise',
+      'Ahi Thunfisch - Steaks (Sushiqualität): 2 Stück',
+      'Öl, neutrales oder gewürztes Woköl: 2 EL',
+      'Pfeffer, ganz (Szechuanpfeffer): 2 TL',
+      'Salz (am besten Fleur de Sel): 1 TL',
+      'Cayennepfeffer: 1 Prise',
     ],
     steps: [
       'Thunfischsteaks waschen und trocken tupfen.',
@@ -318,18 +318,18 @@ let recipes = [
     },
     ingredients: [
 
-     'Baguette (für die Croutons): 1 Stück',
-     'Olivenöl (für die Croutons): 2 EL',
-     'Knoblauchzehe (für die Croutons): 1 Stück',
-     'Knoblauchzehen: 1	Stück',
-     'Parmesan (frisch gerieben): 20 g',
-     'Rotweinessig: 1	EL',
-     'scharfer Senf: 1 TL',
-     'Olivenöl: 80 ml',
-     'Römersalat: 1	Kopf',
-     'Pfeffer: 1 Prise',
-     'Eidotter: 2	Stück',
-     'Zwiebel: 2 Stück',
+      'Baguette (für die Croutons): 1 Stück',
+      'Olivenöl (für die Croutons): 2 EL',
+      'Knoblauchzehe (für die Croutons): 1 Stück',
+      'Knoblauchzehen: 1	Stück',
+      'Parmesan (frisch gerieben): 20 g',
+      'Rotweinessig: 1	EL',
+      'scharfer Senf: 1 TL',
+      'Olivenöl: 80 ml',
+      'Römersalat: 1	Kopf',
+      'Pfeffer: 1 Prise',
+      'Eidotter: 2	Stück',
+      'Zwiebel: 2 Stück',
     ],
     steps: [
       'Für die Croutons, das Baguette in kleine Würfel schneiden. Das Öl in einer großen Pfanne erhitzen.',
@@ -499,7 +499,7 @@ This function returns the id of the first recipe with a specific title
 function getRecipeIdByTitle(title) {
   let id = 0;
   recipes.forEach((recipe) => {
-    if(recipe.title === title){
+    if (recipe.title === title) {
       id = recipe.id;
     }
   });
