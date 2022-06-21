@@ -178,13 +178,18 @@ export default {
       localStorage.removeItem('token');
       this.$router.push('/');
       location.reload();
-      console.log(localStorage.getItem('token'));
     }
   },
   computed: {
     isLoggedIn(){
       return localStorage.getItem('token');
     }
+  },
+  mounted() {
+    const thisInstance = this
+    this.$root.$on('logout', function(){
+      thisInstance.logout();
+    })
   }
 };
 </script>
