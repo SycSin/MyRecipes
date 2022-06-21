@@ -59,13 +59,27 @@
 
                 <v-divider class="my-4"></v-divider>
 
+
+                <v-btn @click="getNutrients" color="accent">Nährwerte Anzeigen </v-btn>
+
+                <div class="text-h5 primary--text font-weight-bold" v-if="nutrients">
+                  Nährwerte:
+                  <div class="text-subtitle-1 primary--text font-weight-medium mt-5">
+                    <ul>
+                      <li v-for="item in nutrients">
+                        {{item.label}} : {{item.quantity}} {{item.unit}}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
                 <div class="text-h5 primary--text font-weight-bold">
                   Zutaten:
-                  <p class="text-subtitle-1 primary--text font-weight-medium mt-5">
-                  <ul>
-                    <li v-for="item in recipes[$route.params.id].ingredients">{{ item }}</li>
-                  </ul>
-                  </p>
+                  <div class="text-subtitle-1 primary--text font-weight-medium mt-5">
+                    <ul>
+                      <li v-for="item in recipes[$route.params.id].ingredients">{{ item }}</li>
+                    </ul>
+                    </div>
                 </div>
 
 
@@ -197,7 +211,7 @@
 
 <script>
 import {recipes, authors, categories, randomId, anotherRandomId, random} from '../resources/js/data';
-
+import axios from "axios"
 export default {
   name: "Home",
   components: {
@@ -211,6 +225,25 @@ export default {
       randomId: randomId,
       anotherRandomId: anotherRandomId,
       random: random,
+      nutrients: '',
+      recipe: ''
+    }
+
+  },
+  methods: {
+    async getNutrients(){
+      let recipe = recipes[this.$route.params.id].ingredients;
+      await axios({
+        method: 'post',
+        url: 'https://api.edamam.com/api/nutrition-details',
+        params: {
+          app_id:"98865d34",
+          app_key:"7a1d80dc680e7c8c1349d5a92b542102"
+        },
+        data: {
+          ingr: recipe
+        }
+      }).then(response => (this.nutrients=response.data.totalNutrientsKCal))
     }
   }
 };
