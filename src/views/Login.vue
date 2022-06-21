@@ -40,6 +40,8 @@
 </template>
 
 <script>
+
+import axios from "axios"
 export default {
     name: "Login",
     data() {
@@ -49,22 +51,21 @@ export default {
         };
     },
     methods: {
-        login() {
-            fetch('http://host.docker.internal:8081/auth/login', {
-                method: 'POST',
-                body: JSON.stringify({
-                    username: this.username,
-                    password: this.password
-                }),
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-            })
-            .then((response) => response.json())
-            .then((result) => {
-                console.log("seas hans");   
-            });
-        }
+
+      async login(){
+        const response = await axios.post('http://localhost:8081/auth/login',
+            {
+              username: this.username,
+              password: this.password
+            },
+            {
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            }
+        );
+        localStorage.setItem('token', response.data.authToken);
+      }
     },
 };
 </script>
