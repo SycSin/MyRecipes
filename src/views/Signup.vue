@@ -68,8 +68,8 @@ export default {
     }};
 },
   methods: {
-    submitForm(){
-      axios.post('http://localhost:8081/auth/register', this.form)
+    async submitForm(){
+      const response = await axios.post('http://localhost:8081/auth/register', this.form)
           .then(function (response) {
             console.log(response);
           })
@@ -77,6 +77,7 @@ export default {
             console.log(error);
           });
       this.form = {...this.formReset};
+      await this.$router.push('/login');
     }
   }
 }
