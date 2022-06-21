@@ -51,7 +51,6 @@ export default {
         };
     },
     methods: {
-
       async login(){
         const response = await axios.post('http://localhost:8081/auth/login',
             {
@@ -63,8 +62,11 @@ export default {
                 'Content-Type': 'application/json'
               }
             }
-        );
-        localStorage.setItem('token', response.data.authToken);
+        ).then((response) => localStorage.setItem('token', response.data.authToken)).finally(() =>{
+          this.$router.push('/');
+          location.reload();
+        })
+        console.log(localStorage.getItem('token'));
       }
     },
 };
