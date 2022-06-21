@@ -76,21 +76,23 @@
             </v-btn
             >
           </v-col>
-
           <v-col v-if="$vuetify.breakpoint.mdAndUp" class="text-right">
             <v-btn
-                v-for="(item, i) in btnItems"
-                :key="i"
-                :color="item.color"
-                :href="item.href"
-                :outlined="item.outlined"
-                :target="item.target"
-                :to="item.to"
+                color="primary"
+                :target="_black"
+                href="/signup"
+                to="/signup"
                 class="ml-3 text-capitalize"
-            >
-              <v-icon left>{{ item.icon }}</v-icon>
-              {{ item.text }}
-            </v-btn>
+            ><v-icon left>mdi-account-plus</v-icon>
+               Registrieren</v-btn>
+            <v-btn
+                color="accent"
+                :target="_black"
+                href="/login"
+                to="/login"
+                class="ml-3 text-capitalize"
+            ><v-icon left>mdi-login-variant</v-icon>
+              Login</v-btn>
           </v-col>
         </v-row>
       </v-container>
