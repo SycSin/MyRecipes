@@ -60,6 +60,7 @@ export default {
       email: '',
       password: ''
     },
+    formReset: {},
     showPassword: false,
     rules: {
       required: value => !!value || 'Enter a password',
@@ -75,6 +76,7 @@ export default {
           .catch(function (error) {
             console.log(error);
           });
+      this.form = {...this.formReset};
     }
   }
 }
