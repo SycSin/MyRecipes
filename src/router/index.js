@@ -49,6 +49,11 @@ const routes = [
         path: '/createRecipe',
         name: 'Rezept erstellen',
         component: () => import("@/views/CreateRecipe.vue"),
+    },
+    {
+        path: '/profile',
+        name: 'Profil',
+        component: () => import("@/views/Profile.vue")
     }
 ]
 
