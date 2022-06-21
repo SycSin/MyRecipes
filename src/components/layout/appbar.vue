@@ -76,21 +76,45 @@
             </v-btn
             >
           </v-col>
-
           <v-col v-if="$vuetify.breakpoint.mdAndUp" class="text-right">
             <v-btn
-                v-for="(item, i) in btnItems"
-                :key="i"
-                :color="item.color"
-                :href="item.href"
-                :outlined="item.outlined"
-                :target="item.target"
-                :to="item.to"
+                v-if="isLoggedIn"
+                color="accent"
+                :target="_black"
+                href="/profile"
+                to="/profile"
                 class="ml-3 text-capitalize"
-            >
-              <v-icon left>{{ item.icon }}</v-icon>
-              {{ item.text }}
-            </v-btn>
+            ><v-icon left>mdi-account</v-icon>
+              Profil</v-btn>
+            <v-btn
+                v-else
+                color="primary"
+                :target="_black"
+                href="/signup"
+                to="/signup"
+                class="ml-3 text-capitalize"
+            ><v-icon left>mdi-account-plus</v-icon>
+              Registrieren</v-btn>
+
+            <v-btn
+                v-if="isLoggedIn"
+                v-on:click="logout"
+                color="red"
+                :target="_black"
+                href="/home"
+                to="/home"
+                class="ml-3 text-capitalize"
+            ><v-icon left>mdi-login-variant</v-icon>
+              Logout</v-btn>
+            <v-btn
+                v-else
+                color="accent"
+                :target="_black"
+                href="/login"
+                to="/login"
+                class="ml-3 text-capitalize"
+            ><v-icon left>mdi-login-variant</v-icon>
+              Login</v-btn>
           </v-col>
         </v-row>
       </v-container>
@@ -100,7 +124,6 @@
 
 <script>
 import {randomId, random} from '../../resources/js/data';
-
 
 export default {
   data: () => ({
@@ -150,5 +173,18 @@ export default {
       }
     ],
   }),
+  methods:{
+    logout(){
+      localStorage.removeItem('token');
+      this.$router.push('/');
+      location.reload();
+      console.log(localStorage.getItem('token'));
+    }
+  },
+  computed: {
+    isLoggedIn(){
+      return localStorage.getItem('token');
+    }
+  }
 };
 </script>
