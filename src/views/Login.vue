@@ -66,7 +66,7 @@ export default {
           this.$router.push('/');
           location.reload();
         })
-        console.log(localStorage.getItem('token'));
+        // console.log(localStorage.getItem('token'));
       }
     },
 };
