@@ -55,6 +55,12 @@
 import axios from "axios"
 import appbar from "../components/layout/appbar";
 
+const config = {
+  headers: {
+    Authorization: 'Bearer ' + localStorage.getItem('token')
+  }
+}
+
 export default {
   data() {
     return {
@@ -83,21 +89,28 @@ export default {
       await this.$router.push('/login');
     },
     async deleteAccount() {
-      await axios.delete('http://localhost:8081/api/deleteUser', this.username)
+      await axios.delete('http://localhost:8081/user/deleteUser', config)
           .then(() => localStorage.removeItem('token'))
           .finally(() => this.$root.$emit('logout'))
     },
     updateAccount() {
-      axios.put('http://localhost:8081/api/updateUser', {
+      axios.put('http://localhost:8081/user/updateUser', {
         password: this.password,
         username: this.username,
         email: this.email
-      }).finally(() => {
+      },config).finally(() => {
             window.alert("Account updated");
             this.$router.push('/');
           }
       )
     }
+  },
+  mounted() {
+    const response = axios.get('http://localhost:8081/user/getSelf', config
+    ).then(
+        (response) => {this.username = response.data.username;
+            this.email = response.data.email;}
+    )
   }
 }
 </script>
