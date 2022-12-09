@@ -10,6 +10,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout Feature Branch for MyRecipes Staging
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST_IP }}
+          username: ${{ secrets.HOST_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd ${{ secrets.STAGING_PATH }} && git checkout main && git pull origin main && git checkout $(echo $GITHUB_REF | cut -d'/' -f 3) && git pull origin $(echo $GITHUB_REF | cut -d'/' -f 3) 
+
       - name: Deploy MyRecipes Staging
         uses: appleboy/ssh-action@master
         with:
