@@ -12,13 +12,15 @@ jobs:
     steps:
       - name: Checkout Feature Branch for MyRecipes Staging
         uses: appleboy/ssh-action@master
+        env:
+          BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 
         with:
           host: ${{ secrets.HOST_IP }}
           username: ${{ secrets.HOST_USER }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            cd ${{ secrets.STAGING_PATH }} && git checkout main && git pull origin main && git checkout $(echo $GITHUB_REF | cut -d'/' -f 3) && git pull origin $(echo $GITHUB_REF | cut -d'/' -f 3) 
+            cd ${{ secrets.STAGING_PATH }} && git checkout main && git pull origin main && echo $BRANCH_NAME && git checkout $BRANCH_NAME $ && git pull origin $BRANCH_NAME 
 
       - name: Deploy MyRecipes Staging
         uses: appleboy/ssh-action@master
