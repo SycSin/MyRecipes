@@ -1,21 +1,21 @@
-#name: Deploy MyRecipes
-#
-#on:
-#  push:
-#    branches:
-#      - main
-#
-#jobs:
-#  deploy:
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#      - name: deploy on AWS instance
-#        uses: appleboy/ssh-action@master
-#        with:
-#          host: ${{ secrets.HOST_IP }}
-#          username: ${{ secrets.HOST_USER }}
-#          key: ${{ secrets.SSH_KEY }}
-#          port: ${{ secrets.SSH_PORT }}
-#          script: |
-#            ${{ secrets.DEPLOY_SCRIPT }}
+name: Deploy MyRecipes
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: deploy on AWS instance
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST_IP }}
+          username: ${{ secrets.HOST_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            ${{ secrets.DEPLOY_SCRIPT }}
