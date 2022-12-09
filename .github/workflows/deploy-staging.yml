@@ -1,0 +1,21 @@
+name: Deploy MyRecipes Staging
+
+on:
+  push:
+    branches:
+      - feature/*
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy MyRecipes Staging
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST_IP }}
+          username: ${{ secrets.HOST_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            ${{ secrets.DEPLOY_STAGING_SCRIPT }}
