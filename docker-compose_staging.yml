@@ -1,0 +1,15 @@
+version: "2.2"
+services:
+   frontend:
+     image: staging_myrecipes-frontend:latest
+     restart: unless-stopped
+     build:
+       context: frontend/.
+     ports:
+       - "127.0.0.1:8080:8080"
+     extra_hosts:
+       - "host.docker.internal:host-gateway"
+     container_name: staging_myrecipes-frontend
+     volumes:
+       - ./frontend:/app
+       - /app/node_modules
