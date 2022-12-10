@@ -18,7 +18,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            cd ${{ secrets.STAGING_PATH }} && git checkout main && git pull origin main && git checkout $(echo $GITHUB_REF | cut -d'/' -f 3) && git pull origin $(echo $GITHUB_REF | cut -d'/' -f 3) 
+            cd ${{ secrets.STAGING_PATH }} && git checkout main && git pull origin main && git checkout ${{ github.ref_name }} && git pull origin ${{ github.ref_name }}
 
       - name: Deploy MyRecipes Staging
         uses: appleboy/ssh-action@master
