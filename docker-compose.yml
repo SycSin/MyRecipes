@@ -21,3 +21,6 @@ services:
       - "127.0.0.1:3306:3306"
     environment:
       MARIADB_ROOT_PASSWORD: example #replaced with vault password
+    container_name: myrecipes-db
+    volumes:
+      - ./db:/var/lib/mysql
