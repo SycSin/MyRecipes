@@ -8,6 +8,8 @@ node_modules
 
 vault.key
 
+db
+
 # Log files
 npm-debug.log*
 yarn-debug.log*
