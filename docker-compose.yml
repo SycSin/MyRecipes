@@ -13,3 +13,11 @@ services:
      volumes:
        - ./frontend:/app
        - /app/node_modules
+
+  db:
+    image: mariadb:latest
+    restart: always
+    ports:
+      - "127.0.0.1:3306:3306"
+    environment:
+      MARIADB_ROOT_PASSWORD: example #replaced with vault password
