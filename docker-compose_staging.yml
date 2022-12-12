@@ -1,15 +1,26 @@
 version: "3"
 services:
-   frontend:
-     image: staging_myrecipes-frontend:latest
-     restart: unless-stopped
-     build:
-       context: frontend/.
-     ports:
-       - "127.0.0.1:9080:8080"
-     extra_hosts:
-       - "host.docker.internal:host-gateway"
-     container_name: staging_myrecipes-frontend
-     volumes:
-       - ./frontend:/app
-       - /app/node_modules
+  frontend:
+    image: staging_myrecipes-frontend:latest
+    restart: unless-stopped
+    build:
+      context: frontend/.
+    ports:
+      - "127.0.0.1:9080:8080"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    container_name: staging_myrecipes-frontend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+  db:
+    image: mariadb:latest
+    restart: always
+    ports:
+      - "127.0.0.1:3307:3306"
+    environment:
+      MARIADB_ROOT_PASSWORD: example #replaced with vault password
+    container_name: staging_myrecipes-db
+    volumes:
+      - ./db:/var/lib/mysql
