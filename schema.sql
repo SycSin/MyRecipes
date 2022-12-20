@@ -23,10 +23,10 @@ DROP TABLE IF EXISTS `categories`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `categories` (
-  `uid` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `categories_UID` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
-  PRIMARY KEY (`uid`),
-  UNIQUE KEY `uid_UNIQUE` (`uid`),
+  PRIMARY KEY (`categories_UID`),
+  UNIQUE KEY `uid_UNIQUE` (`categories_UID`),
   UNIQUE KEY `name_UNIQUE` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -48,11 +48,13 @@ DROP TABLE IF EXISTS `events`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `events` (
-  `uid` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `events_UID` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `date` datetime NOT NULL,
   `recipe` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`uid`),
-  UNIQUE KEY `uid_UNIQUE` (`uid`)
+  PRIMARY KEY (`events_UID`),
+  UNIQUE KEY `uid_UNIQUE` (`events_UID`),
+  KEY `recipes_UID_idx` (`recipe`),
+  CONSTRAINT `recipes_UID` FOREIGN KEY (`recipe`) REFERENCES `recipes` (`recipes_UID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -73,14 +75,17 @@ DROP TABLE IF EXISTS `recipes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `recipes` (
-  `uid` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `author` int(10) unsigned NOT NULL,
+  `recipes_UID` int(10) unsigned NOT NULL,
+  `author` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
   `rating` double unsigned zerofill DEFAULT NULL,
-  `category` int(11) DEFAULT NULL,
-  PRIMARY KEY (`uid`),
-  UNIQUE KEY `uid_UNIQUE` (`uid`),
-  UNIQUE KEY `author_UNIQUE` (`author`)
+  `category` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`recipes_UID`),
+  UNIQUE KEY `uid_UNIQUE` (`recipes_UID`),
+  UNIQUE KEY `author_UNIQUE` (`author`),
+  KEY `categories_UID_idx` (`category`),
+  CONSTRAINT `categories_UID` FOREIGN KEY (`category`) REFERENCES `categories` (`categories_UID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `users_UID` FOREIGN KEY (`author`) REFERENCES `users` (`users_UID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -101,11 +106,11 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
-  `uid` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `users_UID` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  PRIMARY KEY (`uid`),
-  UNIQUE KEY `uid_UNIQUE` (`uid`),
+  PRIMARY KEY (`users_UID`),
+  UNIQUE KEY `uid_UNIQUE` (`users_UID`),
   UNIQUE KEY `email_UNIQUE` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -128,4 +133,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-20 18:36:05
+-- Dump completed on 2022-12-20 18:57:51
