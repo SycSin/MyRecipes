@@ -14,6 +14,20 @@ services:
       - ./frontend:/app
       - /app/node_modules
 
+  backend:
+    image: myrecipes-backend:latest
+    restart: unless-stopped
+    build:
+      context: backend/.
+    ports:
+      - "127.0.0.1:3000:3000"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    container_name: myrecipes-backend
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+
   db:
     image: mariadb:latest
     restart: always
