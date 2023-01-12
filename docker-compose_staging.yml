@@ -20,7 +20,7 @@ services:
     build:
       context: backend/.
     ports:
-      - "127.0.0.1:3000:3000"
+      - "127.0.0.1:3001:3001"
     extra_hosts:
       - "host.docker.internal:host-gateway"
     container_name: staging_myrecipes-backend
