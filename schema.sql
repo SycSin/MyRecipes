@@ -2,6 +2,8 @@ CREATE DATABASE IF NOT EXISTS MyRecipes;
 
 use MyRecipes;
 
+SET SESSION sql_mode = '';
+
 -- MariaDB dump 10.19  Distrib 10.10.2-MariaDB, for debian-linux-gnu (aarch64)
 --
 -- Host: localhost    Database: MyRecipes
@@ -88,8 +90,8 @@ CREATE TABLE `recipes` (
   `author` int(10) unsigned NOT NULL,
   `title` varchar(255) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
-  `ingredients` varchar(255) DEFAULT NULL,
-  `steps` varchar(255) DEFAULT NULL,
+  `ingredients` text DEFAULT NULL,
+  `steps` text DEFAULT NULL,
   `date` date NOT NULL,
   `image` varchar(255) DEFAULT NULL,
   `rating` double unsigned zerofill DEFAULT NULL,
