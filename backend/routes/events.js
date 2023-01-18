@@ -1,69 +1,70 @@
 const express = require('express');
 const router = express.Router();
-const Category = require('../models/categories');
+const Event = require('../models/events');
 
 router.get('/', async (req, res) => {
   try {
-    const categories = await Category.getAllCategorys();
-    res.status(200).json(categories);
+    const events = await Event.getAllEvents();
+    res.status(200).json(events);
   } catch (error) {
-    res.status(500).json({ message: 'Failed to retrieve categories', error });
+    res.status(500).json({ message: 'Failed to retrieve events', error });
   }
 });
 
 router.get('/:id', async (req, res) => {
   try {
-    const category = await Category.getCategoryById(req.params.id);
-    if (!category.length) {
-      res.status(404).json({ message: 'Category not found' });
+    const event = await Event.getEventById(req.params.id);
+    if (!event.length) {
+      res.status(404).json({ message: 'Event not found' });
     } else {
-      res.status(200).json(category);
+      res.status(200).json(event);
     }
   } catch (error) {
-    res.status(500).json({ message: 'Failed to retrieve category', error });
+    res.status(500).json({ message: 'Failed to retrieve event', error });
   }
 });
 
 router.post('/', async (req, res) => {
-  if (!req.body.email || !req.body.password) {
-    res.status(400).json({ message: 'Please provide an email, and password' });
+  if (!req.body.author || !req.body.date || !req.body.recipe || !req.body.color) {
+    res.status(400).json({ message: 'Please provide an author, date, recipe and color' });
   } else {
     try {
-      const newCategory = await Category.addCategory(req.body);
-      res.status(200).json({ message: 'Category added'});
+      const newEvent = await Event.addEvent(req.body);
+      res.status(200).json({ message: 'Event added'});
     } catch (error) {
-      res.status(500).json({ message: 'Failed to add category', error });
+      res.status(500).json({ message: 'Failed to add event', error });
     }
   }
 });
 
 router.put('/:id', async (req, res) => {
-  if (!req.body.email && !req.body.password) {
-    res.status(400).json({ message: 'Please provide at least one field to update' });
-  } else {
-    try {
-      const updatedCategory = await Category.updateCategory(req.params.id, req.body);
-      if (updatedCategory.affectedRows === 0) {
-        res.status(404).json({ message: 'Category not found' });
-      } else {
-        res.status(200).json({ message: 'Category updated', updatedCategory });
+  if (!req.body.author || !req.body.date || !req.body.recipe || !req.body.color) {
+      res.status(400).json({ message: 'Please provide at least one field to update' });
+    } else {
+      try {
+        const updatedEvent = await Event.updateEvent(req.params.id, req.body);
+        if (updatedEvent.affectedRows === 0) {
+          res.status(404).json({ message: 'Event not found' });
+        } else {
+          res.status(200).json({ message: 'Event updated', updatedEvent });
+        }
+      } catch (error) {
+        res.status(500).json({ message: 'Failed to update event', error });
       }
-    } catch (error) {
-      res.status(500).json({ message: 'Failed to update category', error });
     }
   }
 });
 
 router.delete('/:id', async (req, res) => {
   try {
-    const deletedCategory = await Category.deleteCategory(req.params.id);
-    if (deletedCategory.affectedRows === 0) {
-      res.status(404).json({ message: 'Category not found' });
+    const deletedEvent = await Event.deleteEvent(req.params.id);
+    if (deletedEvent.affectedRows === 0) {
+      res.status(404).json({ message: 'Event not found' });
     } else {
-      res.status(200).json({ message: 'Category deleted', deletedCategory });
+      res.status(200).json({ message: 'Event deleted', deletedEvent });
     }
   } catch (error) {
-    res.status(500).json({ message: 'Failed to delete category', error });
+    res.status(500).json({ message: 'Failed to delete event', error });
   }
 });
 
