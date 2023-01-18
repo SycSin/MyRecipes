@@ -14,6 +14,10 @@ sed -ie "s/example/$DBPASSWORD/g" backend/models/users.js
 rm backend/models/users.jse
 sed -ie "s/example/$DBPASSWORD/g" backend/models/recipes.js
 rm backend/models/recipes.jse
+sed -ie "s/example/$DBPASSWORD/g" backend/models/categories.js
+rm backend/models/categories.jse
+sed -ie "s/example/$DBPASSWORD/g" backend/models/events.js
+rm backend/models/events.jse
 
 docker-compose up -d --build
 
@@ -24,6 +28,10 @@ sed -ie "s/$DBPASSWORD/example/g" backend/models/users.js
 rm backend/models/users.jse
 sed -ie "s/$DBPASSWORD/example/g" backend/models/recipes.js
 rm backend/models/recipes.jse
+sed -ie "s/$DBPASSWORD/example/g" backend/models/categories.js
+rm backend/models/categories.jse
+sed -ie "s/$DBPASSWORD/example/g" backend/models/events.js
+rm backend/models/events.jse
 
 # load the data into the database
 echo "Loading data into database..."
