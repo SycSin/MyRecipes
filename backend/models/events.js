@@ -2,7 +2,7 @@ const mariadb = require('mariadb');
 
 const pool = mariadb.createPool({
     host: 'db',
-    event: 'root',
+    user: 'root',
     password: 'example',
     database: 'MyRecipes',
     connectionLimit: 5
