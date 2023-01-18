@@ -34,10 +34,19 @@ const User = {
     async addUser(user) {
         try {
             const conn = await pool.getConnection();
-            const rows = await conn.query(
-                'INSERT INTO users (email, password) VALUES (?, ?)',
-                [user.email, user.password]
-            );
+            let rows;
+            if(user.image != null) {
+                rows = await conn.query(
+                    'INSERT INTO users (email, password, image) VALUES (?, ?, ?)',
+                    [user.email, user.password, user.image]
+                );
+            }
+            else{
+                 rows = await conn.query(
+                    'INSERT INTO users (email, password) VALUES (?, ?)',
+                    [user.email, user.password]
+                );
+            }
             conn.release();
             return rows;
         } catch (error) {
@@ -48,10 +57,19 @@ const User = {
     async updateUser(id, user) {
         try {
             const conn = await pool.getConnection();
-            const rows = await conn.query(
-                'UPDATE users SET email = ?, password = ? WHERE users_UID = ?',
-                [user.email, user.password, id]
-            );
+            let rows;
+            if(user.image != null){
+                rows = await conn.query(
+                    'UPDATE users SET email = ?, password = ?, image = ? WHERE users_UID = ?',
+                    [user.email, user.password, user.image, id]
+                );
+            }
+            else{
+                rows = await conn.query(
+                    'UPDATE users SET email = ?, password = ? WHERE users_UID = ?',
+                    [user.email, user.password, id]
+                );
+            }
             conn.release();
             return rows;
         } catch (error) {
