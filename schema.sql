@@ -94,7 +94,7 @@ CREATE TABLE `recipes` (
   `steps` text DEFAULT NULL,
   `date` date NOT NULL,
   `image` varchar(255) DEFAULT NULL,
-  `rating` double unsigned zerofill DEFAULT NULL,
+  `rating` double unsigned DEFAULT NULL,
   `category` int(10) unsigned NOT NULL,
   PRIMARY KEY (`recipes_UID`),
   UNIQUE KEY `uid_UNIQUE` (`recipes_UID`),
