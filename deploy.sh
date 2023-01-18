@@ -12,6 +12,8 @@ rm docker-compose.ymle
 
 sed -ie "s/example/$DBPASSWORD/g" backend/models/users.js
 rm backend/models/users.jse
+sed -ie "s/example/$DBPASSWORD/g" backend/models/recipes.js
+rm backend/models/recipes.jse
 
 docker-compose up -d --build
 
@@ -20,6 +22,8 @@ rm docker-compose.ymle
 
 sed -ie "s/$DBPASSWORD/example/g" backend/models/users.js
 rm backend/models/users.jse
+sed -ie "s/$DBPASSWORD/example/g" backend/models/recipes.js
+rm backend/models/recipes.jse
 
 # load the data into the database
 echo "Loading data into database..."
