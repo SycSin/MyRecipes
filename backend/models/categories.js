@@ -8,7 +8,7 @@ const pool = mariadb.createPool({
     connectionLimit: 5
 });
 
-const Category = {
+const Categories = {
     async getAllCategorys() {
         try {
             const conn = await pool.getConnection();
@@ -72,4 +72,4 @@ const Category = {
     }
 };
 
-module.exports = Category;
+module.exports = Categories;
