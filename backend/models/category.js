@@ -2,17 +2,17 @@ const mariadb = require('mariadb');
 
 const pool = mariadb.createPool({
     host: 'db',
-    user: 'root',
+    category: 'root',
     password: 'example',
     database: 'MyRecipes',
     connectionLimit: 5
 });
 
-const User = {
-    async getAllUsers() {
+const Category = {
+    async getAllCategorys() {
         try {
             const conn = await pool.getConnection();
-            const rows = await conn.query('SELECT * FROM users');
+            const rows = await conn.query('SELECT * FROM categories');
             conn.release();
             return rows;
         } catch (error) {
@@ -20,10 +20,10 @@ const User = {
             return error;
         }
     },
-    async getUserById(id) {
+    async getCategoryById(id) {
         try {
             const conn = await pool.getConnection();
-            const rows = await conn.query('SELECT * FROM users WHERE users_UID = ?', [id]);
+            const rows = await conn.query('SELECT * FROM categories WHERE categories_UID = ?', [id]);
             conn.release();
             return rows;
         } catch (error) {
@@ -31,22 +31,13 @@ const User = {
             return error;
         }
     },
-    async addUser(user) {
+    async addCategory(category) {
         try {
             const conn = await pool.getConnection();
-            let rows;
-            if(user.image != null) {
-                rows = await conn.query(
-                    'INSERT INTO users (email, password, image) VALUES (?, ?, ?)',
-                    [user.email, user.password, user.image]
-                );
-            }
-            else{
-                 rows = await conn.query(
-                    'INSERT INTO users (email, password) VALUES (?, ?)',
-                    [user.email, user.password]
-                );
-            }
+            const rows = await conn.query(
+                'INSERT INTO categories (name) VALUES (?)',
+                [category.name]
+            );
             conn.release();
             return rows;
         } catch (error) {
@@ -54,22 +45,13 @@ const User = {
             return error;
         }
     },
-    async updateUser(id, user) {
+    async updateCategory(id, category) {
         try {
             const conn = await pool.getConnection();
-            let rows;
-            if(user.image != null){
-                rows = await conn.query(
-                    'UPDATE users SET email = ?, password = ?, image = ? WHERE users_UID = ?',
-                    [user.email, user.password, user.image, id]
-                );
-            }
-            else{
-                rows = await conn.query(
-                    'UPDATE users SET email = ?, password = ? WHERE users_UID = ?',
-                    [user.email, user.password, id]
-                );
-            }
+            const rows = await conn.query(
+                'UPDATE categories SET name = ? WHERE categories_UID = ?',
+                [category.name, id]
+            );
             conn.release();
             return rows;
         } catch (error) {
@@ -77,10 +59,10 @@ const User = {
             return error;
         }
     },
-    async deleteUser(id) {
+    async deleteCategory(id) {
         try {
             const conn = await pool.getConnection();
-            const rows = await conn.query('DELETE FROM users WHERE users_UID = ?', [id]);
+            const rows = await conn.query('DELETE FROM categories WHERE categories_UID = ?', [id]);
             conn.release();
             return rows;
         } catch (error) {
@@ -90,4 +72,4 @@ const User = {
     }
 };
 
-module.exports = User;
+module.exports = Category;
