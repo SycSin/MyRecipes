@@ -1,3 +1,7 @@
+CREATE DATABASE IF NOT EXISTS MyRecipes;
+
+use MyRecipes;
+
 -- MariaDB dump 10.19  Distrib 10.10.2-MariaDB, for debian-linux-gnu (aarch64)
 --
 -- Host: localhost    Database: MyRecipes
@@ -49,12 +53,17 @@ DROP TABLE IF EXISTS `events`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `events` (
   `events_UID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `author` int(10) unsigned NOT NULL,
   `date` datetime NOT NULL,
   `recipe` int(10) unsigned NOT NULL,
+  `color` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`events_UID`),
   UNIQUE KEY `uid_UNIQUE` (`events_UID`),
   KEY `recipes_UID_idx` (`recipe`),
-  CONSTRAINT `recipes_UID` FOREIGN KEY (`recipe`) REFERENCES `recipes` (`recipes_UID`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `users_UID_idx` (`author`),
+  KEY `users_idx` (`author`),
+  CONSTRAINT `recipes_UID` FOREIGN KEY (`recipe`) REFERENCES `recipes` (`recipes_UID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `users` FOREIGN KEY (`author`) REFERENCES `users` (`users_UID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -75,17 +84,22 @@ DROP TABLE IF EXISTS `recipes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `recipes` (
-  `recipes_UID` int(10) unsigned NOT NULL,
-  `author` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `recipes_UID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `author` int(10) unsigned NOT NULL,
   `title` varchar(255) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `ingredients` varchar(255) DEFAULT NULL,
+  `steps` varchar(255) DEFAULT NULL,
+  `date` date NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
   `rating` double unsigned zerofill DEFAULT NULL,
   `category` int(10) unsigned NOT NULL,
   PRIMARY KEY (`recipes_UID`),
   UNIQUE KEY `uid_UNIQUE` (`recipes_UID`),
-  UNIQUE KEY `author_UNIQUE` (`author`),
   KEY `categories_UID_idx` (`category`),
+  KEY `users_UID_idx` (`author`),
   CONSTRAINT `categories_UID` FOREIGN KEY (`category`) REFERENCES `categories` (`categories_UID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `users_UID` FOREIGN KEY (`author`) REFERENCES `users` (`users_UID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `users_UID` FOREIGN KEY (`author`) REFERENCES `users` (`users_UID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -109,6 +123,7 @@ CREATE TABLE `users` (
   `users_UID` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`users_UID`),
   UNIQUE KEY `uid_UNIQUE` (`users_UID`),
   UNIQUE KEY `email_UNIQUE` (`email`)
@@ -133,4 +148,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-20 18:57:51
+-- Dump completed on 2023-01-18 12:55:59
