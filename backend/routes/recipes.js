@@ -1,69 +1,69 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/users');
+const Recipe = require('../models/recipes');
 
 router.get('/', async (req, res) => {
   try {
-    const users = await User.getAllUsers();
-    res.status(200).json(users);
+    const recipes = await Recipe.getAllRecipes();
+    res.status(200).json(recipes);
   } catch (error) {
-    res.status(500).json({ message: 'Failed to retrieve users', error });
+    res.status(500).json({ message: 'Failed to retrieve recipes', error });
   }
 });
 
 router.get('/:id', async (req, res) => {
   try {
-    const user = await User.getUserById(req.params.id);
-    if (!user.length) {
-      res.status(404).json({ message: 'User not found' });
+    const recipe = await Recipe.getRecipeById(req.params.id);
+    if (!recipe.length) {
+      res.status(404).json({ message: 'Recipe not found' });
     } else {
-      res.status(200).json(user);
+      res.status(200).json(recipe);
     }
   } catch (error) {
-    res.status(500).json({ message: 'Failed to retrieve user', error });
+    res.status(500).json({ message: 'Failed to retrieve recipe', error });
   }
 });
 
 router.post('/', async (req, res) => {
-  if (!req.body.email || !req.body.password) {
-    res.status(400).json({ message: 'Please provide an email, and password' });
+  if (!req.body.author || !req.body.title || !req.body.description || !req.body.ingredients || !req.body.steps || !req.body.date || !req.body.image || !req.body.rating || !req.body.category) {
+    res.status(400).json({ message: 'Please provide an author, title, description, ingredients, steps, date, image, rating and category' });
   } else {
     try {
-      const newUser = await User.addUser(req.body);
-      res.status(200).json({ message: 'User added'});
+      const newRecipe = await Recipe.addRecipe(req.body);
+      res.status(200).json({ message: 'Recipe added'});
     } catch (error) {
-      res.status(500).json({ message: 'Failed to add user', error });
+      res.status(500).json({ message: 'Failed to add recipe', error });
     }
   }
 });
 
 router.put('/:id', async (req, res) => {
-  if (!req.body.email && !req.body.password) {
+  if (!req.body.author || !req.body.title || !req.body.description || !req.body.ingredients || !req.body.steps || !req.body.date || !req.body.image || !req.body.rating || !req.body.category) {
     res.status(400).json({ message: 'Please provide at least one field to update' });
   } else {
     try {
-      const updatedUser = await User.updateUser(req.params.id, req.body);
-      if (updatedUser.affectedRows === 0) {
-        res.status(404).json({ message: 'User not found' });
+      const updatedRecipe = await Recipe.updateRecipe(req.params.id, req.body);
+      if (updatedRecipe.affectedRows === 0) {
+        res.status(404).json({ message: 'Recipe not found' });
       } else {
-        res.status(200).json({ message: 'User updated', updatedUser });
+        res.status(200).json({ message: 'Recipe updated', updatedRecipe });
       }
     } catch (error) {
-      res.status(500).json({ message: 'Failed to update user', error });
+      res.status(500).json({ message: 'Failed to update recipe', error });
     }
   }
 });
 
 router.delete('/:id', async (req, res) => {
   try {
-    const deletedUser = await User.deleteUser(req.params.id);
-    if (deletedUser.affectedRows === 0) {
-      res.status(404).json({ message: 'User not found' });
+    const deletedRecipe = await Recipe.deleteRecipe(req.params.id);
+    if (deletedRecipe.affectedRows === 0) {
+      res.status(404).json({ message: 'Recipe not found' });
     } else {
-      res.status(200).json({ message: 'User deleted', deletedUser });
+      res.status(200).json({ message: 'Recipe deleted', deletedRecipe });
     }
   } catch (error) {
-    res.status(500).json({ message: 'Failed to delete user', error });
+    res.status(500).json({ message: 'Failed to delete recipe', error });
   }
 });
 
