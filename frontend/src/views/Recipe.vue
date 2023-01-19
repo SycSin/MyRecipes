@@ -226,8 +226,10 @@ export default {
   },
   data() {
     return {
-      nutrients: '',
-      recipe: ''
+      nutrients: [],
+      recipe: [],
+      category: [],
+      user: []
     }
 
   },
@@ -257,15 +259,15 @@ export default {
     async getUser(id) {
       try {
         const response = await axios.get(`http://localhost:3000/users/${id}`);
-        this.recipe = response.data;
+        this.user = response.data
       } catch (error) {
         console.error(error);
       }
     },
-    async getCategories(id) {
+    async getCategory(id) {
       try {
         const response = await axios.get(`http://localhost:3000/categories/${id}`);
-        this.recipe = response.data;
+        this.category = response.data;
       } catch (error) {
         console.error(error);
       }
