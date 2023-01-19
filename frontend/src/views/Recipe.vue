@@ -225,9 +225,22 @@ export default {
     siderbar: () => import("@/components/details/sidebar"),
   },
   created(){
-    this.getRecipe(this.$route.params.id);
-    this.getCategory(1);
-    this.getUser(1);
+    this.getRecipe(this.$route.params.id)
+        .then(recipe => {
+          this.recipe = recipe
+          this.getCategory(recipe.category)
+          this.getUser(recipe.author)
+        })
+        .then(category => {
+          this.category = category
+        })
+        .then(user => {
+          this.user = user
+        })
+        .catch(error => {
+          console.log(error)
+        })
+
   },
   data() {
     return {
@@ -254,28 +267,67 @@ export default {
       }).then(response => (this.nutrients=response.data.totalNutrientsKCal))
     },
     async getRecipe(id) {
+      return new Promise((resolve, reject) => {
+        axios.get(`http://localhost:3000/recipes/${id}`)
+        .then(response => {
+          resolve(response.data[0])
+        })
+        .catch(error => {
+          reject(error)
+        })
+      })
+
+      /*
       try {
         const response = await axios.get(`http://localhost:3000/recipes/${id}`);
         this.recipe = response.data[0];
       } catch (error) {
         console.error(error);
       }
+       */
     },
     async getUser(id) {
+
+      return new Promise((resolve, reject) => {
+        axios.get(`http://localhost:3000/users/${id}`)
+            .then(response => {
+              resolve(response.data[0])
+            })
+            .catch(error => {
+              reject(error)
+            })
+      })
+
+
+      /*
       try {
         const response = await axios.get(`http://localhost:3000/users/${id}`);
         this.user = response.data[0];
       } catch (error) {
         console.error(error);
       }
+      */
     },
     async getCategory(id) {
+      return new Promise((resolve, reject) => {
+        axios.get(`http://localhost:3000/categories/${id}`)
+            .then(response => {
+              resolve(response.data[0])
+            })
+            .catch(error => {
+              reject(error)
+            })
+      })
+
+
+      /*
       try {
         const response = await axios.get(`http://localhost:3000/categories/${id}`);
         this.category = response.data[0];
       } catch (error) {
         console.error(error);
       }
+      */
     }
   }
 };
