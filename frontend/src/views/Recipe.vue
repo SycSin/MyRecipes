@@ -25,7 +25,7 @@
                   </v-row>
                 </div>
                 <div>
-                  <v-btn v-model="category.name" color="accent" style="margin-right: 5px;" to="/categories/">
+                  <v-btn v-key="category.name" color="accent" style="margin-right: 5px;" to="/categories/">
                     {{ category.name }}
                   </v-btn>
                 </div>
@@ -225,7 +225,7 @@ export default {
     siderbar: () => import("@/components/details/sidebar"),
   },
   created(){
-    this.getRecipe(1);
+    this.getRecipe(this.$route.params.id);
     this.getCategory(1);
     this.getUser(1);
   },
@@ -240,7 +240,7 @@ export default {
   },
   methods: {
     async getNutrients(){
-      let recipe = this.getRecipe(1).ingredients;
+      let recipe = recipe.ingredients;
       await axios({
         method: 'post',
         url: 'https://api.edamam.com/api/nutrition-details',
@@ -256,7 +256,7 @@ export default {
     async getRecipe(id) {
       try {
         const response = await axios.get(`http://localhost:3000/recipes/${id}`);
-        this.recipe = response.data;
+        this.recipe = response.data[0];
       } catch (error) {
         console.error(error);
       }
@@ -264,7 +264,7 @@ export default {
     async getUser(id) {
       try {
         const response = await axios.get(`http://localhost:3000/users/${id}`);
-        this.user = response.data
+        this.user = response.data[0];
       } catch (error) {
         console.error(error);
       }
@@ -272,7 +272,7 @@ export default {
     async getCategory(id) {
       try {
         const response = await axios.get(`http://localhost:3000/categories/${id}`);
-        this.category = response.data;
+        this.category = response.data[0];
       } catch (error) {
         console.error(error);
       }

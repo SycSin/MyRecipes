@@ -67,7 +67,7 @@ let authors = [
 ];
 let recipes = [
   {
-    id: 0,
+    id: 1,
     title: 'Wiener Kaiserschmarrn',
     description: 'Der traditionalle Wiener Kaiserschmarrn.',
     categories: [
@@ -101,7 +101,7 @@ let recipes = [
     rating: 5,
   },
   {
-    id: 1,
+    id: 2,
     title: 'Spaghetti alla Napoli',
     description: 'Das originale neapolitanische Rezept für Spaghetthi.',
     categories: [
@@ -138,7 +138,7 @@ let recipes = [
     rating: 4,
   },
   {
-    id: 2,
+    id: 3,
     title: 'Fruchttorte',
     description: 'Eine leckere Fruchttorte für warme Sommertage.',
     categories: [
@@ -183,7 +183,7 @@ let recipes = [
     rating: 4,
   },
   {
-    id: 3,
+    id: 4,
     title: 'Ahi Thunfisch Steaks',
     description: 'Schmackhafte Thunfisch Steaks auf einem Gemüseberg',
     categories: [
@@ -213,7 +213,7 @@ let recipes = [
     rating: 4,
   },
   {
-    id: 4,
+    id: 5,
     title: 'Beerenpunsch',
     description: 'Das perfekte Heißgetränk zum Wohlfühlen für die kalte Jahreszeit.',
     categories: [
@@ -251,7 +251,7 @@ let recipes = [
     rating: 5,
   },
   {
-    id: 5,
+    id: 6,
     title: 'Lasagne Bolognese',
     description: 'Eine Lasagne aus Lasagneblättern, einer cremigen Béchamelsauce und einem Bolognese Ragù.',
     categories: [
@@ -304,7 +304,7 @@ let recipes = [
     rating: 3,
   },
   {
-    id: 6,
+    id: 7,
     title: 'Caesar Salat',
     description: 'Das Grundrezept für einen der bekanntesten Salate weltweit.',
     categories: [
