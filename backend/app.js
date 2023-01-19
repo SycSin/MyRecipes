@@ -10,7 +10,11 @@ var recipesRouter = require('./routes/recipes');
 var categoriesRouter = require('./routes/categories');
 var eventsRouter = require('./routes/events');
 
+const cors = require('cors')
+
 var app = express();
+
+app.use(cors())
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

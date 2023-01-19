@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <v-card :to="'/recipe/'+randomId">
+      <v-card :to="'/recipes/'+randomId">
         <v-img
             :aspect-ratio="16 / 9"
             dark
@@ -50,7 +50,7 @@
                         :elevation="hover ? 12 : 0"
                         flat
                         hover
-                        :to="'/recipe/' + item.id"
+                        :to="'/recipes/' + item.id"
                     >
                       <v-img
                           :aspect-ratio="16 / 9"
@@ -102,7 +102,7 @@
                           :elevation="hover ? 12 : 0"
                           flat
                           hover
-                          :to="'/recipe/' + item.id">
+                          :to="'/recipes/' + item.id">
                     <v-img
                         :aspect-ratio="16 / 9"
                         :src=item.img

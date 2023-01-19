@@ -27,7 +27,7 @@
                           :elevation="hover ? 12 : 0"
                           hover
                           style="margin-bottom: 15px;"
-                          :to="'/recipe/'+item.id"
+                          :to="'/recipes/'+item.id"
                       >
                         <v-img
                             :src=item.img

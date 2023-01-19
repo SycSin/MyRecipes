@@ -12,17 +12,17 @@ const routes = [
     },
     {
         path: '/categories',
-        name: 'Kategorien',
+        name: 'Categories',
         component: () => import("@/views/Category.vue"),
     },
     {
-        path: '/recipe/:id',
-        name: 'Rezepte',
+        path: '/recipes/:id',
+        name: 'Recipes',
         component: () => import("@/views/Recipe.vue"),
     },
     {
         path: '/authors',
-        name: 'authoren',
+        name: 'Authors',
         component: () => import("@/views/Authors.vue"),
     },
     {
@@ -32,12 +32,12 @@ const routes = [
     },
     {
         path: '/signup',
-        name: 'Registrieren',
+        name: 'Sign Up',
         component: () => import("@/views/Signup.vue"),
     },
     {
         path: '/profile',
-        name: 'Profil',
+        name: 'Profile',
         component: () => import("@/views/Profile.vue")
     }
 ]

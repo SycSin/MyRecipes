@@ -157,7 +157,7 @@ export default {
       },
       {
         title: "Rezept",
-        to: "/recipe/"+randomId,
+        to: "/recipes/"+randomId,
       },
       {
         title: "Authoren",
