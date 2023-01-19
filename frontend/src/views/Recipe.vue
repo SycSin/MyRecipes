@@ -4,11 +4,11 @@
       <v-col cols="12" lg="12" xl="8">
         <div>
           <div>
-            {{ getRecipe(1).title }}
+            {{ recipe.title}}
             <v-card color="transparent" flat>
               <v-img
                   :aspect-ratio="16 / 9"
-                  :src=getRecipe(1).image
+                  :src=recipe.image
                   gradient="to top, rgba(25,32,72,.4), rgba(25,32,72,.0)"
                   style="border-radius: 16px"
               ></v-img>
@@ -17,7 +17,7 @@
 
                 <div class="text-h4 font-weight-bold primary--text pt-4">
                   <v-row>
-                    <h4>{{ getRecipe(1).title }}</h4>
+                    <h4>{{ recipe.title }}</h4>
                     &nbsp;
                     <!--p v-for="i in getRecipe(1).rating" :key="i" class="pa-0" style="font-size: 20px;">
                       &#11088;
@@ -25,22 +25,22 @@
                   </v-row>
                 </div>
                 <div>
-                  <v-btn :key="getCategories(getRecipe(1).category).name" color="accent" style="margin-right: 5px;" to="/categories/">
-                    {{ getCategories(getRecipe(1).category).name }}
+                  <v-btn v-model="category.name" color="accent" style="margin-right: 5px;" to="/categories/">
+                    {{ category.name }}
                   </v-btn>
                 </div>
 
                 <div class="text-body-1 py-4">
-                  {{ getRecipe(1).description }}
+                  {{ recipe.description }}
                 </div>
 
                 <div class="d-flex align-center justify-space-between">
                   <div class="d-flex align-center">
                     <v-avatar color="accent" size="36">
-                      <v-img :src="getUser(getRecipe(1).author).image"></v-img>
+                      <v-img :src="user.image"></v-img>
                     </v-avatar>
 
-                    <div class="pl-2 text-body-1">{{ getUser(getRecipe(1).author).email }} · {{ getRecipe(1).date }}</div>
+                    <div class="pl-2 text-body-1">{{ user.email }} · {{ recipe.date }}</div>
                   </div>
 
                   <div class="d-flex align-center">
@@ -78,7 +78,7 @@
                   Zutaten:
                   <div class="text-subtitle-1 primary--text font-weight-medium mt-5">
                     <ul>
-                      {{ getRecipe(1).ingredients }}
+                      {{ recipe.ingredients }}
                     </ul>
                     </div>
                 </div>
@@ -88,7 +88,7 @@
                   Schritte:
                   <div class="text-subtitle-1 primary--text font-weight-medium mt-5">
                     <ul>
-                      <li class="my-2"> {{ getRecipe(1).steps }} </li>
+                      <li class="my-2"> {{ recipe.steps }} </li>
                     </ul>
                   </div>
                 </div>
@@ -120,16 +120,16 @@
                           to="/authors">
                     <div class="d-flex align-center">
                       <v-avatar color="accent" size="128">
-                        <v-img :src="getUser(getRecipe(1).author).image"></v-img>
+                        <v-img :src="user.image"></v-img>
                       </v-avatar>
 
                       <div class="pl-4">
                         <div class="text-h5 primary--text font-weight-bold">
-                          <span class="accent--text">{{ getUser(getRecipe(1).author).email }}</span>
+                          <span class="accent--text">{{ user.email }}</span>
                         </div>
 
                         <div class="text-subtitle-1 my-2">
-                          Hi! I am {{ getUser(getRecipe(1).author).email }}!
+                          Hi! I am {{ user.email }}!
                         </div>
 
                         <div class="text-subtitle-1">
@@ -166,10 +166,10 @@
                           <div class="text-h6 primary--text pl-2">
                             <div class="text-subtitle-1">Vorheriges Rezept</div>
                             <!-- {{ getRecipe(anotherRandomId()).title }} -->
-                            {{ getRecipe(3).title }}
+                            {{ recipe.title }}
                             <p class="text--secondary">
                               <!-- von {{ getUser(getRecipe(anotherRandomId()).author).email }} -->
-                              von {{ getUser(getRecipe(3).author).email }}
+                              von {{ user.email }}
                             </p>
                           </div>
                         </div>
@@ -185,11 +185,11 @@
                           <div class="text-h6 primary--text pr-2">
                             <div class="text-subtitle-1">Nächstes Rezept</div>
                             <!-- {{ getRecipe(randomId).title }} -->
-                            {{ getRecipe(2).title }}
+                            {{ recipe.title }}
                             <br>
                             <p class="text--secondary">
                               <!-- von {{ getUser(getRecipe(randomId).author).email }} -->
-                              von {{ getUser(getRecipe(2).author).email }}
+                              von {{ user.email }}
                             </p>
                           </div>
 
@@ -223,6 +223,11 @@ export default {
   name: "Home",
   components: {
     siderbar: () => import("@/components/details/sidebar"),
+  },
+  created(){
+    this.getRecipe(1);
+    this.getCategory(1);
+    this.getUser(1);
   },
   data() {
     return {
