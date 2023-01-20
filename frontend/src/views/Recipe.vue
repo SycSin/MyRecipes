@@ -4,7 +4,6 @@
       <v-col cols="12" lg="12" xl="8">
         <div>
           <div>
-            {{ recipe.title}}
             <v-card color="transparent" flat>
               <v-img
                   :aspect-ratio="16 / 9"
@@ -19,13 +18,13 @@
                   <v-row>
                     <h4>{{ recipe.title }}</h4>
                     &nbsp;
-                    <!--p v-for="i in getRecipe(1).rating" :key="i" class="pa-0" style="font-size: 20px;">
+                    <p v-for="i in recipe.rating" :key="i" class="pa-0" style="font-size: 20px;">
                       &#11088;
-                    </p-->
+                    </p>
                   </v-row>
                 </div>
                 <div>
-                  <v-btn v-key="category.name" color="accent" style="margin-right: 5px;" to="/categories/">
+                  <v-btn :key="category.name" color="accent" style="margin-right: 5px;" to="/categories/">
                     {{ category.name }}
                   </v-btn>
                 </div>
@@ -224,111 +223,51 @@ export default {
   components: {
     siderbar: () => import("@/components/details/sidebar"),
   },
-  created(){
-    this.getRecipe(this.$route.params.id)
-        .then(recipe => {
-          this.recipe = recipe
-          this.getCategory(recipe.category)
-          this.getUser(recipe.author)
-        })
-        .then(category => {
-          this.category = category
-        })
-        .then(user => {
-          this.user = user
-        })
-        .catch(error => {
-          console.log(error)
-        })
-
-  },
   data() {
     return {
-      nutrients: [],
+      nutrients: '',
+      ingredients: [],
       recipe: [],
       category: [],
       user: []
     }
-
+  },
+  created(){
+    // Fetch the data before rendering
+    axios.get(`http://localhost:3000/recipes/${this.$route.params.id}`)
+      .then(response => {
+        this.recipe = response.data[0]
+        axios.get(`http://localhost:3000/categories/${this.recipe.category}`)
+            .then(response => {
+              this.category = response.data[0]
+            })
+            .catch(error => {
+              console.log(error)
+            })
+        axios.get(`http://localhost:3000/users/${this.recipe.author}`)
+            .then(response => {
+              this.user = response.data[0]
+            })
+            .catch(error => {
+              console.log(error)
+        })
+    })
   },
   methods: {
     async getNutrients(){
-      let recipe = recipe.ingredients;
-      await axios({
-        method: 'post',
-        url: 'https://api.edamam.com/api/nutrition-details',
-        params: {
-          app_id:"98865d34",
-          app_key:"7a1d80dc680e7c8c1349d5a92b542102"
-        },
-        data: {
-          ingr: recipe
-        }
-      }).then(response => (this.nutrients=response.data.totalNutrientsKCal))
-    },
-    async getRecipe(id) {
-      return new Promise((resolve, reject) => {
-        axios.get(`http://localhost:3000/recipes/${id}`)
-        .then(response => {
-          resolve(response.data[0])
-        })
-        .catch(error => {
-          reject(error)
-        })
-      })
-
-      /*
-      try {
-        const response = await axios.get(`http://localhost:3000/recipes/${id}`);
-        this.recipe = response.data[0];
-      } catch (error) {
-        console.error(error);
-      }
-       */
-    },
-    async getUser(id) {
-
-      return new Promise((resolve, reject) => {
-        axios.get(`http://localhost:3000/users/${id}`)
-            .then(response => {
-              resolve(response.data[0])
-            })
-            .catch(error => {
-              reject(error)
-            })
-      })
-
-
-      /*
-      try {
-        const response = await axios.get(`http://localhost:3000/users/${id}`);
-        this.user = response.data[0];
-      } catch (error) {
-        console.error(error);
-      }
-      */
-    },
-    async getCategory(id) {
-      return new Promise((resolve, reject) => {
-        axios.get(`http://localhost:3000/categories/${id}`)
-            .then(response => {
-              resolve(response.data[0])
-            })
-            .catch(error => {
-              reject(error)
-            })
-      })
-
-
-      /*
-      try {
-        const response = await axios.get(`http://localhost:3000/categories/${id}`);
-        this.category = response.data[0];
-      } catch (error) {
-        console.error(error);
-      }
-      */
+      this.ingredients = this.recipe.ingredients;
+        await axios({
+          method: 'post',
+          url: 'https://api.edamam.com/api/nutrition-details',
+          params: {
+            app_id:"98865d34",
+            app_key:"7a1d80dc680e7c8c1349d5a92b542102"
+          },
+          data: {
+            ingr: this.ingredients
+          }
+        }).then(response => (this.nutrients=response.data.totalNutrientsKCal))
+      },
     }
-  }
-};
+  };
 </script>
