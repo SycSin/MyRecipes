@@ -123,12 +123,11 @@
 </template>
 
 <script>
-import {randomId, random} from '../../resources/js/data';
+
 
 export default {
   data: () => ({
-    randomId: randomId,
-    random: random,
+    randomId: '',
     drawer: null,
     btnItems: [
       {
@@ -157,7 +156,7 @@ export default {
       },
       {
         title: "Rezept",
-        to: "/recipes/"+randomId,
+        to: "/recipes/" + this.randomId,
       },
       {
         title: "Authoren",
@@ -165,11 +164,17 @@ export default {
       }
     ],
   }),
+  created() {
+    this.generateRandomID(1, 6);
+  },
   methods:{
     logout(){
       localStorage.removeItem('token');
       this.$router.push('/');
       location.reload();
+    },
+    generateRandomID(min, max){
+      this.randomId = Math.floor(Math.random() * (max - min + 1)) + min;
     }
   },
   computed: {

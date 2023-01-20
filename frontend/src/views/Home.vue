@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <v-card :to="'/recipes/'+randomID">{{ randomID }}
+      <v-card :to="'/recipes/'+randomID">
         <v-img
             :aspect-ratio="16 / 9"
             dark
