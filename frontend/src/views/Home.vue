@@ -7,24 +7,24 @@
             dark
             gradient="to top, rgba(25,32,72,.7), rgba(25,32,72,.0)"
             height="500px"
-            :src=recipes[randomId].img
+            :src=recipe[randomId].image
         >
           <v-card-text class="fill-height d-flex align-end">
             <v-row class="flex-column">
               <v-col cols="12" lg="8" md="10" xl="7">
                 <h2 class="text-h3 py-3" style="line-height: 1.0">
-                 {{ recipes[randomId].title }}
+                 {{ recipe[randomId].title }}
                 </h2>
               </v-col>
               <v-col>
-                <v-btn v-for="item in recipes[randomId].categories" :key="item" color="accent" to="categories" style="margin-right: 10px;">{{ item }}</v-btn>
+                <v-btn v-for="item in recipe[randomId].categories" :key="item" color="accent" to="categories" style="margin-right: 10px;">{{ item }}</v-btn>
               </v-col>
               <v-col class="d-flex align-center">
                 <v-avatar class="elevation-4" color="accent">
-                  <v-img :src="recipes[randomId].author.image"></v-img>
+                  <v-img :src="recipe[randomId].image"></v-img>
                 </v-avatar>
 
-                <div class="text-h6 pl-2">{{ recipes[randomId].author.name }} · {{ recipes[randomId].date }}</div>
+                <div class="text-h6 pl-2">{{ recipe[randomId].name }} · {{ recipe[randomId].date }}</div>
               </v-col>
             </v-row>
           </v-card-text>
@@ -38,7 +38,7 @@
           <div class="pt-16">
             <h2 class="text-h4 font-weight-bold pb-4">Persönliche Vorschläge</h2>
             <v-row>
-              <v-col v-for="item in recipes.slice(0,6)" :key="item.id" cols="12" lg="4" md="6">
+              <v-col v-for="item in recipe.slice(0,6)" :key="item.id" cols="12" lg="4" md="6">
                 <v-hover
                     v-slot:default="{ hover }"
                     close-delay="50"
@@ -95,7 +95,7 @@
             <h2 class="text-h4 font-weight-bold">Neueste Rezepte</h2>
 
             <div>
-              <v-row v-for="item in sortByDate(recipes, 3)" :key="item.id" class="py-4">
+              <v-row v-for="item in sortByDate(recipe, 3)" :key="item.id" class="py-4">
                 <v-col md="6">
                   <v-card height="100%"
                           :color="hover ? 'white' : 'transparent'"
@@ -147,22 +147,47 @@
 </template>
 
 <script>
-import { recipes, authors, categories, sortByDate, randomId, random } from '../resources/js/data';
+import { sortByDate, randomId, random } from '../resources/js/data';
+import axios from "axios";
 
 export default {
   name: "Home",
   components: {
     siderbar: () => import("@/components/details/sidebar"),
   },
-  data(){
+  data() {
     return {
-      recipes: recipes,
-      authors: authors,
-      categories: categories,
+      nutrients: '',
+      ingredients: [],
+      recipe: [],
+      category: [],
+      user: [],
       sortByDate: sortByDate,
       randomId: randomId,
       random: random,
     }
+  },
+  created() {
+    // Fetch the data before rendering
+    axios.get(`http://localhost:3000/recipes`)
+      .then(response => {
+        this.recipe = response.data
+        console.log(this.recipe)
+        axios.get(`http://localhost:3000/categories/${randomId}`)
+            .then(response => {
+              this.category = response.data[0]
+            })
+            .catch(error => {
+              console.log(error)
+            })
+        axios.get(`http://localhost:3000/users/${this.recipe.author}`)
+            .then(response => {
+              this.user = response.data[0]
+            })
+            .catch(error => {
+              console.log(error)
+            })
+      })
   }
 };
 </script>
