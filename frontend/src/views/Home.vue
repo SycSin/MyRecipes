@@ -1,30 +1,30 @@
 <template>
   <div>
     <div>
-      <v-card :to="'/recipes/'+randomId">
+      <v-card :to="'/recipes/'+randomID">{{ randomID }}
         <v-img
             :aspect-ratio="16 / 9"
             dark
             gradient="to top, rgba(25,32,72,.7), rgba(25,32,72,.0)"
             height="500px"
-            :src=recipe[randomId].image
+            :src=this.recipes[randomID].image
         >
           <v-card-text class="fill-height d-flex align-end">
             <v-row class="flex-column">
               <v-col cols="12" lg="8" md="10" xl="7">
                 <h2 class="text-h3 py-3" style="line-height: 1.0">
-                 {{ recipe[randomId].title }}
+                 {{ this.recipes[randomID].title }}
                 </h2>
               </v-col>
               <v-col>
-                <v-btn v-for="item in recipe[randomId].categories" :key="item" color="accent" to="categories" style="margin-right: 10px;">{{ item }}</v-btn>
+                <v-btn :key="this.recipes[randomID].category" color="accent" to="categories" style="margin-right: 10px;">{{ getCategoryFromRecipe(this.recipes[randomID].category).name }}</v-btn>
               </v-col>
               <v-col class="d-flex align-center">
                 <v-avatar class="elevation-4" color="accent">
-                  <v-img :src="recipe[randomId].image"></v-img>
+                  <v-img :src="getAuthorFromRecipe(this.recipes[randomID].author).image"></v-img>
                 </v-avatar>
 
-                <div class="text-h6 pl-2">{{ recipe[randomId].name }} · {{ recipe[randomId].date }}</div>
+                <div class="text-h6 pl-2">{{ this.recipes[randomID].name }} · {{ this.recipes[randomID].date }}</div>
               </v-col>
             </v-row>
           </v-card-text>
@@ -38,7 +38,7 @@
           <div class="pt-16">
             <h2 class="text-h4 font-weight-bold pb-4">Persönliche Vorschläge</h2>
             <v-row>
-              <v-col v-for="item in recipe.slice(0,6)" :key="item.id" cols="12" lg="4" md="6">
+              <v-col v-for="item in this.recipes.slice(0,this.recipes.length+1)" :key="item.recipes_UID" cols="12" lg="4" md="6">
                 <v-hover
                     v-slot:default="{ hover }"
                     close-delay="50"
@@ -50,19 +50,19 @@
                         :elevation="hover ? 12 : 0"
                         flat
                         hover
-                        :to="'/recipes/' + item.id"
+                        :to="'/recipes/' + item.recipes_UID"
                     >
                       <v-img
                           :aspect-ratio="16 / 9"
                           class="elevation-2"
                           gradient="to top, rgba(25,32,72,.4), rgba(25,32,72,.0)"
                           height="200px"
-                          :src=item.img
+                          :src=item.image
                           style="border-radius: 16px"
                       >
                         <v-card-text>
                           <v-btn color="accent" to="categories">
-                            {{ item.categories[0] }}
+                            {{ getCategoryFromRecipe(item.category).name }}
                           </v-btn>
                         </v-card-text>
                       </v-img>
@@ -78,10 +78,10 @@
 
                         <div class="d-flex align-center">
                           <v-avatar color="accent" size="36">
-                            <v-img :src="item.author.image"></v-img>
+                            <v-img :src="getAuthorFromRecipe(item.author).image"></v-img>
                           </v-avatar>
 
-                          <div class="pl-2">{{ item.author.name }} · {{ item.date }}</div>
+                          <div class="pl-2">{{ getAuthorFromRecipe(item.author).email }} · {{ item.date }}</div>
                         </div>
                       </v-card-text>
                     </v-card>
@@ -95,22 +95,22 @@
             <h2 class="text-h4 font-weight-bold">Neueste Rezepte</h2>
 
             <div>
-              <v-row v-for="item in sortByDate(recipe, 3)" :key="item.id" class="py-4">
+              <v-row v-for="item in sortByDate(this.recipes, 3)" :key="item.recipes_UID" class="py-4">
                 <v-col md="6">
                   <v-card height="100%"
                           :color="hover ? 'white' : 'transparent'"
                           :elevation="hover ? 12 : 0"
                           flat
                           hover
-                          :to="'/recipes/' + item.id">
+                          :to="'/recipes/' + item.recipes_UID">
                     <v-img
                         :aspect-ratio="16 / 9"
-                        :src=item.img
+                        :src=item.image
                     ></v-img>
 
                 <v-col>
                   <div>
-                    <v-btn v-for="element in item.categories" :key="element" color="accent" style="margin-right: 10px;" depressed to="/categories">{{ element }}</v-btn>
+                    <v-btn :key="item.category" color="accent" style="margin-right: 10px;" depressed to="/categories">{{ item.category }}</v-btn>
 
                     <h3 class="text-h4 font-weight-bold pt-3">
                       {{ item.title }}
@@ -122,10 +122,10 @@
 
                     <div class="d-flex align-center">
                       <v-avatar color="accent" size="36">
-                        <v-img :src=item.author.image></v-img>
+                        <v-img :src=getAuthorFromRecipe(item.author).image></v-img>
                       </v-avatar>
 
-                      <div class="pl-2">{{ item.author.name }} · {{ item.date }}</div>
+                      <div class="pl-2">{{ getAuthorFromRecipe(item.author).email }} · {{ item.date }}</div>
                     </div>
                   </div>
                 </v-col>
@@ -159,35 +159,61 @@ export default {
     return {
       nutrients: '',
       ingredients: [],
-      recipe: [],
-      category: [],
-      user: [],
+      recipes: [],
+      categories: [],
+      users: [],
       sortByDate: sortByDate,
-      randomId: randomId,
       random: random,
+      randomID: ''
     }
   },
-  created() {
+  async created() {
     // Fetch the data before rendering
-    axios.get(`http://localhost:3000/recipes`)
-      .then(response => {
-        this.recipe = response.data
-        console.log(this.recipe)
-        axios.get(`http://localhost:3000/categories/${randomId}`)
-            .then(response => {
-              this.category = response.data[0]
-            })
-            .catch(error => {
-              console.log(error)
-            })
-        axios.get(`http://localhost:3000/users/${this.recipe.author}`)
-            .then(response => {
-              this.user = response.data[0]
-            })
-            .catch(error => {
-              console.log(error)
-            })
-      })
+    await this.getRecipes()
+    await this.getCategories()
+    await this.getUsers()
+    await this.generateRandomID(1, this.recipes.length)
+
+  },
+  methods: {
+    async getRecipes() {
+      try {
+        const response = await axios.get(`http://localhost:3000/recipes/`)
+        this.recipes = response.data
+        console.log(this.recipes)
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async getCategories() {
+      try {
+        const response = await axios.get(`http://localhost:3000/categories/`)
+        this.categories = response.data
+        console.log(this.categories)
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async getUsers() {
+      try {
+        const response = await axios.get(`http://localhost:3000/users/`)
+        this.users = response.data
+        console.log(this.users)
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    generateRandomID(min, max){
+      this.randomID = Math.floor(Math.random() * (max - min + 1)) + min;
+      console.log("This is in generateRandomID "+randomId)
+      return this.randomID
+    },
+    getCategoryFromRecipe(categoryID){
+      return this.categories[categoryID-1]
+    },
+    getAuthorFromRecipe(userID){
+      return this.users[userID-1];
+    }
   }
 };
 </script>
