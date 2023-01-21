@@ -4,7 +4,7 @@
       <v-card class="py-6" style="border-radius: 15px;">
         <v-card-title class="d-flex justify-center">
           <div class="text-h4">
-            Anmeldung
+            Sign Up
           </div>
         </v-card-title>
         <v-card-text>
@@ -60,7 +60,7 @@ export default {
 },
   methods: {
     async submitForm(){
-      const response = await axios.post('http://localhost:8081/auth/register', this.form)
+      const response = await axios.post('http://localhost:3000/auth/register', this.form)
           .then(function (response) {
             console.log(response);
           })

@@ -65,7 +65,7 @@ CREATE TABLE `events` (
   KEY `users_UID_idx` (`author`),
   KEY `users_idx` (`author`),
   CONSTRAINT `recipes_UID` FOREIGN KEY (`recipe`) REFERENCES `recipes` (`recipes_UID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `users` FOREIGN KEY (`author`) REFERENCES `users` (`users_UID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `users` FOREIGN KEY (`author`) REFERENCES `users` (`users_UID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -100,7 +100,7 @@ CREATE TABLE `recipes` (
   UNIQUE KEY `uid_UNIQUE` (`recipes_UID`),
   KEY `categories_UID_idx` (`category`),
   KEY `users_UID_idx` (`author`),
-  CONSTRAINT `categories_UID` FOREIGN KEY (`category`) REFERENCES `categories` (`categories_UID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `categories_UID` FOREIGN KEY (`category`) REFERENCES `categories` (`categories_UID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `users_UID` FOREIGN KEY (`author`) REFERENCES `users` (`users_UID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;

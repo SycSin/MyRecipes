@@ -31,6 +31,18 @@ const User = {
             return error;
         }
     },
+    async getUserByEmail(email) {
+        try {
+            const conn = await pool.getConnection();
+            const rows = await conn.query('SELECT * FROM users WHERE email = ?', [email]);
+            conn.release();
+            return rows;
+        } catch (error) {
+            console.log(error);
+            return error;
+        }
+    }
+    ,
     async addUser(user) {
         try {
             const conn = await pool.getConnection();
@@ -77,10 +89,10 @@ const User = {
             return error;
         }
     },
-    async deleteUser(id) {
+    async deleteUser(email) {
         try {
             const conn = await pool.getConnection();
-            const rows = await conn.query('DELETE FROM users WHERE users_UID = ?', [id]);
+            const rows = await conn.query('DELETE FROM users WHERE email = ?', [email]);
             conn.release();
             return rows;
         } catch (error) {
