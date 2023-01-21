@@ -89,7 +89,7 @@
           Copyright &copy;
           <a
               class="white--text"
-              href="https://heroui.net"
+              href="https://www.myrecipes.at"
               rel="noopener noreferrer"
               target="_blank"
           >MyRecipes</a

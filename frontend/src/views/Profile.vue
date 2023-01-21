@@ -42,7 +42,7 @@
               Edit
             </v-btn>
             <v-btn color="red" class="ml-3 text-capitalize" @click.prevent="deleteAccount">
-              Profil löschen
+             Delete Profile
             </v-btn>
           </div>
         </v-card-text>
@@ -64,8 +64,8 @@ const config = {
 export default {
   data() {
     return {
-      username: '',
       email: '',
+      image: '',
       password: '',
       newPassword: '',
       formReset: {},
@@ -105,7 +105,7 @@ export default {
     }
   },
   mounted() {
-    const response = axios.get('http://localhost:3000/users/getSelf/:authToken', config
+    const response = axios.get(`http://localhost:3000/auth/getSelf/${localStorage.getItem('token')}`, config
     ).then(
         (response) => {
             this.email = response.data.email;
