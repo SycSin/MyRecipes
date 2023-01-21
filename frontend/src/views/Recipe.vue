@@ -225,7 +225,7 @@ export default {
   },
   data() {
     return {
-      nutrients: '',
+      nutrients: [],
       ingredients: [],
       recipe: [],
       category: [],
@@ -234,7 +234,7 @@ export default {
   },
   methods: {
     async getNutrients() {
-      this.ingredients = this.recipe.ingredients;
+      this.ingredients = this.recipe.ingredients.split(",");
       await axios({
         method: 'post',
         url: 'https://api.edamam.com/api/nutrition-details',
@@ -245,7 +245,21 @@ export default {
         data: {
           ingr: this.ingredients
         }
-      }).then(response => (this.nutrients = response.data.totalNutrientsKCal))
+      }).then(response => {
+          //this.nutrients = response.data.totalNutrients;
+        const energy = response.data.totalNutrients.ENERC_KCAL;
+        energy.quantity = Math.round(energy.quantity)
+        const protein = response.data.totalNutrients.PROCNT;
+        protein.quantity = Math.round(protein.quantity)
+        const fat = response.data.totalNutrients.FAT;
+        fat.quantity = Math.round(fat.quantity)
+        fat.label = "Fat"
+        const carbs = response.data.totalNutrients.CHOCDF;
+        carbs.quantity = Math.round(carbs.quantity)
+        carbs.label = "Carbohydrates"
+        this.nutrients.push(energy, protein, fat, carbs)
+        }
+      )
     },
     getDateFromRecipe() {
       this.date = new Date(this.recipe.date)
