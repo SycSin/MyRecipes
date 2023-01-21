@@ -161,26 +161,23 @@ export default {
       }
     ],
   }),
-  methods:{
+  methods: {
     logout() {
       localStorage.removeItem('token');
       this.$router.push('/');
       location.reload();
     },
-    generateRandomID(min, max){
-      return Math.floor(Math.random() * (max - min + 1)) + min;
+    computed: {
+      isLoggedIn() {
+        return localStorage.getItem('token');
+      }
     },
-  },
-  computed: {
-    isLoggedIn(){
-      return localStorage.getItem('token');
+    mounted() {
+      const thisInstance = this
+      this.$root.$on('logout', function () {
+        thisInstance.logout();
+      })
     }
-  },
-  mounted() {
-    const thisInstance = this
-    this.$root.$on('logout', function(){
-      thisInstance.logout();
-    })
   }
 };
 </script>
