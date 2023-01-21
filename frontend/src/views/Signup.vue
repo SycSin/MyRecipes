@@ -47,7 +47,6 @@ export default {
   data () {
   return {
     form: {
-      username: '',
       email: '',
       password: ''
     },
@@ -60,9 +59,9 @@ export default {
 },
   methods: {
     async submitForm(){
-      const response = await axios.post('http://localhost:3000/auth/register', this.form)
+      const response = await axios.post('http://localhost:3000/auth/signup', this.form)
           .then(function (response) {
-            console.log(response);
+            //console.log(response);
           })
           .catch(function (error) {
             console.log(error);

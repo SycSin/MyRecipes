@@ -54,7 +54,7 @@ export default {
   },
   methods: {
     async login() {
-      const response = await axios.post('http://localhost:3000/auth/login',
+      await axios.post('http://localhost:3000/auth/login',
           {
             email: this.email,
             password: this.password
@@ -64,13 +64,13 @@ export default {
               'Content-Type': 'application/json'
             }
           }
-      ).then((response) => localStorage.setItem('token', response.data.authToken))
+      ).then((response) => localStorage.setItem('token', response.data[0].authToken))
           .finally(() => {
-            this.$router.push('/');
-            location.reload();
+            //this.$router.push('/');
+            //location.reload();
 
           })
-      // console.log(localStorage.getItem('token'));
+      console.log("This is the local storage: " + localStorage.getItem('token'));
     }
   },
 };
