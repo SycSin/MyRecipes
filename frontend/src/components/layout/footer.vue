@@ -110,10 +110,6 @@ export default {
         href: "https://github.com/SycSin"
       },
       {
-        text: "GW",
-        href: "https://github.com/WildingGerald"
-      },
-      {
         text: "tacsi566",
         href: "https://github.com/tacsi566"
       }

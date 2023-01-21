@@ -24,6 +24,19 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+router.get('/getSelf/:authToken', async (req, res) => {
+  try {
+    const user = await User.getSelf(req.params.authToken);
+    if (!user.length) {
+      res.status(404).json({ message: 'User not found' });
+    } else {
+      res.status(200).json(user);
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to retrieve user', error });
+  }
+});
+
 router.post('/', async (req, res) => {
   if (!req.body.email || !req.body.password) {
     res.status(400).json({ message: 'Please provide an email, and password' });

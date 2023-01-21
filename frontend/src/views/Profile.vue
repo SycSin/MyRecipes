@@ -5,25 +5,25 @@
       <v-card class="py-6" style="border-radius: 15px;">
         <v-card-title class="d-flex justify-center">
           <div class="text-h4">
-            Profil
+            Profile
           </div>
         </v-card-title>
         <v-card-text>
           <v-text-field
-              label="Benutzer"
-              v-model="username"
-              name="user"
+              label="E-Mail"
+              v-model="email"
+              name="email"
               type="text"
-              placeholder="Benutzer"
+              placeholder="E-Mail"
               required
               outlined
           ></v-text-field>
           <v-text-field
-              label="Mail"
-              v-model="email"
-              name="title"
+              label="Image URL"
+              v-model="image"
+              name="URL"
               type="text"
-              placeholder="E-Mail"
+              placeholder="Image URL"
               required
               outlined
           ></v-text-field>
@@ -39,7 +39,7 @@
           ></v-text-field>
           <div class="text-right" style="margin-top: 30px;">
             <v-btn color="accent" class="ml-3 text-capitalize" @click.prevent="updateAccount">
-              Editieren
+              Edit
             </v-btn>
             <v-btn color="red" class="ml-3 text-capitalize" @click.prevent="deleteAccount">
               Profil löschen

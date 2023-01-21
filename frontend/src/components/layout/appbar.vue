@@ -80,12 +80,11 @@
             <v-btn
                 v-if="isLoggedIn"
                 color="accent"
-                :target="_black"
                 href="/profile"
                 to="/profile"
                 class="ml-3 text-capitalize"
             ><v-icon left>mdi-account</v-icon>
-              Profil</v-btn>
+              Profile</v-btn>
             <v-btn
                 v-else
                 color="primary"
@@ -167,17 +166,17 @@ export default {
       this.$router.push('/');
       location.reload();
     },
-    computed: {
-      isLoggedIn() {
-        return localStorage.getItem('token');
-      }
-    },
-    mounted() {
-      const thisInstance = this
-      this.$root.$on('logout', function () {
-        thisInstance.logout();
-      })
+  },
+  computed: {
+    isLoggedIn() {
+      return localStorage.getItem('token');
     }
+  },
+  mounted() {
+    const thisInstance = this
+    this.$root.$on('logout', function () {
+      thisInstance.logout();
+    })
   }
 };
 </script>
