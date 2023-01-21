@@ -24,7 +24,7 @@
                   <v-img :src="getAuthorFromRecipe(recipes[randomID-1].author).image"></v-img>
                 </v-avatar>
 
-                <div class="text-h6 pl-2">{{ this.getAuthorFromRecipe(recipes[randomID-1].author).email }} · {{ recipes[randomID-1].date }}</div>
+                <div class="text-h6 pl-2">{{ this.getAuthorFromRecipe(recipes[randomID-1].author).email }} · {{ getDateFromRecipe(this.recipes[randomID-1].recipes_UID) | formatDate }}</div>
               </v-col>
             </v-row>
           </v-card-text>
@@ -81,7 +81,7 @@
                             <v-img :src="getAuthorFromRecipe(item.author).image"></v-img>
                           </v-avatar>
 
-                          <div class="pl-2">{{ getAuthorFromRecipe(item.author).email }} · {{ item.date }}</div>
+                          <div class="pl-2">{{ getAuthorFromRecipe(item.author).email }} · {{ getDateFromRecipe(item.recipes_UID) | formatDate }}</div>
                         </div>
                       </v-card-text>
                     </v-card>
@@ -125,7 +125,7 @@
                         <v-img :src=getAuthorFromRecipe(item.author).image></v-img>
                       </v-avatar>
 
-                      <div class="pl-2">{{ getAuthorFromRecipe(item.author).email }} · {{ item.date }}</div>
+                      <div class="pl-2">{{ getAuthorFromRecipe(item.author).email }} · {{ getDateFromRecipe(item.recipes_UID) | formatDate }}</div>
                     </div>
                   </div>
                 </v-col>
@@ -173,7 +173,7 @@ export default {
         this.categories = categoryResponse.data;
         const userResponse = await axios.get(`http://localhost:3000/users`);
         this.users = userResponse.data;
-        this.generateRandomId(1, this.recipes.length-1);
+        this.generateRandomId(1, this.recipes.length - 1);
       } catch (error) {
         console.log(error);
       }
@@ -181,11 +181,11 @@ export default {
     generateRandomId(min, max) {
       this.randomID = Math.floor(Math.random() * (max - min + 1)) + min;
     },
-    getCategoryFromRecipe(categoryID){
-      return this.categories[categoryID-1];
+    getCategoryFromRecipe(categoryID) {
+      return this.categories[categoryID - 1];
     },
-    getAuthorFromRecipe(userID){
-      return this.users[userID-1];
+    getAuthorFromRecipe(userID) {
+      return this.users[userID - 1];
     },
     sortByDate(collection, nrElements) {
       return collection.slice().sort((a, b) => {
@@ -199,6 +199,19 @@ export default {
           return 0;
         }
       }).slice(0, nrElements);
+    },
+    getDateFromRecipe(recipeID) {
+      this.date = new Date(this.recipes[recipeID - 1].date)
+      return this.date;
+    },
+  },
+  filters: {
+    formatDate(value) {
+      return value.toLocaleDateString("en-UK", {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      });
     }
   },
   created() {
