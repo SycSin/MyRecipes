@@ -22,7 +22,9 @@ router.post('/signup', async (req, res) => {
     } else {
         try {
             const newUser = await User.addUser(req.body);
-            res.status(200).json({ message: 'User added'});
+            const authToken = await User.getTokenFromUser(req.body.email);
+            console.log(newUser);
+            res.status(200).json({ message: 'User added', authToken: authToken});
         } catch (error) {
             res.status(500).json({ message: 'Failed to add user', error });
         }

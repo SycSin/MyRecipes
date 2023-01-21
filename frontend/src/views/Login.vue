@@ -12,8 +12,8 @@
           <form ref="form" @submit.prevent="login()">
             <v-text-field
                 label="E-Mail"
-                v-model="username"
-                name="username"
+                v-model="email"
+                name="email"
                 type="text"
                 placeholder="E-Mail"
                 required
@@ -48,7 +48,7 @@ export default {
   name: "Login",
   data() {
     return {
-      username: '',
+      email: '',
       password: '',
     };
   },
@@ -56,7 +56,7 @@ export default {
     async login() {
       const response = await axios.post('http://localhost:3000/auth/login',
           {
-            username: this.username,
+            email: this.email,
             password: this.password
           },
           {

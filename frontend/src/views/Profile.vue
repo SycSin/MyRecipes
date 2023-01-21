@@ -78,7 +78,7 @@ export default {
   },
   methods: {
     async submitForm() {
-      const response = await axios.post('http://localhost:8081/auth/register', this.form)
+      const response = await axios.post('http://localhost:3000/auth/signup', this.form)
           .then(function (response) {
             console.log(response);
           })
@@ -89,14 +89,13 @@ export default {
       await this.$router.push('/login');
     },
     async deleteAccount() {
-      await axios.delete('http://localhost:8081/user/deleteUser', config)
+      await axios.delete('http://localhost:3000/auth/', config)
           .then(() => localStorage.removeItem('token'))
           .finally(() => this.$root.$emit('logout'))
     },
     updateAccount() {
-      axios.put('http://localhost:8081/user/updateUser', {
+      axios.put('http://localhost:3000/users/', {
         password: this.password,
-        username: this.username,
         email: this.email
       },config).finally(() => {
             window.alert("Account updated");
@@ -106,10 +105,11 @@ export default {
     }
   },
   mounted() {
-    const response = axios.get('http://localhost:8081/user/getSelf', config
+    const response = axios.get('http://localhost:3000/users/getSelf/:authToken', config
     ).then(
-        (response) => {this.username = response.data.username;
-            this.email = response.data.email;}
+        (response) => {
+            this.email = response.data.email;
+        }
     )
   }
 }

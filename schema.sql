@@ -126,6 +126,7 @@ CREATE TABLE `users` (
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `image` varchar(255) DEFAULT NULL,
+  `authToken` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`users_UID`),
   UNIQUE KEY `uid_UNIQUE` (`users_UID`),
   UNIQUE KEY `email_UNIQUE` (`email`)

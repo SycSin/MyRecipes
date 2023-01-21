@@ -9,5 +9,6 @@ ENV NODE_ENV=production
 RUN npm install
 RUN npm install mariadb
 RUN npm install --save cors
+RUN npm install jsonwebtoken
 COPY . /
 CMD ["node", "bin/www"]

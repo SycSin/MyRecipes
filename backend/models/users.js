@@ -1,4 +1,5 @@
 const mariadb = require('mariadb');
+const jwt = require('jsonwebtoken');
 
 const pool = mariadb.createPool({
     host: 'db',
@@ -41,22 +42,36 @@ const User = {
             console.log(error);
             return error;
         }
+    },
+    async getTokenFromUser(email){
+        try {
+            const conn = await pool.getConnection();
+            const rows = await conn.query('SELECT authToken FROM users WHERE email = ?', [email]);
+            conn.release();
+            return rows;
+        } catch (error) {
+            console.log(error);
+            return error;
+        }
     }
     ,
     async addUser(user) {
         try {
             const conn = await pool.getConnection();
+            const payload = user.email;
+            const secret = user.password;
+            const token = jwt.sign(payload, secret);
             let rows;
             if(user.image != null) {
                 rows = await conn.query(
-                    'INSERT INTO users (email, password, image) VALUES (?, ?, ?)',
-                    [user.email, user.password, user.image]
+                    'INSERT INTO users (email, password, image, authToken) VALUES (?, ?, ?, ?)',
+                    [user.email, user.password, user.image, token]
                 );
             }
             else{
                  rows = await conn.query(
-                    'INSERT INTO users (email, password) VALUES (?, ?)',
-                    [user.email, user.password]
+                    'INSERT INTO users (email, password, authToken) VALUES (?, ?, ?)',
+                    [user.email, user.password, token]
                 );
             }
             conn.release();
@@ -65,7 +80,8 @@ const User = {
             console.log(error);
             return error;
         }
-    },
+    }
+    ,
     async updateUser(id, user) {
         try {
             const conn = await pool.getConnection();
@@ -93,6 +109,17 @@ const User = {
         try {
             const conn = await pool.getConnection();
             const rows = await conn.query('DELETE FROM users WHERE email = ?', [email]);
+            conn.release();
+            return rows;
+        } catch (error) {
+            console.log(error);
+            return error;
+        }
+    },
+    async getSelf(authToken){
+        try {
+            const conn = await pool.getConnection();
+            const rows = await conn.query('SELECT FROM users WHERE authToken = ?', [authToken]);
             conn.release();
             return rows;
         } catch (error) {
