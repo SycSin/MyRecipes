@@ -67,7 +67,7 @@ export default {
       email: '',
       image: '',
       password: '',
-      newPassword: '',
+      id: '',
       formReset: {},
       showPassword: false,
       rules: {
@@ -89,26 +89,30 @@ export default {
       await this.$router.push('/login');
     },
     async deleteAccount() {
-      await axios.delete('http://localhost:3000/auth/', config)
+      await axios.delete(`http://localhost:3000/users/${this.id}`, config)
           .then(() => localStorage.removeItem('token'))
           .finally(() => this.$root.$emit('logout'))
     },
     updateAccount() {
-      axios.put('http://localhost:3000/users/', {
+      axios.put(`http://localhost:3000/users/${this.id}`, {
         password: this.password,
-        email: this.email
+        email: this.email,
+        image: this.image
       },config).finally(() => {
             window.alert("Account updated");
-            this.$router.push('/');
+            //this.$router.push('/');
           }
       )
     }
   },
-  mounted() {
-    const response = axios.get(`http://localhost:3000/auth/getSelf/${localStorage.getItem('token')}`, config
+  created() {
+    axios.get(`http://localhost:3000/auth/getSelf/${localStorage.getItem('token')}`, config
     ).then(
         (response) => {
-            this.email = response.data.email;
+          this.email = response.data[0].email;
+          this.id = response.data[0].users_UID;
+          this.image = response.data[0].image;
+          this.password = response.data[0].password;
         }
     )
   }

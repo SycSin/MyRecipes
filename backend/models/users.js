@@ -105,10 +105,10 @@ const User = {
             return error;
         }
     },
-    async deleteUser(email) {
+    async deleteUser(id) {
         try {
             const conn = await pool.getConnection();
-            const rows = await conn.query('DELETE FROM users WHERE email = ?', [email]);
+            const rows = await conn.query('DELETE FROM users WHERE users_UID = ?', [id]);
             conn.release();
             return rows;
         } catch (error) {
@@ -119,7 +119,7 @@ const User = {
     async getSelf(authToken){
         try {
             const conn = await pool.getConnection();
-            const rows = await conn.query('SELECT FROM users WHERE authToken = ?', [authToken]);
+            const rows = await conn.query('SELECT * FROM users WHERE authToken = ?', [authToken]);
             conn.release();
             return rows;
         } catch (error) {
