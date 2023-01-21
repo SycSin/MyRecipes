@@ -39,7 +39,7 @@
                       <v-img :src="user.image"></v-img>
                     </v-avatar>
 
-                    <div class="pl-2 text-body-1">{{ user.email }} · {{ recipe.date }}</div>
+                    <div class="pl-2 text-body-1">{{ user.email }} · {{ getDateFromRecipe() | formatDate }}</div>
                   </div>
 
                   <div class="d-flex align-center">
@@ -51,7 +51,7 @@
 
                       <v-chip color="transparent" small>
                         <v-icon left>mdi-comment-outline</v-icon>
-                        7 Comment
+                        0 Comments
                       </v-chip>
                     </div>
                   </div>
@@ -128,11 +128,11 @@
                         </div>
 
                         <div class="text-subtitle-1 my-2">
-                          Hi! I am {{ user.email }}!
+                          Hi! I hope you like my recipe!
                         </div>
 
                         <div class="text-subtitle-1">
-                          Schreib mir >
+                          Follow me >
                           <v-btn icon>
                             <v-icon>mdi-facebook</v-icon>
                           </v-btn>
@@ -163,12 +163,12 @@
                           </div>
 
                           <div class="text-h6 primary--text pl-2">
-                            <div class="text-subtitle-1">Vorheriges Rezept</div>
+                            <div class="text-subtitle-1">Previous Recipe</div>
                             <!-- {{ getRecipe(anotherRandomId()).title }} -->
                             {{ recipe.title }}
                             <p class="text--secondary">
                               <!-- von {{ getUser(getRecipe(anotherRandomId()).author).email }} -->
-                              von {{ user.email }}
+                              by {{ user.email }}
                             </p>
                           </div>
                         </div>
@@ -182,13 +182,13 @@
                               <!-- :to="'/recipes/'+randomId"> -->
                         <div class="d-flex align-center text-right">
                           <div class="text-h6 primary--text pr-2">
-                            <div class="text-subtitle-1">Nächstes Rezept</div>
+                            <div class="text-subtitle-1">Next Recipe</div>
                             <!-- {{ getRecipe(randomId).title }} -->
                             {{ recipe.title }}
                             <br>
                             <p class="text--secondary">
                               <!-- von {{ getUser(getRecipe(randomId).author).email }} -->
-                              von {{ user.email }}
+                              by {{ user.email }}
                             </p>
                           </div>
 
@@ -229,45 +229,58 @@ export default {
       ingredients: [],
       recipe: [],
       category: [],
-      user: []
+      user: [],
     }
-  },
-  created(){
-    // Fetch the data before rendering
-    axios.get(`http://localhost:3000/recipes/${this.$route.params.id}`)
-      .then(response => {
-        this.recipe = response.data[0]
-        axios.get(`http://localhost:3000/categories/${this.recipe.category}`)
-            .then(response => {
-              this.category = response.data[0]
-            })
-            .catch(error => {
-              console.log(error)
-            })
-        axios.get(`http://localhost:3000/users/${this.recipe.author}`)
-            .then(response => {
-              this.user = response.data[0]
-            })
-            .catch(error => {
-              console.log(error)
-        })
-    })
   },
   methods: {
-    async getNutrients(){
+    async getNutrients() {
       this.ingredients = this.recipe.ingredients;
-        await axios({
-          method: 'post',
-          url: 'https://api.edamam.com/api/nutrition-details',
-          params: {
-            app_id:"98865d34",
-            app_key:"7a1d80dc680e7c8c1349d5a92b542102"
-          },
-          data: {
-            ingr: this.ingredients
-          }
-        }).then(response => (this.nutrients=response.data.totalNutrientsKCal))
-      },
+      await axios({
+        method: 'post',
+        url: 'https://api.edamam.com/api/nutrition-details',
+        params: {
+          app_id: "98865d34",
+          app_key: "7a1d80dc680e7c8c1349d5a92b542102"
+        },
+        data: {
+          ingr: this.ingredients
+        }
+      }).then(response => (this.nutrients = response.data.totalNutrientsKCal))
+    },
+    getDateFromRecipe() {
+      this.date = new Date(this.recipe.date)
+      return this.date;
+    },
+  },
+  filters: {
+    formatDate(value) {
+      return value.toLocaleDateString("en-UK", {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      });
     }
-  };
+  },
+  created() {
+    // Fetch the data before rendering
+    axios.get(`http://localhost:3000/recipes/${this.$route.params.id}`)
+        .then(response => {
+          this.recipe = response.data[0]
+          axios.get(`http://localhost:3000/categories/${this.recipe.category}`)
+              .then(response => {
+                this.category = response.data[0]
+              })
+              .catch(error => {
+                console.log(error)
+              })
+          axios.get(`http://localhost:3000/users/${this.recipe.author}`)
+              .then(response => {
+                this.user = response.data[0]
+              })
+              .catch(error => {
+                console.log(error)
+              })
+        })
+  },
+};
 </script>
