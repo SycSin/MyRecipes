@@ -10,16 +10,7 @@
         <v-card-text>
           <form ref="form" @submit.prevent="submitForm()">
               <v-text-field
-                  label="Benutzer"
-                  v-model="form.username"
-                  name="user"
-                  type="text"
-                  placeholder="Benutzer"
-                  required
-                  outlined
-              ></v-text-field>
-              <v-text-field
-                  label="Mail"
+                  label="E-Mail"
                   v-model="form.email"
                   name="title"
                   type="text"
@@ -33,7 +24,7 @@
                   :rules="[rules.required, rules.min]"
                   validate-on-blur
                   :type="showPassword ? 'text' : 'password'"
-                  label="Passwort"
+                  label="Password"
                   class="mb-6"
                   @click:append="showPassword = !showPassword"
               ></v-text-field>

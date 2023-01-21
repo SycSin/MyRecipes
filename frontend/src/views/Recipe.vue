@@ -60,10 +60,10 @@
                 <v-divider class="my-4"></v-divider>
 
 
-                <v-btn @click="getNutrients" color="accent">Nährwerte Anzeigen </v-btn>
+                <v-btn @click="getNutrients" color="accent"> Display Nutrients </v-btn>
 
                 <div class="text-h5 primary--text font-weight-bold" v-if="nutrients">
-                  Nährwerte:
+                  Nutrients:
                   <div class="text-subtitle-1 primary--text font-weight-medium mt-5">
                     <ul>
                       <li v-for="item in nutrients">
@@ -74,7 +74,7 @@
                 </div>
 
                 <div class="text-h5 primary--text font-weight-bold">
-                  Zutaten:
+                  Ingredients:
                   <div class="text-subtitle-1 primary--text font-weight-medium mt-5">
                     <ul>
                       {{ recipe.ingredients }}
@@ -84,7 +84,7 @@
 
 
                 <div class="text-h5 primary--text font-weight-bold">
-                  Schritte:
+                  Steps:
                   <div class="text-subtitle-1 primary--text font-weight-medium mt-5">
                     <ul>
                       <li class="my-2"> {{ recipe.steps }} </li>
@@ -95,7 +95,7 @@
                 <div class="d-flex align-center justify-space-between mt-8">
                   <div class="text-h5">
                     <span class="accent--text">
-                      Rezept teilen >
+                      Share >
                     </span>
                     <v-btn icon large>
                       <v-icon color="primary" large>mdi-facebook</v-icon>

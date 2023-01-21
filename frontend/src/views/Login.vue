@@ -11,11 +11,11 @@
         <v-card-text>
           <form ref="form" @submit.prevent="login()">
             <v-text-field
-                label="Benutzername"
+                label="E-Mail"
                 v-model="username"
                 name="username"
                 type="text"
-                placeholder="username"
+                placeholder="E-Mail"
                 required
                 outlined
             ></v-text-field>

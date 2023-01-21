@@ -89,18 +89,16 @@
             <v-btn
                 v-else
                 color="primary"
-                :target="_black"
                 href="/signup"
                 to="/signup"
                 class="ml-3 text-capitalize"
             ><v-icon left>mdi-account-plus</v-icon>
-              Registrieren</v-btn>
+              Sign Up</v-btn>
 
             <v-btn
                 v-if="isLoggedIn"
                 v-on:click="logout"
                 color="red"
-                :target="_black"
                 href="/home"
                 to="/home"
                 class="ml-3 text-capitalize"
@@ -109,7 +107,6 @@
             <v-btn
                 v-else
                 color="accent"
-                :target="_black"
                 href="/login"
                 to="/login"
                 class="ml-3 text-capitalize"
@@ -123,16 +120,15 @@
 </template>
 
 <script>
-import {randomId, random} from '../../resources/js/data';
+
 
 export default {
   data: () => ({
-    randomId: randomId,
-    random: random,
+    randomId: '',
     drawer: null,
     btnItems: [
       {
-        text: "Registrieren",
+        text: "Sign Up",
         to: "/signup",
         target: "_black",
         color: "primary",
@@ -148,29 +144,32 @@ export default {
     ],
     barItems: [
       {
-        title: "Startseite",
+        title: "Home",
         to: "/",
       },
       {
-        title: "Kategorien",
+        title: "Categories",
         to: "/categories",
       },
       {
-        title: "Rezept",
-        to: "/recipes/"+randomId,
+        title: "Recipes",
+        to: "/recipes/"+1,
       },
       {
-        title: "Authoren",
+        title: "Authors",
         to: "/authors",
       }
     ],
   }),
   methods:{
-    logout(){
+    logout() {
       localStorage.removeItem('token');
       this.$router.push('/');
       location.reload();
-    }
+    },
+    generateRandomID(min, max){
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    },
   },
   computed: {
     isLoggedIn(){

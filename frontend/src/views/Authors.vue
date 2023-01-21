@@ -5,7 +5,7 @@
         <div>
           <div>
             <div class="my-2">
-              <h2 class="text-h4 font-weight-bold">Unsere Authoren</h2>
+              <h2 class="text-h4 font-weight-bold">Our Authors</h2>
             </div>
 
             <v-row>
@@ -86,7 +86,7 @@
 import { authors } from '../resources/js/data';
 
 export default {
-    name: "Authoren",
+    name: "Authors",
     components: {
     },
     data(){

@@ -5,9 +5,9 @@
         <div>
           <div>
             <div>
-              <h2 class="text-h3 font-weight-bold">Kategorien</h2>
+              <h2 class="text-h3 font-weight-bold">Categories</h2>
 
-              <h4 class="text-h6">Hier findest du die Kategorien und deren dazugehörige Rezepte gelistet.</h4>
+              <h4 class="text-h6">Here you can find the categories with their corresponding recipes</h4>
             </div>
 
             <v-divider class="my-4"></v-divider>
@@ -83,7 +83,7 @@
 import { recipes, authors, categories, getRecipesByCategory } from '../resources/js/data';
 
 export default {
-  name: "Kategorien",
+  name: "Categories",
   components: {
     siderbar: () => import("@/components/details/sidebar"),
   },

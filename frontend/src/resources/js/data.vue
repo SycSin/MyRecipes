@@ -8,7 +8,7 @@ import {Day, Month, Weekday} from "dayspan";
 let categories = [
   {
     id: 0,
-    name: "Süßes",
+    name: "Sweets",
   },
   {
     id: 1,
@@ -16,15 +16,15 @@ let categories = [
   },
   {
     id: 2,
-    name: 'Vegetarisch',
+    name: 'Vegetarian',
   },
   {
     id: 3,
-    name: 'Fleisch',
+    name: 'Meat',
   },
   {
     id: 4,
-    name: 'Fisch',
+    name: 'Fish',
   }
 ];
 let authors = [
