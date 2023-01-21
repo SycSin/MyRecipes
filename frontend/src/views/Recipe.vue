@@ -253,10 +253,10 @@ export default {
         protein.quantity = Math.round(protein.quantity)
         const fat = response.data.totalNutrients.FAT;
         fat.quantity = Math.round(fat.quantity)
-        fat.label = "Fat"
+        fat.label = "Fat";
         const carbs = response.data.totalNutrients.CHOCDF;
         carbs.quantity = Math.round(carbs.quantity)
-        carbs.label = "Carbohydrates"
+        carbs.label = "Carbohydrates";
         this.nutrients.push(energy, protein, fat, carbs)
         }
       )
