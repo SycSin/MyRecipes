@@ -30,6 +30,16 @@ Our application is built to run via Docker on any environment.
 * [Docker](https://docs.docker.com/get-docker/)
 * [Docker Compose](https://docs.docker.com/compose/install/#install-compose)
 
+### Automated deployment (Linux, OSX)
+On Linux or OSX it is recommended to use the `deploy.sh` script in order to deploy the application and load the initial data into the database
+This can be done with the following:
+```shell
+chmod u+x deploy.sh
+./deploy.sh
+```
+When developing locally, it is recommended to use `http://localhost:3000` as the API via axios on the frontend.
+
+## Manual deployment (Windows, OSX, Linux): 
 ### Creating the image
 In order to create a Docker image the `Dockerfile` as well as the `docker-compose.yml` file are required.
 
@@ -38,24 +48,15 @@ The `Dockerfile` is a sequence of commands for the building process of the image
 Issue the following command to build and deploy the application:
 ```shell
 docker-compose up -d --build
+
 ```
+
+### Loading the data into the database
+```shell
+docker exec -i myrecipes-db mysql -uroot -pexample < schema.sql
+docker exec -i myrecipes-db mysql -uroot -pexample < seed.sql
+````
 
 ### Preview
 After deploying the application via Docker, you can preview the application via the following link:
 > http://127.0.0.1:8080
-
-## Deployments
-This section is only required in case the live-update does not work as expected.
-
-### Development
-When developing please issue the following command to build the image:
-```shell
-docker exec -t myrecipes-frontend npm run serve
-```
-The `serve` command is used for live-updates of the code on the webpage.
-
-### Production
-Live updates are not recommended in productive environments, therefore it is best-practise to build the application with the following command:
-```shell
-docker exec -t myrecipes-frontend npm run build
-```
