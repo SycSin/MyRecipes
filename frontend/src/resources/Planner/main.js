@@ -17,7 +17,7 @@ import 'moment/locale/ca'
 import 'moment/locale/nl'
 import * as moment from 'moment'
 
-moment.locale('de')
+moment.locale('en')
 
 Vue.config.productionTip = false
 

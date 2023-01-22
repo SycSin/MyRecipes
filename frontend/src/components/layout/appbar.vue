@@ -75,6 +75,16 @@
             >{{ item.title }}
             </v-btn
             >
+            <v-btn
+                v-if="isLoggedIn"
+                color="red"
+                href="/planner"
+                to="/planner"
+                class="text-capitalize"
+                exact
+                exact-active-class="accent--text"
+                text
+            >Planner</v-btn>
           </v-col>
           <v-col v-if="$vuetify.breakpoint.mdAndUp" class="text-right">
             <v-btn
@@ -157,7 +167,7 @@ export default {
       {
         title: "Authors",
         to: "/authors",
-      }
+      },
     ],
   }),
   methods: {

@@ -53,7 +53,7 @@
       <v-divider></v-divider>
 
         <div class="pt-4">
-          <v-card v-for="item in authors" :key="item.users_UID" class="d-flex align-center mb-4"
+          <v-card v-for="item in sortByNrOfRecipes()" :key="item.users_UID" class="d-flex align-center mb-4"
                   flat
                   hover
                   to="/authors">
@@ -63,7 +63,7 @@
 
             <div class="pl-2">
               <div class="text-h6">{{ item.email }}</div>
-              <div class="text-subtitle-1">2 Recipes</div>
+              <div class="text-subtitle-1">{{ getNrOfRecipesFromAuthor(item.users_UID) }} Recipes</div>
             </div>
           </v-card>
         </div>
@@ -76,6 +76,7 @@
 
 <script>
 import axios from "axios";
+
 export default {
   data() {
     return {
@@ -112,6 +113,17 @@ export default {
       this.date = new Date(this.recipes[recipeID - 1].date)
       return this.date;
     },
+    getNrOfRecipesFromAuthor(authorID) {
+      return this.recipes.filter(element => element.author === authorID).length;
+    },
+    sortByNrOfRecipes(){
+      let authorsWithRecipeCount = this.authors.map(author => {
+        let recipeCount = this.recipes.filter(recipe => recipe.author === author.uid).length;
+        return {...author, recipeCount};
+      });
+
+      return authorsWithRecipeCount.sort((a, b) => b.recipeCount - a.recipeCount).slice(0,5)
+    }
   },
   created() {
     this.fetchData();

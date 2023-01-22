@@ -10,7 +10,7 @@
               <v-autocomplete
                   :items="recipes"
                   :item-text="item => `${ item.title }`"
-                  label="Rezept"
+                  label="Recipe"
                   v-model="details.title"
                   style="font-size: 20px;"
               ></v-autocomplete>
@@ -119,9 +119,21 @@
 <script>
 import { CalendarEvent, Calendar, Functions as fn } from 'dayspan'
 
-import { recipes } from "../../js/data"
+import axios from "axios";
 
 export default {
+    filters: {
+      formatDate(value) {
+        return value.toLocaleDateString("en-UK", {
+          year: "numeric",
+          month: "long",
+          day: "numeric"
+        });
+      }
+    },
+    created() {
+      this.fetchData();
+    },
 
     name: 'dsCalendarEventCreatePopover',
     props:
@@ -239,10 +251,18 @@ export default {
 
     data: vm => ({
         details: vm.buildDetails(),
-        recipes: recipes,
+        recipes: [],
     }),
     methods:
         {
+          async fetchData() {
+            try {
+              const recipeResponse = await axios.get(`http://localhost:3000/recipes`);
+              this.recipes = recipeResponse.data;
+            } catch (error) {
+              console.log(error);
+            }
+          },
             edit () {
                 var ev = this.getEvent('create-edit')
 

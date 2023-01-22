@@ -113,6 +113,18 @@
                       <v-icon color="primary" large>mdi-instagram</v-icon>
                     </v-btn>
                   </div>
+                  <slot name="calendarAppPrint">
+                    <v-btn
+                        class="ds-add-event-today"
+                        color="primary2"
+                        style="margin-top: 60px"
+                        right
+                        bottom
+                        @click="print"
+                    >
+                      <v-icon>mdi-printer</v-icon>
+                    </v-btn>
+                  </slot>
                 </div>
 
                 <v-divider class="my-8"></v-divider>
@@ -312,6 +324,9 @@ export default {
     redirectAndReload(path){
       this.$router.push({path: `${path}`})
       location.reload();
+    },
+    print(){
+      window.print();
     },
   },
   filters: {

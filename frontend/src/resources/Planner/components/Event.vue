@@ -203,10 +203,21 @@
 
 <script>
 import { Day, Calendar, CalendarEvent, Schedule, Functions as fn } from 'dayspan'
-import { getRecipeIdByTitle, recipes } from "../../js/data";
+import axios from "axios";
 
 export default {
-
+  filters: {
+    formatDate(value) {
+      return value.toLocaleDateString("en-UK", {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      });
+    }
+  },
+  created() {
+    this.fetchData();
+  },
     name: 'dsEvent',
 
     props:
@@ -339,8 +350,9 @@ export default {
         tab: 'details',
         schedule: new Schedule(),
         details: vm.$dayspan.getDefaultEventDetails(),
-        recipes: recipes,
-        getRecipeIdByTitle: getRecipeIdByTitle,
+        recipes: [],
+        categories: [],
+        users: [],
     }),
 
     watch:
@@ -430,6 +442,29 @@ export default {
 
     methods:
         {
+          async fetchData() {
+            try {
+              const recipeResponse = await axios.get(`http://localhost:3000/recipes`);
+              this.recipes = recipeResponse.data;
+              const categoryResponse = await axios.get(`http://localhost:3000/categories`);
+              this.categories = categoryResponse.data;
+              const userResponse = await axios.get(`http://localhost:3000/users`);
+              this.users = userResponse.data;
+              this.generateRandomId(1, this.recipes.length - 1);
+            } catch (error) {
+              console.log(error);
+            }
+          },
+          getCategoryFromRecipe(categoryID) {
+            return this.categories[categoryID - 1];
+          },
+          getAuthorFromRecipe(userID) {
+            return this.users[userID - 1];
+          },
+          getDateFromRecipe(recipeID) {
+            this.date = new Date(this.recipes[recipeID - 1].date)
+            return this.date;
+          },
             save () {
                 var ev = this.getEvent('save')
 
@@ -516,6 +551,7 @@ export default {
             }
 
         }
+
 }
 </script>
 
