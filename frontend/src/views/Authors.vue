@@ -42,7 +42,7 @@
                         </div>
 
                         <div class="text-body-1 py-4">
-                          Hi! I greated passion is cooking and I love to try out new recipes and share them with the whole world! :)
+                          Hi! My greatest passion is cooking and I love to try out new recipes and share them with the whole world! :)
                         </div>
 
                         <div>

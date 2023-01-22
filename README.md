@@ -2,7 +2,10 @@
 ## Introduction
 MyRecipes is a recipe website which is used to create recipes, rate them and add them to a food planner.
 
-This repository is the source for the **front end** application of [MyRecipes](https://www.myrecipes.at).
+This repository is the source for the application deployed at [MyRecipes](https://www.myrecipes.at).
+
+## MOSCOW Requirements
+
 
 ## Installation
 Our application is built to run via Docker on any environment.
@@ -18,7 +21,7 @@ The `Dockerfile` is a sequence of commands for the building process of the image
 
 Issue the following command to build and deploy the application:
 ```shell
-docker-compose up -d
+docker-compose up -d --build
 ```
 
 ### Preview
