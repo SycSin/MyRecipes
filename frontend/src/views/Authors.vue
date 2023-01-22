@@ -5,11 +5,11 @@
         <div>
           <div>
             <div class="my-2">
-              <h2 class="text-h4 font-weight-bold">Unsere Authoren</h2>
+              <h2 class="text-h4 font-weight-bold">Our Authors</h2>
             </div>
 
             <v-row>
-              <v-col cols="12" md="6" v-for="item in authors" :key="item.id">
+              <v-col cols="12" md="6" v-for="item in users" :key="item.users_UID">
                 <v-hover
                   v-slot:default="{ hover }"
                   open-delay="50"
@@ -38,11 +38,11 @@
                         <div
                           class="text-h5 font-weight-bold primary--text pt-4"
                         >
-                          {{ item.name }}
+                          {{ item.email }}
                         </div>
 
                         <div class="text-body-1 py-4">
-                          {{ item.description }}
+                          Hi! I greated passion is cooking and I love to try out new recipes and share them with the whole world! :)
                         </div>
 
                         <div>
@@ -82,19 +82,38 @@
 </template>
 
 <script>
-
-import { authors } from '../resources/js/data';
+import axios from "axios";
 
 export default {
-    name: "Authoren",
-    components: {
-    },
-    data(){
-      return {
-        authors: authors,
-      }
+  name: "Authors",
+  data() {
+    return {
+      users: [],
     }
-  };
+  },
+  methods: {
+    async fetchData() {
+      try {
+        const userResponse = await axios.get(`http://localhost:3000/users`);
+        this.users = userResponse.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  },
+  filters: {
+    formatDate(value) {
+      return value.toLocaleDateString("en-UK", {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      });
+    }
+  },
+  created() {
+    this.fetchData();
+  },
+};
 </script>
 
 <style lang="scss" scoped>

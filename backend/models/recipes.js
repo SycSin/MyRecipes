@@ -36,7 +36,7 @@ const Recipe = {
             const conn = await pool.getConnection();
             const rows = await conn.query(
                 'INSERT INTO recipes (author, title, description, ingredients, steps, date, image, rating, category) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                [recipe.author, recipe.title, recipe.description, recipe.ingredients, recipe.steps, recipe.date, recipe.image, recipe.rating, recipe.category]
+                [recipe.author, recipe.title, recipe.description, recipe.ingredients, recipe.steps, recipe.date, recipe.image, recipe.rating, recipe.category] // Postman probieren
             );
             conn.release();
             return rows;

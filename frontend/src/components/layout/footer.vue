@@ -89,7 +89,7 @@
           Copyright &copy;
           <a
               class="white--text"
-              href="https://heroui.net"
+              href="https://www.myrecipes.at"
               rel="noopener noreferrer"
               target="_blank"
           >MyRecipes</a
@@ -108,10 +108,6 @@ export default {
       {
         text: "SycSin",
         href: "https://github.com/SycSin"
-      },
-      {
-        text: "GW",
-        href: "https://github.com/WildingGerald"
       },
       {
         text: "tacsi566",

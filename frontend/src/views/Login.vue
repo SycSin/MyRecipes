@@ -11,11 +11,11 @@
         <v-card-text>
           <form ref="form" @submit.prevent="login()">
             <v-text-field
-                label="Benutzername"
-                v-model="username"
-                name="username"
+                label="E-Mail"
+                v-model="email"
+                name="email"
                 type="text"
-                placeholder="username"
+                placeholder="E-Mail"
                 required
                 outlined
             ></v-text-field>
@@ -48,15 +48,15 @@ export default {
   name: "Login",
   data() {
     return {
-      username: '',
+      email: '',
       password: '',
     };
   },
   methods: {
     async login() {
-      const response = await axios.post('http://localhost:8081/auth/login',
+      await axios.post('http://localhost:3000/auth/login',
           {
-            username: this.username,
+            email: this.email,
             password: this.password
           },
           {
@@ -64,13 +64,15 @@ export default {
               'Content-Type': 'application/json'
             }
           }
-      ).then((response) => localStorage.setItem('token', response.data.authToken))
+      )
+          //.if()
+          .then((response) => localStorage.setItem('token', response.data[0].authToken))
           .finally(() => {
             this.$router.push('/');
             location.reload();
 
           })
-      // console.log(localStorage.getItem('token'));
+      console.log("This is the local storage: " + localStorage.getItem('token'));
     }
   },
 };

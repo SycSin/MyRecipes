@@ -5,25 +5,25 @@
       <v-card class="py-6" style="border-radius: 15px;">
         <v-card-title class="d-flex justify-center">
           <div class="text-h4">
-            Profil
+            Profile
           </div>
         </v-card-title>
         <v-card-text>
           <v-text-field
-              label="Benutzer"
-              v-model="username"
-              name="user"
+              label="E-Mail"
+              v-model="email"
+              name="email"
               type="text"
-              placeholder="Benutzer"
+              placeholder="E-Mail"
               required
               outlined
           ></v-text-field>
           <v-text-field
-              label="Mail"
-              v-model="email"
-              name="title"
+              label="Image URL"
+              v-model="image"
+              name="URL"
               type="text"
-              placeholder="E-Mail"
+              placeholder="Image URL"
               required
               outlined
           ></v-text-field>
@@ -39,10 +39,10 @@
           ></v-text-field>
           <div class="text-right" style="margin-top: 30px;">
             <v-btn color="accent" class="ml-3 text-capitalize" @click.prevent="updateAccount">
-              Editieren
+              Edit
             </v-btn>
             <v-btn color="red" class="ml-3 text-capitalize" @click.prevent="deleteAccount">
-              Profil löschen
+             Delete Profile
             </v-btn>
           </div>
         </v-card-text>
@@ -64,10 +64,10 @@ const config = {
 export default {
   data() {
     return {
-      username: '',
       email: '',
+      image: '',
       password: '',
-      newPassword: '',
+      id: '',
       formReset: {},
       showPassword: false,
       rules: {
@@ -78,7 +78,7 @@ export default {
   },
   methods: {
     async submitForm() {
-      const response = await axios.post('http://localhost:8081/auth/register', this.form)
+      const response = await axios.post('http://localhost:3000/auth/signup', this.form)
           .then(function (response) {
             console.log(response);
           })
@@ -89,27 +89,31 @@ export default {
       await this.$router.push('/login');
     },
     async deleteAccount() {
-      await axios.delete('http://localhost:8081/user/deleteUser', config)
+      await axios.delete(`http://localhost:3000/users/${this.id}`, config)
           .then(() => localStorage.removeItem('token'))
           .finally(() => this.$root.$emit('logout'))
     },
     updateAccount() {
-      axios.put('http://localhost:8081/user/updateUser', {
+      axios.put(`http://localhost:3000/users/${this.id}`, {
         password: this.password,
-        username: this.username,
-        email: this.email
+        email: this.email,
+        image: this.image
       },config).finally(() => {
             window.alert("Account updated");
-            this.$router.push('/');
+            //this.$router.push('/');
           }
       )
     }
   },
-  mounted() {
-    const response = axios.get('http://localhost:8081/user/getSelf', config
+  created() {
+    axios.get(`http://localhost:3000/auth/getSelf/${localStorage.getItem('token')}`, config
     ).then(
-        (response) => {this.username = response.data.username;
-            this.email = response.data.email;}
+        (response) => {
+          this.email = response.data[0].email;
+          this.id = response.data[0].users_UID;
+          this.image = response.data[0].image;
+          this.password = response.data[0].password;
+        }
     )
   }
 }

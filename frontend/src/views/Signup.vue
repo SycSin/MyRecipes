@@ -4,22 +4,13 @@
       <v-card class="py-6" style="border-radius: 15px;">
         <v-card-title class="d-flex justify-center">
           <div class="text-h4">
-            Anmeldung
+            Sign Up
           </div>
         </v-card-title>
         <v-card-text>
           <form ref="form" @submit.prevent="submitForm()">
               <v-text-field
-                  label="Benutzer"
-                  v-model="form.username"
-                  name="user"
-                  type="text"
-                  placeholder="Benutzer"
-                  required
-                  outlined
-              ></v-text-field>
-              <v-text-field
-                  label="Mail"
+                  label="E-Mail"
                   v-model="form.email"
                   name="title"
                   type="text"
@@ -33,7 +24,7 @@
                   :rules="[rules.required, rules.min]"
                   validate-on-blur
                   :type="showPassword ? 'text' : 'password'"
-                  label="Passwort"
+                  label="Password"
                   class="mb-6"
                   @click:append="showPassword = !showPassword"
               ></v-text-field>
@@ -56,7 +47,6 @@ export default {
   data () {
   return {
     form: {
-      username: '',
       email: '',
       password: ''
     },
@@ -69,9 +59,9 @@ export default {
 },
   methods: {
     async submitForm(){
-      const response = await axios.post('http://localhost:8081/auth/register', this.form)
+      const response = await axios.post('http://localhost:3000/auth/signup', this.form)
           .then(function (response) {
-            console.log(response);
+            //console.log(response);
           })
           .catch(function (error) {
             console.log(error);

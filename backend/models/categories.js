@@ -12,7 +12,7 @@ const Categories = {
     async getAllCategorys() {
         try {
             const conn = await pool.getConnection();
-            const rows = await conn.query('SELECT * FROM categories');
+            const rows = await conn.query('SELECT * FROM categories ORDER BY categories_UID ASC');
             conn.release();
             return rows;
         } catch (error) {

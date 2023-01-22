@@ -24,6 +24,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+
 router.post('/', async (req, res) => {
   if (!req.body.email || !req.body.password) {
     res.status(400).json({ message: 'Please provide an email, and password' });

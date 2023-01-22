@@ -24,6 +24,9 @@ RUN npm install -g bootstrap bootstrap-vue
 # install vue-template-compiler
 RUN npm install -g vue-template-compiler
 
+# install dayspan-vuetify-2
+RUN npm install --save dayspan-vuetify-2
+
 # installing material design icons for vuetify
 RUN npm install @mdi/font
 

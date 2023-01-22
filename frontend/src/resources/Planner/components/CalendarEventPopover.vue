@@ -7,7 +7,7 @@
                    :style="styleHeader">
 
             <v-toolbar-title slot="extension">
-                <a :href="'recipe/'+getRecipeIdByTitle(details.title)" style="font-size: 25px; font-weight: bold; color: white;">{{ details.title }}</a>
+                <a :href="'recipes/'+getRecipeIdByTitle(details.title)" style="font-size: 25px; font-weight: bold; color: white;">{{ details.title }}</a>
                 <v-icon v-if="details.icon"
                         :style="styleButton">
                     {{ details.icon }}
@@ -93,7 +93,7 @@
 <script>
 import {Calendar, CalendarEvent, Day, Functions as fn, Time} from 'dayspan'
 
-import { recipes, getRecipeIdByTitle } from '../../js/data';
+import axios from "axios";
 
 export default {
 
@@ -218,13 +218,27 @@ export default {
 
   data() {
     return {
-      recipes: recipes,
-      getRecipeIdByTitle: getRecipeIdByTitle,
+      recipes: [],
     }
   },
-
+  created(){
+    this.fetchData();
+  },
   methods:
       {
+        async fetchData() {
+          try {
+            const recipeResponse = await axios.get(`http://localhost:3000/recipes`);
+            this.recipes = recipeResponse.data;
+          } catch (error) {
+            console.log(error);
+          }
+        },
+        getRecipeIdByTitle(title){
+          let recipe = this.recipes.filter(element => element.title === title)
+          console.log(recipe)
+          return recipe[0].recipes_UID;
+        },
         remove () {
           this.$dayspan.getPermission('actionRemove', () => {
             var ev = this.getEvent('remove')

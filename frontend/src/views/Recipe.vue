@@ -7,7 +7,7 @@
             <v-card color="transparent" flat>
               <v-img
                   :aspect-ratio="16 / 9"
-                  :src=recipes[$route.params.id].img
+                  :src=recipe.image
                   gradient="to top, rgba(25,32,72,.4), rgba(25,32,72,.0)"
                   style="border-radius: 16px"
               ></v-img>
@@ -16,30 +16,30 @@
 
                 <div class="text-h4 font-weight-bold primary--text pt-4">
                   <v-row>
-                    <h4>{{ recipes[$route.params.id].title }}</h4>
+                    <h4>{{ recipe.title }}</h4>
                     &nbsp;
-                    <p v-for="i in recipes[$route.params.id].rating" :key="i" class="pa-0" style="font-size: 20px;">
+                    <p v-for="i in recipe.rating" :key="i" class="pa-0" style="font-size: 20px;">
                       &#11088;
                     </p>
                   </v-row>
                 </div>
                 <div>
-                  <v-btn v-for="item in recipes[$route.params.id].categories" :key="item" color="accent" style="margin-right: 5px;" to="/categories/">
-                    {{ item }}
+                  <v-btn :key="category.name" color="accent" style="margin-right: 5px;" to="/categories/">
+                    {{ category.name }}
                   </v-btn>
                 </div>
 
                 <div class="text-body-1 py-4">
-                  {{ recipes[$route.params.id].description }}
+                  {{ recipe.description }}
                 </div>
 
                 <div class="d-flex align-center justify-space-between">
                   <div class="d-flex align-center">
                     <v-avatar color="accent" size="36">
-                      <v-img :src="recipes[$route.params.id].author.image"></v-img>
+                      <v-img :src="user.image"></v-img>
                     </v-avatar>
 
-                    <div class="pl-2 text-body-1">{{ recipes[$route.params.id].author.name }} · {{ recipes[$route.params.id].date }}</div>
+                    <div class="pl-2 text-body-1">{{ user.email }} · {{ getDateFromRecipe() | formatDate }}</div>
                   </div>
 
                   <div class="d-flex align-center">
@@ -51,7 +51,7 @@
 
                       <v-chip color="transparent" small>
                         <v-icon left>mdi-comment-outline</v-icon>
-                        7 Comment
+                        0 Comments
                       </v-chip>
                     </div>
                   </div>
@@ -59,35 +59,39 @@
 
                 <v-divider class="my-4"></v-divider>
 
-
-                <v-btn @click="getNutrients" color="accent">Nährwerte Anzeigen </v-btn>
-
+                <v-btn @click="getNutrients" color="accent"> Display Nutrients </v-btn>
                 <div class="text-h5 primary--text font-weight-bold" v-if="nutrients">
-                  Nährwerte:
+                  <h4 v-if="nutrients.length > 0">
+                    <br/> Nutrients:
+                  </h4>
                   <div class="text-subtitle-1 primary--text font-weight-medium mt-5">
                     <ul>
                       <li v-for="item in nutrients">
-                        {{item.label}} : {{item.quantity}} {{item.unit}}
+                        {{ item.label }} : {{ item.quantity }} {{ item.unit }}
                       </li>
                     </ul>
                   </div>
                 </div>
+                <br/>
 
                 <div class="text-h5 primary--text font-weight-bold">
-                  Zutaten:
+                  Ingredients:
                   <div class="text-subtitle-1 primary--text font-weight-medium mt-5">
                     <ul>
-                      <li v-for="item in recipes[$route.params.id].ingredients">{{ item }}</li>
+                      <li v-for="item in recipe.ingredients.split(',')">
+                        {{ item }}
+                      </li>
                     </ul>
                     </div>
                 </div>
 
 
+                <br/>
                 <div class="text-h5 primary--text font-weight-bold">
-                  Schritte:
+                  Steps:
                   <div class="text-subtitle-1 primary--text font-weight-medium mt-5">
                     <ul>
-                      <li class="my-2" v-for="item in recipes[$route.params.id].steps"> {{ item }}</li>
+                      {{ recipe.steps }}
                     </ul>
                   </div>
                 </div>
@@ -95,7 +99,7 @@
                 <div class="d-flex align-center justify-space-between mt-8">
                   <div class="text-h5">
                     <span class="accent--text">
-                      Rezept teilen >
+                      Share >
                     </span>
                     <v-btn icon large>
                       <v-icon color="primary" large>mdi-facebook</v-icon>
@@ -109,6 +113,18 @@
                       <v-icon color="primary" large>mdi-instagram</v-icon>
                     </v-btn>
                   </div>
+                  <slot name="calendarAppPrint">
+                    <v-btn
+                        class="ds-add-event-today"
+                        color="primary2"
+                        style="margin-top: 60px"
+                        right
+                        bottom
+                        @click="print"
+                    >
+                      <v-icon>mdi-printer</v-icon>
+                    </v-btn>
+                  </slot>
                 </div>
 
                 <v-divider class="my-8"></v-divider>
@@ -119,20 +135,20 @@
                           to="/authors">
                     <div class="d-flex align-center">
                       <v-avatar color="accent" size="128">
-                        <v-img :src="recipes[$route.params.id].author.image"></v-img>
+                        <v-img :src="user.image"></v-img>
                       </v-avatar>
 
                       <div class="pl-4">
                         <div class="text-h5 primary--text font-weight-bold">
-                          <span class="accent--text">{{ recipes[$route.params.id].author.name }}</span>
+                          <span class="accent--text">{{ user.email }}</span>
                         </div>
 
                         <div class="text-subtitle-1 my-2">
-                          {{ recipes[$route.params.id].author.description }}
+                          Hi! I hope you like my recipe!
                         </div>
 
                         <div class="text-subtitle-1">
-                          Schreib mir >
+                          Follow me >
                           <v-btn icon>
                             <v-icon>mdi-facebook</v-icon>
                           </v-btn>
@@ -155,17 +171,18 @@
                     <v-col cols="12" lg="4" md="6">
                       <v-card flat
                               hover
-                              :to="'/recipe/'+anotherRandomId()">
+                              @click="redirectAndReload('/recipes/'+getPrev().recipes_UID)"
+                              >
                         <div class="d-flex align-center">
                           <div>
                             <v-icon>mdi-arrow-left</v-icon>
                           </div>
 
                           <div class="text-h6 primary--text pl-2">
-                            <div class="text-subtitle-1">Vorheriges Rezept</div>
-                            {{ recipes[anotherRandomId()].title }}
+                            <div class="text-subtitle-1">Previous Recipe</div>
+                            {{ this.getPrev().title }}
                             <p class="text--secondary">
-                              von {{ recipes[anotherRandomId()].author.name }}
+                              by {{ getAuthorFromRecipe(this.getPrev().author).email }}
                             </p>
                           </div>
                         </div>
@@ -175,14 +192,14 @@
                     <v-col cols="12" lg="4" md="6">
                       <v-card flat
                               hover
-                              :to="'/recipe/'+randomId">
+                              @click="redirectAndReload('/recipes/'+getNext().recipes_UID)">
                         <div class="d-flex align-center text-right">
                           <div class="text-h6 primary--text pr-2">
-                            <div class="text-subtitle-1">Nächstes Rezept</div>
-                            {{ recipes[randomId].title }}
+                            <div class="text-subtitle-1">Next Recipe</div>
+                            {{ this.getNext().title }}
                             <br>
                             <p class="text--secondary">
-                              von {{ recipes[randomId].author.name }}
+                              by {{ getAuthorFromRecipe(this.getNext().author).email }}
                             </p>
                           </div>
 
@@ -199,7 +216,6 @@
           </div>
         </div>
       </v-col>
-
       <v-col>
         <div>
           <siderbar/>
@@ -210,8 +226,8 @@
 </template>
 
 <script>
-import {recipes, authors, categories, randomId, anotherRandomId, random} from '../resources/js/data';
 import axios from "axios"
+
 export default {
   name: "Home",
   components: {
@@ -219,32 +235,111 @@ export default {
   },
   data() {
     return {
-      recipes: recipes,
-      authors: authors,
-      categories: categories,
-      randomId: randomId,
-      anotherRandomId: anotherRandomId,
-      random: random,
-      nutrients: '',
-      recipe: ''
+      nutrients: [],
+      ingredients: [],
+      recipe: [],
+      recipes: [],
+      categories: [],
+      category: [],
+      user: [],
+      users: [],
     }
-
   },
   methods: {
-    async getNutrients(){
-      let recipe = recipes[this.$route.params.id].ingredients;
+    async getNutrients() {
+      this.ingredients = this.recipe.ingredients.split(",");
       await axios({
         method: 'post',
         url: 'https://api.edamam.com/api/nutrition-details',
         params: {
-          app_id:"98865d34",
-          app_key:"7a1d80dc680e7c8c1349d5a92b542102"
+          app_id: "98865d34",
+          app_key: "7a1d80dc680e7c8c1349d5a92b542102"
         },
         data: {
-          ingr: recipe
+          ingr: this.ingredients
         }
-      }).then(response => (this.nutrients=response.data.totalNutrientsKCal))
+      }).then(response => {
+        const energy = response.data.totalNutrients.ENERC_KCAL;
+        energy.quantity = Math.round(energy.quantity)
+        const protein = response.data.totalNutrients.PROCNT;
+        protein.quantity = Math.round(protein.quantity)
+        const fat = response.data.totalNutrients.FAT;
+        fat.quantity = Math.round(fat.quantity)
+        fat.label = "Fat";
+        const carbs = response.data.totalNutrients.CHOCDF;
+        carbs.quantity = Math.round(carbs.quantity)
+        carbs.label = "Carbohydrates";
+        this.nutrients.push(energy, protein, fat, carbs)
+        }
+      )
+    },
+    async fetchData() {
+      try {
+        const recipeResponse = await axios.get(`http://localhost:3000/recipes`);
+        this.recipes = recipeResponse.data;
+        const categoryResponse = await axios.get(`http://localhost:3000/categories`);
+        this.categories = categoryResponse.data;
+        const userResponse = await axios.get(`http://localhost:3000/users`);
+        this.users = userResponse.data;
+
+        axios.get(`http://localhost:3000/recipes/${this.$route.params.id}`)
+            .then(response => {
+              this.recipe = response.data[0]
+              axios.get(`http://localhost:3000/categories/${this.recipe.category}`)
+                  .then(response => {
+                    this.category = response.data[0]
+                  })
+                  .catch(error => {
+                    console.log(error)
+                  })
+              axios.get(`http://localhost:3000/users/${this.recipe.author}`)
+                  .then(response => {
+                    this.user = response.data[0]
+                  })
+                  .catch(error => {
+                    console.log(error)
+                  })
+            });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    getDateFromRecipe() {
+      this.date = new Date(this.recipe.date)
+      return this.date;
+    },
+    getAuthorFromRecipe(userID) {
+      return this.users[userID-1];
+    },
+    getPrev() {
+      let currentIndex = this.recipes.findIndex(element => element.recipes_UID === this.recipe.recipes_UID);
+      let prevIndex = (currentIndex + this.recipes.length - 1) % this.recipes.length;
+      return this.recipes[prevIndex];
+    },
+    getNext() {
+      let currentIndex = this.recipes.findIndex(element => element.recipes_UID === this.recipe.recipes_UID);
+      let nextIndex = (currentIndex + 1) % this.recipes.length;
+      return this.recipes[nextIndex];
+    },
+    redirectAndReload(path){
+      this.$router.push({path: `${path}`})
+      location.reload();
+    },
+    print(){
+      window.print();
+    },
+  },
+  filters: {
+    formatDate(value) {
+      return value.toLocaleDateString("en-UK", {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      });
     }
-  }
+  },
+  created() {
+    this.fetchData();
+  },
 };
 </script>

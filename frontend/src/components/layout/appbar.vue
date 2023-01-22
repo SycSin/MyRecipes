@@ -75,32 +75,39 @@
             >{{ item.title }}
             </v-btn
             >
+            <v-btn
+                v-if="isLoggedIn"
+                color="red"
+                href="/planner"
+                to="/planner"
+                class="text-capitalize"
+                exact
+                exact-active-class="accent--text"
+                text
+            >Planner</v-btn>
           </v-col>
           <v-col v-if="$vuetify.breakpoint.mdAndUp" class="text-right">
             <v-btn
                 v-if="isLoggedIn"
                 color="accent"
-                :target="_black"
                 href="/profile"
                 to="/profile"
                 class="ml-3 text-capitalize"
             ><v-icon left>mdi-account</v-icon>
-              Profil</v-btn>
+              Profile</v-btn>
             <v-btn
                 v-else
                 color="primary"
-                :target="_black"
                 href="/signup"
                 to="/signup"
                 class="ml-3 text-capitalize"
             ><v-icon left>mdi-account-plus</v-icon>
-              Registrieren</v-btn>
+              Sign Up</v-btn>
 
             <v-btn
                 v-if="isLoggedIn"
                 v-on:click="logout"
                 color="red"
-                :target="_black"
                 href="/home"
                 to="/home"
                 class="ml-3 text-capitalize"
@@ -109,7 +116,6 @@
             <v-btn
                 v-else
                 color="accent"
-                :target="_black"
                 href="/login"
                 to="/login"
                 class="ml-3 text-capitalize"
@@ -123,16 +129,15 @@
 </template>
 
 <script>
-import {randomId, random} from '../../resources/js/data';
+
 
 export default {
   data: () => ({
-    randomId: randomId,
-    random: random,
+    randomId: '',
     drawer: null,
     btnItems: [
       {
-        text: "Registrieren",
+        text: "Sign Up",
         to: "/signup",
         target: "_black",
         color: "primary",
@@ -148,38 +153,38 @@ export default {
     ],
     barItems: [
       {
-        title: "Startseite",
+        title: "Home",
         to: "/",
       },
       {
-        title: "Kategorien",
+        title: "Categories",
         to: "/categories",
       },
       {
-        title: "Rezept",
-        to: "/recipe/"+randomId,
+        title: "Recipes",
+        to: "/recipes/"+1,
       },
       {
-        title: "Authoren",
+        title: "Authors",
         to: "/authors",
-      }
+      },
     ],
   }),
-  methods:{
-    logout(){
+  methods: {
+    logout() {
       localStorage.removeItem('token');
       this.$router.push('/');
       location.reload();
-    }
+    },
   },
   computed: {
-    isLoggedIn(){
+    isLoggedIn() {
       return localStorage.getItem('token');
     }
   },
   mounted() {
     const thisInstance = this
-    this.$root.$on('logout', function(){
+    this.$root.$on('logout', function () {
       thisInstance.logout();
     })
   }
