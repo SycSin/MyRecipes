@@ -94,7 +94,7 @@ export default {
   methods: {
     async fetchData() {
       try {
-        const userResponse = await axios.get(`http://localhost:3000/users`);
+        const userResponse = await axios.get(`https://localhost:3000/users`);
         this.users = userResponse.data;
       } catch (error) {
         console.log(error);
