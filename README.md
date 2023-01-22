@@ -30,7 +30,7 @@ Our application is built to run via Docker on any environment.
 * [Docker](https://docs.docker.com/get-docker/)
 * [Docker Compose](https://docs.docker.com/compose/install/#install-compose)
 
-### Automated deployment (Linux, OSX)
+## Automated deployment (Linux, OSX)
 On Linux or OSX it is recommended to use the `deploy.sh` script in order to deploy the application and load the initial data into the database
 This can be done with the following:
 ```shell
