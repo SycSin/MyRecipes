@@ -26,6 +26,8 @@ This repository is the source for the application deployed at [MyRecipes](https:
 ## Installation
 Our application is built to run via Docker on any environment.
 
+When developing locally, it is recommended to use `http://localhost:3000` as the API via axios on the frontend.
+
 ### Requirements
 * [Docker](https://docs.docker.com/get-docker/)
 * [Docker Compose](https://docs.docker.com/compose/install/#install-compose)
@@ -37,7 +39,6 @@ This can be done with the following:
 chmod u+x deploy.sh
 ./deploy.sh
 ```
-When developing locally, it is recommended to use `http://localhost:3000` as the API via axios on the frontend.
 
 ## Manual deployment (Windows, OSX, Linux): 
 ### Creating the image
