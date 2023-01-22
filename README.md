@@ -6,6 +6,22 @@ This repository is the source for the application deployed at [MyRecipes](https:
 
 ## MOSCOW Requirements
 
+### 1.2.1. Must-criteria
+* **The user must be able to register, login, change password and remove the account**
+* **The user must be able to view recipes.**
+* **The system must be able to retrieve macronutrients and display them to the user.**
+### 1.2.2. Should-criteria
+* User should be able to create recipe and delete It.
+* **User should be able to add recipes to food planner**
+### 1.2.3. Could-criteria
+* The user could adjust the recipe according to portions
+* **The user could print a recipe**
+* The user could rate a recipe
+* **The user could add a recipe to a weekday in the food planner via autocompletion**
+* **The user could delete a recipe from the weekday in the food planner**
+### 1.2.4. Won’t-criteria
+* **The user won't be able to leave comments**
+* **The user won't be able to share recipes on third party social media sites**
 
 ## Installation
 Our application is built to run via Docker on any environment.
