@@ -59,11 +59,11 @@
 
                 <v-divider class="my-4"></v-divider>
 
-
                 <v-btn @click="getNutrients" color="accent"> Display Nutrients </v-btn>
-
                 <div class="text-h5 primary--text font-weight-bold" v-if="nutrients">
-                  Nutrients:
+                  <h4 v-if="nutrients.length > 0">
+                    <br/> Nutrients:
+                  </h4>
                   <div class="text-subtitle-1 primary--text font-weight-medium mt-5">
                     <ul>
                       <li v-for="item in nutrients">
@@ -72,22 +72,26 @@
                     </ul>
                   </div>
                 </div>
+                <br/>
 
                 <div class="text-h5 primary--text font-weight-bold">
                   Ingredients:
                   <div class="text-subtitle-1 primary--text font-weight-medium mt-5">
                     <ul>
-                      {{ recipe.ingredients }}
+                      <li v-for="item in recipe.ingredients.split(',')">
+                        {{ item }}
+                      </li>
                     </ul>
                     </div>
                 </div>
 
 
+                <br/>
                 <div class="text-h5 primary--text font-weight-bold">
                   Steps:
                   <div class="text-subtitle-1 primary--text font-weight-medium mt-5">
                     <ul>
-                      <li class="my-2"> {{ recipe.steps }} </li>
+                      {{ recipe.steps }}
                     </ul>
                   </div>
                 </div>
@@ -155,8 +159,8 @@
                     <v-col cols="12" lg="4" md="6">
                       <v-card flat
                               hover
-                              :to="'/recipes/'+3">
-                              <!-- :to="'/recipes/'+anotherRandomId()"> -->
+                              @click="redirectAndReload('/recipes/'+getPrev().recipes_UID)"
+                              >
                         <div class="d-flex align-center">
                           <div>
                             <v-icon>mdi-arrow-left</v-icon>
@@ -164,11 +168,9 @@
 
                           <div class="text-h6 primary--text pl-2">
                             <div class="text-subtitle-1">Previous Recipe</div>
-                            <!-- {{ getRecipe(anotherRandomId()).title }} -->
-                            {{ recipe.title }}
+                            {{ this.getPrev().title }}
                             <p class="text--secondary">
-                              <!-- von {{ getUser(getRecipe(anotherRandomId()).author).email }} -->
-                              by {{ user.email }}
+                              by {{ getAuthorFromRecipe(this.getPrev().author).email }}
                             </p>
                           </div>
                         </div>
@@ -178,17 +180,14 @@
                     <v-col cols="12" lg="4" md="6">
                       <v-card flat
                               hover
-                              :to="'/recipes/'+2">
-                              <!-- :to="'/recipes/'+randomId"> -->
+                              @click="redirectAndReload('/recipes/'+getNext().recipes_UID)">
                         <div class="d-flex align-center text-right">
                           <div class="text-h6 primary--text pr-2">
                             <div class="text-subtitle-1">Next Recipe</div>
-                            <!-- {{ getRecipe(randomId).title }} -->
-                            {{ recipe.title }}
+                            {{ this.getNext().title }}
                             <br>
                             <p class="text--secondary">
-                              <!-- von {{ getUser(getRecipe(randomId).author).email }} -->
-                              by {{ user.email }}
+                              by {{ getAuthorFromRecipe(this.getNext().author).email }}
                             </p>
                           </div>
 
@@ -205,7 +204,6 @@
           </div>
         </div>
       </v-col>
-
       <v-col>
         <div>
           <siderbar/>
@@ -216,8 +214,8 @@
 </template>
 
 <script>
-// import {recipes, author, category, randomId, anotherRandomId, random} from '../resources/js/data';
 import axios from "axios"
+
 export default {
   name: "Home",
   components: {
@@ -228,8 +226,11 @@ export default {
       nutrients: [],
       ingredients: [],
       recipe: [],
+      recipes: [],
+      categories: [],
       category: [],
       user: [],
+      users: [],
     }
   },
   methods: {
@@ -246,7 +247,6 @@ export default {
           ingr: this.ingredients
         }
       }).then(response => {
-          //this.nutrients = response.data.totalNutrients;
         const energy = response.data.totalNutrients.ENERC_KCAL;
         energy.quantity = Math.round(energy.quantity)
         const protein = response.data.totalNutrients.PROCNT;
@@ -261,9 +261,57 @@ export default {
         }
       )
     },
+    async fetchData() {
+      try {
+        const recipeResponse = await axios.get(`http://localhost:3000/recipes`);
+        this.recipes = recipeResponse.data;
+        const categoryResponse = await axios.get(`http://localhost:3000/categories`);
+        this.categories = categoryResponse.data;
+        const userResponse = await axios.get(`http://localhost:3000/users`);
+        this.users = userResponse.data;
+
+        axios.get(`http://localhost:3000/recipes/${this.$route.params.id}`)
+            .then(response => {
+              this.recipe = response.data[0]
+              axios.get(`http://localhost:3000/categories/${this.recipe.category}`)
+                  .then(response => {
+                    this.category = response.data[0]
+                  })
+                  .catch(error => {
+                    console.log(error)
+                  })
+              axios.get(`http://localhost:3000/users/${this.recipe.author}`)
+                  .then(response => {
+                    this.user = response.data[0]
+                  })
+                  .catch(error => {
+                    console.log(error)
+                  })
+            });
+      } catch (error) {
+        console.log(error);
+      }
+    },
     getDateFromRecipe() {
       this.date = new Date(this.recipe.date)
       return this.date;
+    },
+    getAuthorFromRecipe(userID) {
+      return this.users[userID-1];
+    },
+    getPrev() {
+      let currentIndex = this.recipes.findIndex(element => element.recipes_UID === this.recipe.recipes_UID);
+      let prevIndex = (currentIndex + this.recipes.length - 1) % this.recipes.length;
+      return this.recipes[prevIndex];
+    },
+    getNext() {
+      let currentIndex = this.recipes.findIndex(element => element.recipes_UID === this.recipe.recipes_UID);
+      let nextIndex = (currentIndex + 1) % this.recipes.length;
+      return this.recipes[nextIndex];
+    },
+    redirectAndReload(path){
+      this.$router.push({path: `${path}`})
+      location.reload();
     },
   },
   filters: {
@@ -276,25 +324,7 @@ export default {
     }
   },
   created() {
-    // Fetch the data before rendering
-    axios.get(`http://localhost:3000/recipes/${this.$route.params.id}`)
-        .then(response => {
-          this.recipe = response.data[0]
-          axios.get(`http://localhost:3000/categories/${this.recipe.category}`)
-              .then(response => {
-                this.category = response.data[0]
-              })
-              .catch(error => {
-                console.log(error)
-              })
-          axios.get(`http://localhost:3000/users/${this.recipe.author}`)
-              .then(response => {
-                this.user = response.data[0]
-              })
-              .catch(error => {
-                console.log(error)
-              })
-        })
+    this.fetchData();
   },
 };
 </script>

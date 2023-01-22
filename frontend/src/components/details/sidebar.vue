@@ -6,15 +6,15 @@
       <v-divider></v-divider>
 
       <div>
-        <v-row v-for="item in this.recipes.slice(0,4).reverse()" :key="item.recipes_UID" class="py-2">
+        <v-row v-for="item in this.recipes.slice(1, 5).reverse()" :key="item.recipes_UID" class="py-2">
           <v-col cols="12" lg="10" md="6">
             <div>
-              <v-card :color="hover ? 'white' : 'transparent'"
+              <v-card height="100%"
+                      :color="hover ? 'white' : 'transparent'"
                       :elevation="hover ? 12 : 0"
                       flat
-                      height="100%"
                       hover
-                      :to="'/recipes/'+item.recipes_UID">
+                      @click="redirectAndReload('/recipes/'+item.recipes_UID)">
                 <v-img
                     :aspect-ratio="16 / 9"
                     :src="item.image"
@@ -37,7 +37,7 @@
                       <v-img :src="getAuthorFromRecipe(item.author).image"></v-img>
                     </v-avatar>
 
-                    <div class="pl-2">{{ getAuthorFromRecipe(item.author).email }} · {{ item.date }}</div>
+                    <div class="pl-2">{{ getDateFromRecipe(item.recipes_UID) | formatDate }}</div>
                   </div>
                 </div>
               </v-card>
@@ -82,7 +82,7 @@ export default {
       recipes: [],
       authors: [],
       categories: [],
-      randomId: '',
+      date: Date,
     }
   },
   methods: {
@@ -90,30 +90,40 @@ export default {
       try {
         const recipeResponse = await axios.get(`http://localhost:3000/recipes/`);
         this.recipes = recipeResponse.data;
-        console.log(this.recipes)
         const categoryResponse = await axios.get(`http://localhost:3000/categories/`);
         this.categories = categoryResponse.data;
-        console.log(this.categories)
         const userResponse = await axios.get(`http://localhost:3000/users`);
         this.authors = userResponse.data;
-        console.log(this.authors)
-        this.generateRandomId(1, this.recipes.length-1);
       } catch (error) {
         console.log(error);
       }
     },
-    generateRandomId(min, max) {
-      this.randomID = Math.floor(Math.random() * (max - min + 1)) + min;
+    redirectAndReload(path){
+      this.$router.push({path: `${path}`})
+      location.reload();
     },
     getCategoryFromRecipe(categoryID){
       return this.categories[categoryID-1];
     },
     getAuthorFromRecipe(userID){
-      return this.users[userID-1];
+      return this.authors[userID-1];
+    },
+    getDateFromRecipe(recipeID) {
+      this.date = new Date(this.recipes[recipeID - 1].date)
+      return this.date;
     },
   },
   created() {
     this.fetchData();
   },
+  filters: {
+    formatDate(value) {
+      return value.toLocaleDateString("en-UK", {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      });
+    }
+  }
 };
 </script>

@@ -102,7 +102,7 @@
                           :elevation="hover ? 12 : 0"
                           flat
                           hover
-                          :to="'/recipes/' + item.recipes_UID">
+                          @click="redirectAndReload('/recipes/'+item.recipes_UID)">
                     <v-img
                         :aspect-ratio="16 / 9"
                         :src=item.image
@@ -167,9 +167,9 @@ export default {
   methods: {
     async fetchData() {
       try {
-        const recipeResponse = await axios.get(`http://localhost:3000/recipes/`);
+        const recipeResponse = await axios.get(`http://localhost:3000/recipes`);
         this.recipes = recipeResponse.data;
-        const categoryResponse = await axios.get(`http://localhost:3000/categories/`);
+        const categoryResponse = await axios.get(`http://localhost:3000/categories`);
         this.categories = categoryResponse.data;
         const userResponse = await axios.get(`http://localhost:3000/users`);
         this.users = userResponse.data;
