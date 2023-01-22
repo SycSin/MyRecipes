@@ -50,8 +50,8 @@
                       </v-chip>
 
                       <v-chip color="transparent" small>
-                        <v-icon left>mdi-comment-outline</v-icon>
-                        0 Comments
+                        <v-icon left>mdi-heart-outline</v-icon>
+                        47
                       </v-chip>
                     </div>
                   </div>
@@ -85,7 +85,6 @@
                     </div>
                 </div>
 
-
                 <br/>
                 <div class="text-h5 primary--text font-weight-bold">
                   Steps:
@@ -95,37 +94,19 @@
                     </ul>
                   </div>
                 </div>
+                <slot name="calendarAppPrint">
+                  <v-btn
+                      class="ds-add-event-today"
+                      color="primary2"
+                      style="margin-top: 60px"
+                      right
+                      bottom
+                      @click="print"
+                  >
+                    <v-icon>mdi-printer</v-icon>
+                  </v-btn>
+                </slot>
 
-                <div class="d-flex align-center justify-space-between mt-8">
-                  <div class="text-h5">
-                    <span class="accent--text">
-                      Share >
-                    </span>
-                    <v-btn icon large>
-                      <v-icon color="primary" large>mdi-facebook</v-icon>
-                    </v-btn>
-
-                    <v-btn icon large>
-                      <v-icon color="primary" large>mdi-twitter</v-icon>
-                    </v-btn>
-
-                    <v-btn icon large>
-                      <v-icon color="primary" large>mdi-instagram</v-icon>
-                    </v-btn>
-                  </div>
-                  <slot name="calendarAppPrint">
-                    <v-btn
-                        class="ds-add-event-today"
-                        color="primary2"
-                        style="margin-top: 60px"
-                        right
-                        bottom
-                        @click="print"
-                    >
-                      <v-icon>mdi-printer</v-icon>
-                    </v-btn>
-                  </slot>
-                </div>
 
                 <v-divider class="my-8"></v-divider>
 
