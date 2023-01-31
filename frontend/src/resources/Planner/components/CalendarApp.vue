@@ -223,6 +223,20 @@
           </v-fab-transition>
         </slot>
 
+        <slot name="calendarAppHome">
+          <v-btn
+              class="ds-add-event-today"
+              color="accent"
+              style="margin-top: 60px"
+              fixed
+              left
+              top
+              @click="homepage"
+          >
+            <v-icon>home</v-icon>
+          </v-btn>
+        </slot>
+
         <slot name="calendarAppPrint">
             <v-btn
                 class="ds-add-event-today"
@@ -458,6 +472,10 @@ export default {
 
     print(){
       window.print();
+    },
+    homepage() {
+      this.$router.push({ path: '/' });
+      location.reload();
     },
 
     rebuild(aroundDay, force, forceType) {
