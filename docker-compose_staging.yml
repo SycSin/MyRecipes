@@ -28,7 +28,7 @@ services:
       - ./backend:/app
       - /app/node_modules
 
-  db:
+  mariadb:
     image: mariadb:latest
     restart: always
     ports:

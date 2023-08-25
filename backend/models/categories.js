@@ -1,7 +1,7 @@
 const mariadb = require('mariadb');
 
 const pool = mariadb.createPool({
-    host: 'db',
+    host: 'mariadb',
     user: 'root',
     password: 'example',
     database: 'MyRecipes',
