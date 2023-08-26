@@ -10,7 +10,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # install project dependencies
-RUN npm install
+RUN npm install --production
 
 # copy project files and folders to the current working directory (i.e. 'app' folder)
 COPY . .
@@ -37,4 +37,4 @@ RUN npm install -g vue-to-top-button --save
 RUN npm install axios --save
 
 EXPOSE 8080
-CMD [ "npm", "run", "serve" ]
+CMD [ "npm", "run", "prod" ]
