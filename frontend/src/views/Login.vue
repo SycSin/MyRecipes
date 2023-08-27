@@ -54,7 +54,7 @@ export default {
   },
   methods: {
     async login() {
-      await axios.post('myrecipes-backend.myrecipes.svc.cluster.local:3000/auth/login',
+      await axios.post('http://myrecipes-backend.myrecipes.svc.cluster.local:3000/auth/login',
           {
             email: this.email,
             password: this.password

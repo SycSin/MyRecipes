@@ -59,7 +59,7 @@ export default {
 },
   methods: {
     async submitForm(){
-      const response = await axios.post('myrecipes-backend.myrecipes.svc.cluster.local:3000/auth/signup', this.form)
+      const response = await axios.post('http://myrecipes-backend.myrecipes.svc.cluster.local:3000/auth/signup', this.form)
           .then(function (response) {
             //console.log(response);
           })

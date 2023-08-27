@@ -256,24 +256,24 @@ export default {
     },
     async fetchData() {
       try {
-        const recipeResponse = await axios.get(`myrecipes-backend.myrecipes.svc.cluster.local:3000/recipes`);
+        const recipeResponse = await axios.get(`http://myrecipes-backend.myrecipes.svc.cluster.local:3000/recipes`);
         this.recipes = recipeResponse.data;
-        const categoryResponse = await axios.get(`myrecipes-backend.myrecipes.svc.cluster.local:3000/categories`);
+        const categoryResponse = await axios.get(`http://myrecipes-backend.myrecipes.svc.cluster.local:3000/categories`);
         this.categories = categoryResponse.data;
-        const userResponse = await axios.get(`myrecipes-backend.myrecipes.svc.cluster.local:3000/users`);
+        const userResponse = await axios.get(`http://myrecipes-backend.myrecipes.svc.cluster.local:3000/users`);
         this.users = userResponse.data;
 
-        axios.get(`myrecipes-backend.myrecipes.svc.cluster.local:3000/recipes/${this.$route.params.id}`)
+        axios.get(`http://myrecipes-backend.myrecipes.svc.cluster.local:3000/recipes/${this.$route.params.id}`)
             .then(response => {
               this.recipe = response.data[0]
-              axios.get(`myrecipes-backend.myrecipes.svc.cluster.local:3000/categories/${this.recipe.category}`)
+              axios.get(`http://myrecipes-backend.myrecipes.svc.cluster.local:3000/categories/${this.recipe.category}`)
                   .then(response => {
                     this.category = response.data[0]
                   })
                   .catch(error => {
                     console.log(error)
                   })
-              axios.get(`myrecipes-backend.myrecipes.svc.cluster.local:3000/users/${this.recipe.author}`)
+              axios.get(`http://myrecipes-backend.myrecipes.svc.cluster.local:3000/users/${this.recipe.author}`)
                   .then(response => {
                     this.user = response.data[0]
                   })

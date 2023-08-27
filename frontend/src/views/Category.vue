@@ -97,11 +97,11 @@ export default {
   methods: {
     async fetchData() {
       try {
-        const recipeResponse = await axios.get(`myrecipes-backend.myrecipes.svc.cluster.local:3000/recipes`);
+        const recipeResponse = await axios.get(`http://myrecipes-backend.myrecipes.svc.cluster.local:3000/recipes`);
         this.recipes = recipeResponse.data;
-        const categoryResponse = await axios.get(`myrecipes-backend.myrecipes.svc.cluster.local:3000/categories`);
+        const categoryResponse = await axios.get(`http://myrecipes-backend.myrecipes.svc.cluster.local:3000/categories`);
         this.categories = categoryResponse.data;
-        const userResponse = await axios.get(`myrecipes-backend.myrecipes.svc.cluster.local:3000/users`);
+        const userResponse = await axios.get(`http://myrecipes-backend.myrecipes.svc.cluster.local:3000/users`);
         this.users = userResponse.data;
         this.generateRandomId(1, this.recipes.length - 1);
       } catch (error) {
