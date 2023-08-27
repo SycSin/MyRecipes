@@ -94,7 +94,7 @@ export default {
   methods: {
     async fetchData() {
       try {
-        const userResponse = await axios.get(`https://myrecipes-backend.myrecipes.svc.cluster.local:3000/users`);
+        const userResponse = await axios.get(`myrecipes-backend.myrecipes.svc.cluster.local:3000/users`);
         this.users = userResponse.data;
       } catch (error) {
         console.log(error);
