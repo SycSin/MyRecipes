@@ -37,4 +37,4 @@ RUN npm install -g vue-to-top-button --save
 RUN npm install axios --save
 
 EXPOSE 8080
-CMD [ "vue-cli-service", "build" ]
+CMD [ "npm", "run", "serve" ]
