@@ -103,7 +103,7 @@ export default {
         //TODO: Load events from database and use them in Planner
         async fetchData() {
           try {
-            const eventResponse = await axios.get(`https://www.myrecipes.at/api/events`);
+            const eventResponse = await axios.get(`https://myrecipes-backend.myrecipes.svc.cluster.local:3000/events`);
             this.events = eventResponse.data;
           } catch (error) {
             console.log(error);
