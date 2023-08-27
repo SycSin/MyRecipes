@@ -228,7 +228,7 @@ export default {
       {
         async fetchData() {
           try {
-            const recipeResponse = await axios.get(`http://myrecipes-backend.myrecipes.svc.cluster.local:3000/recipes`);
+            const recipeResponse = await axios.get(`https://www.myrecipes.at/api/recipes`);
             this.recipes = recipeResponse.data;
           } catch (error) {
             console.log(error);
