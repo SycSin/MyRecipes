@@ -37,4 +37,5 @@ RUN npm install -g vue-to-top-button --save
 RUN npm install axios --save
 
 EXPOSE 8080
-CMD [ "npm", "run", "serve" ]
+#CMD [ "npm", "run", "serve" ]
+CMD [ "npm", "run", "build" ]
