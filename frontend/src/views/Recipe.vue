@@ -273,7 +273,7 @@ export default {
                   .catch(error => {
                     console.log(error)
                   })
-              axios.get(`http://www.myrecipes.at/api/users/${this.recipe.author}`)
+              axios.get(`https://www.myrecipes.at/api/users/${this.recipe.author}`)
                   .then(response => {
                     this.user = response.data[0]
                   })
