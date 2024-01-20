@@ -59,7 +59,7 @@ export default {
 },
   methods: {
     async submitForm(){
-      const response = await axios.post('https://www.myrecipes.at/api/auth/signup', this.form)
+      const response = await axios.post('http://www.myrecipes.at/api/auth/signup', this.form)
           .then(function (response) {
             //console.log(response);
           })

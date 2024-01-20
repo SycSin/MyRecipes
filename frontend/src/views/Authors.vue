@@ -94,7 +94,7 @@ export default {
   methods: {
     async fetchData() {
       try {
-        const userResponse = await axios.get(`https://www.myrecipes.at/api/users`);
+        const userResponse = await axios.get(`http://www.myrecipes.at/api/users`);
         this.users = userResponse.data;
       } catch (error) {
         console.log(error);

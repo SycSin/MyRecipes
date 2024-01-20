@@ -106,7 +106,7 @@ export default {
     }
   },
   created() {
-    axios.get(`https://www.myrecipes.at/api/auth/getSelf/${localStorage.getItem('token')}`, config
+    axios.get(`http://www.myrecipes.at/api/auth/getSelf/${localStorage.getItem('token')}`, config
     ).then(
         (response) => {
           this.email = response.data[0].email;
