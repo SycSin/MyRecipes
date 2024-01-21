@@ -78,7 +78,7 @@ export default {
   },
   methods: {
     async submitForm() {
-      const response = await axios.post('http://myrecipes-backend:3000/auth/signup', this.form)
+      const response = await axios.post('https://www.myrecipes.at/api/auth/signup', this.form)
           .then(function (response) {
             console.log(response);
           })
@@ -89,12 +89,12 @@ export default {
       await this.$router.push('/login');
     },
     async deleteAccount() {
-      await axios.delete(`http://myrecipes-backend:3000/users/${this.id}`, config)
+      await axios.delete(`https://www.myrecipes.at/api/users/${this.id}`, config)
           .then(() => localStorage.removeItem('token'))
           .finally(() => this.$root.$emit('logout'))
     },
     updateAccount() {
-      axios.put(`http://myrecipes-backend:3000/users/${this.id}`, {
+      axios.put(`https://www.myrecipes.at/api/users/${this.id}`, {
         password: this.password,
         email: this.email,
         image: this.image
@@ -106,7 +106,7 @@ export default {
     }
   },
   created() {
-    axios.get(`http://myrecipes-backend:3000/auth/getSelf/${localStorage.getItem('token')}`, config
+    axios.get(`https://www.myrecipes.at/api/auth/getSelf/${localStorage.getItem('token')}`, config
     ).then(
         (response) => {
           this.email = response.data[0].email;
