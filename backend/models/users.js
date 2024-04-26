@@ -2,7 +2,7 @@ const mariadb = require('mariadb');
 const jwt = require('jsonwebtoken');
 
 const pool = mariadb.createPool({
-    host: 'mariadb.mariadb',
+    host: process.env.DB_HOST,
     user: 'root',
     password: process.env.DB_ROOT_PASSWORD,
     database: 'MyRecipes',
