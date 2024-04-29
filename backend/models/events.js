@@ -1,19 +1,7 @@
 const mariadb = require('mariadb');
 
-// Initialize Pool Cluster
-const clust = mariadb.createPoolCluster();
-
-// Add database server pools
-clust.add('primary', {
-    host: process.env.PRIMARY_DB_HOST,
-    user: 'root',
-    password: process.env.DB_ROOT_PASSWORD,
-    database: 'MyRecipes',
-    connectionLimit: 5
-});
-
-clust.add('replica', {
-    host: process.env.REPLICA_DB_HOST,
+const pool = mariadb.createPool({
+    host: process.env.DB_HOST,
     user: 'root',
     password: process.env.DB_ROOT_PASSWORD,
     database: 'MyRecipes',
@@ -22,41 +10,66 @@ clust.add('replica', {
 
 const Event = {
     async getAllEvents() {
-        return await queryData('SELECT * FROM events');
+        try {
+            const conn = await pool.getConnection();
+            const rows = await conn.query('SELECT * FROM events');
+            conn.release();
+            return rows;
+        } catch (error) {
+            console.log(error);
+            return error;
+        }
     },
     async getEventById(id) {
-        return await queryData('SELECT * FROM events WHERE events_UID = ?', [id]);
+        try {
+            const conn = await pool.getConnection();
+            const rows = await conn.query('SELECT * FROM events WHERE events_UID = ?', [id]);
+            conn.release();
+            return rows;
+        } catch (error) {
+            console.log(error);
+            return error;
+        }
     },
     async addEvent(event) {
-        return await queryData(
-            'INSERT INTO events (author, date, recipe, color) VALUES (?, ?, ?, ?)',
-            [event.author, event.date, event.recipe, event.color],
-            true
-        );
+        try {
+            const conn = await pool.getConnection();
+            const rows = await conn.query(
+                'INSERT INTO events (author, date, recipe, color) VALUES (?, ?, ?, ?)',
+                [event.author, event.date, event.recipe, event.color]
+            );
+            conn.release();
+            return rows;
+        } catch (error) {
+            console.log(error);
+            return error;
+        }
     },
     async updateEvent(id, event) {
-        return await queryData(
-            'UPDATE events SET author = ?, date = ?, recipe = ?, color = ? WHERE events_UID = ?',
-            [event.author, event.date, event.recipe, event.color, id],
-            true
-        );
+        try {
+            const conn = await pool.getConnection();
+            const rows = await conn.query(
+                'UPDATE events SET author = ?, date = ?, recipe = ?, color = ? WHERE events_UID = ?',
+                [event.author, event.date, event.recipe, event.color, id]
+            );
+            conn.release();
+            return rows;
+        } catch (error) {
+            console.log(error);
+            return error;
+        }
     },
     async deleteEvent(id) {
-        return await queryData('DELETE FROM events WHERE events_UID = ?', [id], true);
+        try {
+            const conn = await pool.getConnection();
+            const rows = await conn.query('DELETE FROM events WHERE events_UID = ?', [id]);
+            conn.release();
+            return rows;
+        } catch (error) {
+            console.log(error);
+            return error;
+        }
     }
 };
-
-async function queryData(sql, params = [], usePrimary = false) {
-    let conn;
-    try {
-        conn = await clust.getConnection(usePrimary ? 'primary' : 'replica');
-        return await conn.query(sql, params);
-    } catch (err) {
-        console.error('Database Query Error:', err);
-        throw err;
-    } finally {
-        if (conn) conn.end();
-    }
-}
 
 module.exports = Event;
