@@ -1,7 +1,19 @@
 const mariadb = require('mariadb');
 
-const pool = mariadb.createPool({
-    host: process.env.DB_HOST,
+// Initialize Pool Cluster
+const clust = mariadb.createPoolCluster();
+
+// Add database server pools
+clust.add('primary', {
+    host: process.env.PRIMARY_DB_HOST,
+    user: 'root',
+    password: process.env.DB_ROOT_PASSWORD,
+    database: 'MyRecipes',
+    connectionLimit: 5
+});
+
+clust.add('replica', {
+    host: process.env.REPLICA_DB_HOST,
     user: 'root',
     password: process.env.DB_ROOT_PASSWORD,
     database: 'MyRecipes',
@@ -10,65 +22,27 @@ const pool = mariadb.createPool({
 
 const Recipe = {
     async getAllRecipes() {
-        try {
-            const conn = await pool.getConnection();
-            const rows = await conn.query('SELECT * FROM recipes');
-            conn.release();
-            return rows;
-        } catch (error) {
-            console.log(error);
-            return error;
-        }
+        return await queryData('SELECT * FROM recipes');
     },
     async getRecipeById(id) {
-        try {
-            const conn = await pool.getConnection();
-            const rows = await conn.query('SELECT * FROM recipes WHERE recipes_UID = ?', [id]);
-            conn.release();
-            return rows;
-        } catch (error) {
-            console.log(error);
-            return error;
-        }
+        return await queryData('SELECT * FROM recipes WHERE recipes_UID = ?', [id]);
     },
     async addRecipe(recipe) {
-        try {
-            const conn = await pool.getConnection();
-            const rows = await conn.query(
-                'INSERT INTO recipes (author, title, description, ingredients, steps, date, image, rating, category) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                [recipe.author, recipe.title, recipe.description, recipe.ingredients, recipe.steps, recipe.date, recipe.image, recipe.rating, recipe.category] // Postman probieren
-            );
-            conn.release();
-            return rows;
-        } catch (error) {
-            console.log(error);
-            return error;
-        }
+        return await queryData(
+            'INSERT INTO recipes (author, title, description, ingredients, steps, date, image, rating, category) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            [recipe.author, recipe.title, recipe.description, recipe.ingredients, recipe.steps, recipe.date, recipe.image, recipe.rating, recipe.category],
+            true
+        );
     },
     async updateRecipe(id, recipe) {
-        try {
-            const conn = await pool.getConnection();
-            const rows = await conn.query(
-                'UPDATE recipes SET author = ?, title = ?, description = ?, steps = ?, date = ?, image = ?, rating = ?, category = ? WHERE recipes_UID = ?',
-                [recipe.author, recipe.title, recipe.description, recipe.ingredients, recipe.steps, recipe.date, recipe.image, recipe.rating, recipe.category]
-            );
-            conn.release();
-            return rows;
-        } catch (error) {
-            console.log(error);
-            return error;
-        }
+        return await queryData(
+            'UPDATE recipes SET author = ?, title = ?, description = ?, ingredients = ?, steps = ?, date = ?, image = ?, rating = ?, category = ? WHERE recipes_UID = ?',
+            [recipe.author, recipe.title, recipe.description, recipe.ingredients, recipe.steps, recipe.date, recipe.image, recipe.rating, recipe.category, id],
+            true
+        );
     },
     async deleteRecipe(id) {
-        try {
-            const conn = await pool.getConnection();
-            const rows = await conn.query('DELETE FROM recipes WHERE recipes_UID = ?', [id]);
-            conn.release();
-            return rows;
-        } catch (error) {
-            console.log(error);
-            return error;
-        }
+        return await queryData('DELETE FROM recipes WHERE recipes_UID = ?', [id], true);
     }
 };
 

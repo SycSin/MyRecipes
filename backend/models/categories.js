@@ -1,7 +1,19 @@
 const mariadb = require('mariadb');
 
-const pool = mariadb.createPool({
-    host: process.env.DB_HOST,
+// Initialize Pool Cluster
+const clust = mariadb.createPoolCluster();
+
+// Adding servers to the cluster
+clust.add('primary', {
+    host: process.env.PRIMARY_DB_HOST,
+    user: 'root',
+    password: process.env.DB_ROOT_PASSWORD,
+    database: 'MyRecipes',
+    connectionLimit: 5
+});
+
+clust.add('replica', { // Replica server
+    host: process.env.REPLICA_DB_HOST,
     user: 'root',
     password: process.env.DB_ROOT_PASSWORD,
     database: 'MyRecipes',
@@ -9,67 +21,45 @@ const pool = mariadb.createPool({
 });
 
 const Categories = {
-    async getAllCategorys() {
-        try {
-            const conn = await pool.getConnection();
-            const rows = await conn.query('SELECT * FROM categories ORDER BY categories_UID ASC');
-            conn.release();
-            return rows;
-        } catch (error) {
-            console.log(error);
-            return error;
-        }
+    async getAllCategories() {
+        const sql = 'SELECT * FROM categories ORDER BY categories_UID ASC';
+        return await queryData(sql, false);
     },
+
     async getCategoryById(id) {
-        try {
-            const conn = await pool.getConnection();
-            const rows = await conn.query('SELECT * FROM categories WHERE categories_UID = ?', [id]);
-            conn.release();
-            return rows;
-        } catch (error) {
-            console.log(error);
-            return error;
-        }
+        const sql = 'SELECT * FROM categories WHERE categories_UID = ?';
+        return await queryData(sql, false, [id]);
     },
+
     async addCategory(category) {
-        try {
-            const conn = await pool.getConnection();
-            const rows = await conn.query(
-                'INSERT INTO categories (name) VALUES (?)',
-                [category.name]
-            );
-            conn.release();
-            return rows;
-        } catch (error) {
-            console.log(error);
-            return error;
-        }
+        const sql = 'INSERT INTO categories (name) VALUES (?)';
+        return await queryData(sql, true, [category.name]);
     },
+
     async updateCategory(id, category) {
-        try {
-            const conn = await pool.getConnection();
-            const rows = await conn.query(
-                'UPDATE categories SET name = ? WHERE categories_UID = ?',
-                [category.name, id]
-            );
-            conn.release();
-            return rows;
-        } catch (error) {
-            console.log(error);
-            return error;
-        }
+        const sql = 'UPDATE categories SET name = ? WHERE categories_UID = ?';
+        return await queryData(sql, true, [category.name, id]);
     },
+
     async deleteCategory(id) {
-        try {
-            const conn = await pool.getConnection();
-            const rows = await conn.query('DELETE FROM categories WHERE categories_UID = ?', [id]);
-            conn.release();
-            return rows;
-        } catch (error) {
-            console.log(error);
-            return error;
-        }
+        const sql = 'DELETE FROM categories WHERE categories_UID = ?';
+        return await queryData(sql, true, [id]);
     }
 };
+
+async function queryData(sql, usePrimary = true, params = []) {
+    let conn;
+    try {
+        // Get connection from the appropriate pool
+        //conn = await clust.getConnection(usePrimary ? 'primary' : /^replica*$/, "RR"); //For multiple replicas
+        conn = await clust.getConnection(usePrimary ? 'primary' : 'replica');
+        return await conn.query(sql, params);
+    } catch (err) {
+        console.error("Database Query Error: ", err);
+        throw err; // Rethrow the error after logging
+    } finally {
+        if (conn) conn.end();
+    }
+}
 
 module.exports = Categories;

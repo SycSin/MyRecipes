@@ -1,8 +1,21 @@
 const mariadb = require('mariadb');
 const jwt = require('jsonwebtoken');
 
-const pool = mariadb.createPool({
-    host: process.env.DB_HOST,
+// Initialize Pool Cluster
+const clust = mariadb.createPoolCluster();
+
+// Add primary database pool
+clust.add('primary', {
+    host: process.env.PRIMARY_DB_HOST,
+    user: 'root',
+    password: process.env.DB_ROOT_PASSWORD,
+    database: 'MyRecipes',
+    connectionLimit: 5
+});
+
+// Add replica database pool
+clust.add('replica', {
+    host: process.env.REPLICA_DB_HOST,
     user: 'root',
     password: process.env.DB_ROOT_PASSWORD,
     database: 'MyRecipes',
@@ -11,122 +24,56 @@ const pool = mariadb.createPool({
 
 const User = {
     async getAllUsers() {
-        try {
-            const conn = await pool.getConnection();
-            const rows = await conn.query('SELECT * FROM users');
-            conn.release();
-            return rows;
-        } catch (error) {
-            console.log(error);
-            return error;
-        }
+        return await queryData('SELECT * FROM users');
     },
     async getUserById(id) {
-        try {
-            const conn = await pool.getConnection();
-            const rows = await conn.query('SELECT * FROM users WHERE users_UID = ?', [id]);
-            conn.release();
-            return rows;
-        } catch (error) {
-            console.log(error);
-            return error;
-        }
+        return await queryData('SELECT * FROM users WHERE users_UID = ?', [id]);
     },
     async getUserByEmail(email) {
-        try {
-            const conn = await pool.getConnection();
-            const rows = await conn.query('SELECT * FROM users WHERE email = ?', [email]);
-            conn.release();
-            return rows;
-        } catch (error) {
-            console.log(error);
-            return error;
-        }
+        return await queryData('SELECT * FROM users WHERE email = ?', [email]);
     },
-    async getTokenFromUser(email){
-        try {
-            const conn = await pool.getConnection();
-            const rows = await conn.query('SELECT authToken FROM users WHERE email = ?', [email]);
-            conn.release();
-            return rows;
-        } catch (error) {
-            console.log(error);
-            return error;
-        }
-    }
-    ,
     async addUser(user) {
-        try {
-            const conn = await pool.getConnection();
-            const payload = user.email;
-            const secret = user.password;
-            const token = jwt.sign(payload, secret);
-            let rows;
-            if(user.image != null) {
-                rows = await conn.query(
-                    'INSERT INTO users (email, password, image, authToken) VALUES (?, ?, ?, ?)',
-                    [user.email, user.password, user.image, token]
-                );
-            }
-            else{
-                 rows = await conn.query(
-                    'INSERT INTO users (email, password, authToken) VALUES (?, ?, ?)',
-                    [user.email, user.password, token]
-                );
-            }
-            conn.release();
-            return rows;
-        } catch (error) {
-            console.log(error);
-            return error;
-        }
-    }
-    ,
+        const payload = { email: user.email };
+        const token = jwt.sign(payload, user.password);
+        return await queryData(
+            'INSERT INTO users (email, password, image, authToken) VALUES (?, ?, ?, ?)',
+            [user.email, user.password, user.image, token],
+            true
+        );
+    },
     async updateUser(id, user) {
-        try {
-            const conn = await pool.getConnection();
-            let rows;
-            if(user.image != null){
-                rows = await conn.query(
-                    'UPDATE users SET email = ?, password = ?, image = ? WHERE users_UID = ?',
-                    [user.email, user.password, user.image, id]
-                );
-            }
-            else{
-                rows = await conn.query(
-                    'UPDATE users SET email = ?, password = ? WHERE users_UID = ?',
-                    [user.email, user.password, id]
-                );
-            }
-            conn.release();
-            return rows;
-        } catch (error) {
-            console.log(error);
-            return error;
-        }
+        return await queryData(
+            'UPDATE users SET email = ?, password = ?, image = ? WHERE users_UID = ?',
+            [user.email, user.password, user.image, id],
+            true
+        );
     },
     async deleteUser(id) {
-        try {
-            const conn = await pool.getConnection();
-            const rows = await conn.query('DELETE FROM users WHERE users_UID = ?', [id]);
-            conn.release();
-            return rows;
-        } catch (error) {
-            console.log(error);
-            return error;
-        }
+        return await queryData(
+            'DELETE FROM users WHERE users_UID = ?',
+            [id],
+            true
+        );
     },
-    async getSelf(authToken){
-        try {
-            const conn = await pool.getConnection();
-            const rows = await conn.query('SELECT * FROM users WHERE authToken = ?', [authToken]);
-            conn.release();
-            return rows;
-        } catch (error) {
-            console.log(error);
-            return error;
-        }
+    async getSelf(authToken) {
+        return await queryData(
+            'SELECT * FROM users WHERE authToken = ?',
+            [authToken]
+        );
     }
 };
+
+async function queryData(sql, params = [], usePrimary = false) {
+    let conn;
+    try {
+        conn = await clust.getConnection(usePrimary ? 'primary' : 'replica');
+        return await conn.query(sql, params);
+    } catch (err) {
+        console.error('Database Query Error:', err);
+        throw err;
+    } finally {
+        if (conn) conn.end();
+    }
+}
 
 module.exports = User;
